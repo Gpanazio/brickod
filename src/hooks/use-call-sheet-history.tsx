@@ -71,3 +71,30 @@ export function useCreateCallSheet() {
     isPending,
   };
 }
+
+// Hook para deletar call sheets do histórico - ADICIONADO
+export function useDeleteCallSheet() {
+  const [isPending, setIsPending] = useState(false);
+
+  const mutateAsync = async (id: string): Promise<void> => {
+    setIsPending(true);
+    
+    try {
+      const stored = localStorage.getItem('brick_call_sheets_history');
+      const history = stored ? JSON.parse(stored) : [];
+      
+      const filteredHistory = history.filter((cs: CallSheet) => cs.id !== id);
+      localStorage.setItem('brick_call_sheets_history', JSON.stringify(filteredHistory));
+    } catch (error) {
+      console.error('Erro ao deletar call sheet:', error);
+      throw new Error('Falha ao deletar call sheet');
+    } finally {
+      setIsPending(false);
+    }
+  };
+
+  return {
+    mutateAsync,
+    isPending,
+  };
+}
