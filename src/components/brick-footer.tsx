@@ -3,14 +3,14 @@ export default function BrickFooter() {
     <footer className="brick-black text-white py-12 mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-center">
-          <div className="h-16 flex items-center mb-4">
+          <div className="flex justify-center mb-2">
             <svg viewBox="0 0 200 50" className="h-16 w-auto">
-              <text x="10" y="35" fontFamily="Arial, sans-serif" fontSize="28" fontWeight="bold" fill="white">
+              <text x="100" y="35" fontFamily="Arial, sans-serif" fontSize="28" fontWeight="bold" fill="white" textAnchor="middle">
                 BRICK
               </text>
             </svg>
           </div>
-          <p className="text-gray-400 text-xs mb-2 text-center">Powered by BrickAI</p>
+          <p className="text-gray-400 text-xs">Powered by BrickAI</p>
         </div>
       </div>
     </footer>
