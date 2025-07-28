@@ -1,0 +1,97 @@
+import { Film } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent } from "@/components/ui/card";
+
+interface ProductionInfoProps {
+  productionTitle: string;
+  shootingDate: string;
+  producer?: string;
+  director?: string;
+  client?: string;
+  onUpdateField: (field: any, value: any) => void;
+}
+
+export default function ProductionInfo({ 
+  productionTitle, 
+  shootingDate,
+  producer = '',
+  director = '',
+  client = '',
+  onUpdateField 
+}: ProductionInfoProps) {
+  return (
+    <Card className="mb-8">
+      <CardContent className="p-6">
+        <div className="flex items-center mb-6">
+          <div className="w-8 h-8 brick-dark rounded-lg flex items-center justify-center mr-3">
+            <Film className="text-white w-4 h-4" />
+          </div>
+          <h2 className="text-xl font-semibold text-brick-dark">Informações da Produção</h2>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="md:col-span-2">
+            <Label className="block text-sm font-medium text-gray-700 mb-2">
+              Cliente
+            </Label>
+            <Input
+              type="text"
+              value={client}
+              onChange={(e) => onUpdateField('client', e.target.value)}
+              placeholder="Nome do cliente ou empresa"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brick-red focus:border-transparent transition-all"
+            />
+          </div>
+          <div>
+            <Label className="block text-sm font-medium text-gray-700 mb-2">
+              Título da Produção
+            </Label>
+            <Input
+              type="text"
+              value={productionTitle}
+              onChange={(e) => onUpdateField('productionTitle', e.target.value)}
+              placeholder="Nome do projeto ou filme"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brick-red focus:border-transparent transition-all"
+            />
+          </div>
+          <div>
+            <Label className="block text-sm font-medium text-gray-700 mb-2">
+              Data de Filmagem
+            </Label>
+            <Input
+              type="date"
+              value={shootingDate}
+              onChange={(e) => onUpdateField('shootingDate', e.target.value)}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brick-red focus:border-transparent transition-all"
+            />
+          </div>
+          <div>
+            <Label className="block text-sm font-medium text-gray-700 mb-2">
+              Produtor
+            </Label>
+            <Input
+              type="text"
+              value={producer}
+              onChange={(e) => onUpdateField('producer', e.target.value)}
+              placeholder="Nome do produtor"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brick-red focus:border-transparent transition-all"
+            />
+          </div>
+          <div>
+            <Label className="block text-sm font-medium text-gray-700 mb-2">
+              Diretor
+            </Label>
+            <Input
+              type="text"
+              value={director}
+              onChange={(e) => onUpdateField('director', e.target.value)}
+              placeholder="Nome do diretor"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brick-red focus:border-transparent transition-all"
+            />
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
