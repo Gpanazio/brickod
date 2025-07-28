@@ -10,7 +10,7 @@ export default function BrickFooter() {
               </text>
             </svg>
           </div>
-          <p className="text-gray-400 text-sm">7 anos de experiência em produção audiovisual</p>
+          <p className="text-gray-400 text-sm">Powered by BrickAI</p>
         </div>
       </div>
     </footer>
