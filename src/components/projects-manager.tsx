@@ -9,19 +9,18 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { useProjects } from "@/hooks/use-projects";
-import { useProjectCallSheets } from "@/hooks/use-project-call-sheets";
-import type { Project } from "@shared/schema";
+import { useProjects, useProjectCallSheets } from "@/hooks/use-projects-final";
+import type { SelectProject } from "@shared/schema";
 
 interface ProjectsManagerProps {
-  onSelectProject: (project: Project) => void;
+  onSelectProject: (project: SelectProject) => void;
 }
 
 export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
   const { toast } = useToast();
-  const { projects, addProject, updateProject, deleteProject } = useProjects();
+  const { projects, addProject, updateProject, deleteProject, lastSync, forceSync } = useProjects();
   const [showNewProjectDialog, setShowNewProjectDialog] = useState(false);
-  const [editingProject, setEditingProject] = useState<Project | null>(null);
+  const [editingProject, setEditingProject] = useState<SelectProject | null>(null);
   const [newProjectName, setNewProjectName] = useState("");
   const [newProjectDescription, setNewProjectDescription] = useState("");
   const [newProjectClient, setNewProjectClient] = useState("");
@@ -36,7 +35,7 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
       
       toast({
         title: "Projeto criado",
-        description: `O projeto "${project.name}" foi criado com sucesso.`,
+        description: `O projeto "${newProjectName}" foi criado com sucesso.`,
       });
       
       setNewProjectName("");
@@ -66,7 +65,7 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
     }
   };
 
-  const handleDeleteProject = (project: Project) => {
+  const handleDeleteProject = (project: SelectProject) => {
     if (confirm(`Tem certeza que deseja excluir o projeto "${project.name}"? Esta ação não pode ser desfeita.`)) {
       deleteProject(project.id!);
       toast({
@@ -76,7 +75,7 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
     }
   };
 
-  const handleStatusChange = (project: Project, newStatus: 'ativo' | 'pausado' | 'concluído') => {
+  const handleStatusChange = (project: SelectProject, newStatus: 'ativo' | 'pausado' | 'concluído') => {
     updateProject(project.id!, { status: newStatus });
     toast({
       title: "Status atualizado",
@@ -84,7 +83,7 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
     });
   };
 
-  const openEditDialog = (project: Project) => {
+  const openEditDialog = (project: SelectProject) => {
     setEditingProject(project);
     setNewProjectName(project.name);
     setNewProjectDescription(project.description || "");
@@ -111,7 +110,7 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
     }
   };
 
-  const ProjectCard = ({ project }: { project: Project }) => {
+  const ProjectCard = ({ project }: { project: SelectProject }) => {
     const { callSheets } = useProjectCallSheets(project.id);
     const draftsCount = callSheets.filter(cs => cs.status === 'rascunho').length;
     const finishedCount = callSheets.filter(cs => cs.status === 'finalizada').length;

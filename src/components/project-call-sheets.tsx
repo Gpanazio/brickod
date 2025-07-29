@@ -6,30 +6,36 @@ import { Badge } from "@/components/ui/badge";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { useProjectCallSheets } from "@/hooks/use-project-call-sheets";
+import { useProjectCallSheets } from "@/hooks/use-projects-final";
 import { generateCallSheetPDF } from "@/lib/pdf-generator";
-import type { Project, CallSheet } from "@shared/schema";
+import type { SelectProject, SelectCallSheet } from "@shared/schema";
 
 interface ProjectCallSheetsProps {
-  project: Project;
+  project: SelectProject;
   onBack: () => void;
   onNewCallSheet: (projectId: string) => void;
-  onEditCallSheet: (callSheet: CallSheet) => void;
+  onEditCallSheet: (callSheet: SelectCallSheet) => void;
 }
 
 export function ProjectCallSheets({ project, onBack, onNewCallSheet, onEditCallSheet }: ProjectCallSheetsProps) {
   const { toast } = useToast();
-  const { callSheets, deleteCallSheet, updateCallSheetStatus } = useProjectCallSheets(project.id);
-  const [showDeleteDialog, setShowDeleteDialog] = useState<CallSheet | null>(null);
+  const { callSheets } = useProjectCallSheets(project.id);
+  const [showDeleteDialog, setShowDeleteDialog] = useState<SelectCallSheet | null>(null);
 
-  const handleDeleteCallSheet = (callSheet: CallSheet) => {
-    if (deleteCallSheet(callSheet.id!)) {
+  const handleDeleteCallSheet = (callSheet: SelectCallSheet) => {
+    // Implementar delete via localStorage por enquanto
+    try {
+      const localData = localStorage.getItem("brick-call-sheets");
+      const allCallSheets = localData ? JSON.parse(localData) : [];
+      const updated = allCallSheets.filter((cs: SelectCallSheet) => cs.id !== callSheet.id);
+      localStorage.setItem("brick-call-sheets", JSON.stringify(updated));
+      
       toast({
         title: "OD excluída",
         description: `A ordem do dia "${callSheet.productionTitle}" foi excluída.`,
       });
       setShowDeleteDialog(null);
-    } else {
+    } catch (error) {
       toast({
         title: "Erro ao excluir",
         description: "Não foi possível excluir a ordem do dia.",
@@ -38,7 +44,7 @@ export function ProjectCallSheets({ project, onBack, onNewCallSheet, onEditCallS
     }
   };
 
-  const handleExportPDF = (callSheet: CallSheet) => {
+  const handleExportPDF = (callSheet: SelectCallSheet) => {
     try {
       generateCallSheetPDF(callSheet);
       toast({
@@ -54,11 +60,24 @@ export function ProjectCallSheets({ project, onBack, onNewCallSheet, onEditCallS
     }
   };
 
-  const handleStatusChange = (callSheet: CallSheet, newStatus: 'rascunho' | 'finalizada') => {
-    if (updateCallSheetStatus(callSheet.id!, newStatus)) {
+  const handleStatusChange = (callSheet: SelectCallSheet, newStatus: 'rascunho' | 'finalizada') => {
+    try {
+      const localData = localStorage.getItem("brick-call-sheets");
+      const allCallSheets = localData ? JSON.parse(localData) : [];
+      const updated = allCallSheets.map((cs: SelectCallSheet) => 
+        cs.id === callSheet.id ? { ...cs, status: newStatus, updatedAt: new Date() } : cs
+      );
+      localStorage.setItem("brick-call-sheets", JSON.stringify(updated));
+      
       toast({
         title: "Status atualizado",
         description: `OD "${callSheet.productionTitle}" marcada como ${newStatus}.`,
+      });
+    } catch (error) {
+      toast({
+        title: "Erro ao atualizar status",
+        description: "Não foi possível atualizar o status da OD.",
+        variant: "destructive",
       });
     }
   };
