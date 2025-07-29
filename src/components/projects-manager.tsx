@@ -238,7 +238,7 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
                 {editingProject ? 'Edite as informações do projeto abaixo.' : 'Preencha os dados para criar um novo projeto para organizar suas ordens do dia.'}
               </p>
             </DialogHeader>
-            <div className="space-y-4">
+            <form className="space-y-4" autoComplete="off">
               <div>
                 <Label htmlFor="project-name" className="text-sm font-medium">
                   Nome do Projeto *
@@ -249,6 +249,7 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
                   onChange={(e) => setNewProjectName(e.target.value)}
                   placeholder="Ex: Campanha Verão 2024, Documentário Empresa"
                   className="mt-1"
+                  autoComplete="off"
                 />
               </div>
               
@@ -262,6 +263,7 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
                   onChange={(e) => setNewProjectClient(e.target.value)}
                   placeholder="Nome do cliente ou empresa"
                   className="mt-1"
+                  autoComplete="off"
                 />
               </div>
 
@@ -276,6 +278,7 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
                   placeholder="Breve descrição do projeto..."
                   className="mt-1"
                   rows={3}
+                  autoComplete="off"
                 />
               </div>
 
@@ -300,7 +303,7 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
                   {editingProject ? 'Atualizar' : 'Criar'}
                 </Button>
               </div>
-            </div>
+            </form>
           </DialogContent>
         </Dialog>
       </div>
