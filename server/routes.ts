@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertCallSheetSchema, insertTemplateSchema } from "@shared/schema";
+import { insertCallSheetSchema, insertTemplateSchema, insertProjectSchema } from "@shared/schema";
 import { testConnection } from "./db";
 import { ZodError } from "zod";
 
@@ -88,6 +88,89 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error deleting call sheet:", error);
       res.status(500).json({ error: "Failed to delete call sheet" });
+    }
+  });
+
+  // Project routes
+  app.get("/api/projects", async (_req, res) => {
+    try {
+      const projects = await storage.listProjects();
+      res.json(projects);
+    } catch (error) {
+      console.error("Route error fetching projects:", error);
+      res.status(500).json({ error: "Failed to fetch projects" });
+    }
+  });
+
+  app.get("/api/projects/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const project = await storage.getProject(id);
+
+      if (!project) {
+        return res.status(404).json({ error: "Project not found" });
+      }
+
+      res.json(project);
+    } catch (error) {
+      console.error("Error fetching project:", error);
+      res.status(500).json({ error: "Failed to fetch project" });
+    }
+  });
+
+  app.post("/api/projects", async (req, res) => {
+    try {
+      const validatedData = insertProjectSchema.parse(req.body);
+      const project = await storage.createProject(validatedData);
+      res.status(201).json(project);
+    } catch (error) {
+      if (error instanceof ZodError) {
+        return res.status(400).json({
+          error: "Validation error",
+          details: error.issues
+        });
+      }
+      console.error("Error creating project:", error);
+      res.status(500).json({ error: "Failed to create project" });
+    }
+  });
+
+  app.put("/api/projects/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const validatedData = insertProjectSchema.partial().parse(req.body);
+      const project = await storage.updateProject(id, validatedData);
+
+      if (!project) {
+        return res.status(404).json({ error: "Project not found" });
+      }
+
+      res.json(project);
+    } catch (error) {
+      if (error instanceof ZodError) {
+        return res.status(400).json({
+          error: "Validation error",
+          details: error.issues
+        });
+      }
+      console.error("Error updating project:", error);
+      res.status(500).json({ error: "Failed to update project" });
+    }
+  });
+
+  app.delete("/api/projects/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const success = await storage.deleteProject(id);
+
+      if (!success) {
+        return res.status(404).json({ error: "Project not found" });
+      }
+
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting project:", error);
+      res.status(500).json({ error: "Failed to delete project" });
     }
   });
 

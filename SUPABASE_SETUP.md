@@ -3,6 +3,7 @@
 ## ✅ Tabelas Criadas com Sucesso!
 
 As seguintes tabelas foram criadas em seu projeto Supabase:
+- `projects` - Para gerenciar produções
 - `call_sheets` - Para armazenar os mapas de filmagem
 - `templates` - Para armazenar os templates reutilizáveis
 
