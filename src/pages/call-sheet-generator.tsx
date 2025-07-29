@@ -435,9 +435,12 @@ export default function CallSheetGenerator() {
                 Salvar como Template
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-md">
+            <DialogContent className="sm:max-w-md" aria-describedby="template-dialog-description">
               <DialogHeader>
                 <DialogTitle>Salvar como Template</DialogTitle>
+                <p id="template-dialog-description" className="text-sm text-gray-600">
+                  Salve esta ordem do dia como template para reutilizar em projetos futuros.
+                </p>
               </DialogHeader>
               <div className="space-y-4">
                 <div>

@@ -212,9 +212,12 @@ export function ProjectCallSheets({ project, onBack, onNewCallSheet, onEditCallS
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={!!showDeleteDialog} onOpenChange={() => setShowDeleteDialog(null)}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-md" aria-describedby="delete-dialog-description">
           <DialogHeader>
             <DialogTitle>Confirmar Exclusão</DialogTitle>
+            <p id="delete-dialog-description" className="text-sm text-gray-600">
+              Esta ação não pode ser desfeita. A ordem do dia será removida permanentemente.
+            </p>
           </DialogHeader>
           <div className="space-y-4">
             <p className="text-sm text-gray-600">
