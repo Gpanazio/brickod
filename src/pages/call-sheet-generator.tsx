@@ -218,6 +218,7 @@ export default function CallSheetGenerator() {
 
     try {
       const templateData = {
+        id: `template-${Date.now()}`,
         name: templateName,
         description: templateDescription,
         category: templateCategory,
