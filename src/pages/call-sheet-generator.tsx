@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { StickyNote, Save, FileText, Eye, Layers, History, Layout } from "lucide-react";
+import { StickyNote, Save, FileText, Eye, Layers, History, Layout, FolderOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -25,7 +25,10 @@ import ContactsSection from "@/components/contacts-section";
 import PDFPreviewDemo from "@/components/pdf-preview-demo";
 import { TemplateManager } from "@/components/template-manager";
 import { CallSheetHistory } from "@/components/call-sheet-history";
-import type { CallSheet } from "@shared/schema";
+import { ProjectsManager } from "@/components/projects-manager";
+import { ProjectCallSheets } from "@/components/project-call-sheets";
+import { useProjectCallSheets } from "@/hooks/use-project-call-sheets";
+import type { CallSheet, Project } from "@shared/schema";
 
 export default function CallSheetGenerator() {
   const { toast } = useToast();
@@ -36,6 +39,8 @@ export default function CallSheetGenerator() {
   const [templateName, setTemplateName] = useState("");
   const [templateDescription, setTemplateDescription] = useState("");
   const [templateCategory, setTemplateCategory] = useState("produção");
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [currentProjectId, setCurrentProjectId] = useState<string | undefined>(undefined);
   
   const createCallSheet = useCreateCallSheet();
   const createTemplateMutation = useCreateTemplate();
@@ -61,19 +66,38 @@ export default function CallSheetGenerator() {
     addCastCallTime,
     updateCastCallTime,
     removeCastCallTime,
+    addAttachment,
+    updateAttachment,
+    removeAttachment,
     saveCallSheet,
     clearCallSheet,
     replaceCallSheet,
   } = useCallSheet();
 
+  const { saveCallSheet: saveToProject } = useProjectCallSheets(currentProjectId);
+
   const handleSave = async () => {
     try {
       const callSheetData = {
         ...callSheet,
+        projectId: currentProjectId,
         createdAt: callSheet.createdAt || new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       };
       
+      // If we have a project, save to project
+      if (currentProjectId && saveToProject) {
+        const savedCallSheet = saveToProject(callSheetData);
+        if (savedCallSheet) {
+          toast({
+            title: "OD salva no projeto",
+            description: "Sua ordem do dia foi salva no projeto!",
+          });
+          return;
+        }
+      }
+      
+      // Try database save
       await createCallSheet.mutateAsync(callSheetData);
       
       // Also save locally as backup
@@ -103,11 +127,67 @@ export default function CallSheetGenerator() {
 
   const handleLoadFromHistory = (selectedCallSheet: CallSheet) => {
     replaceCallSheet(selectedCallSheet);
+    setCurrentProjectId(selectedCallSheet.projectId);
     setActiveTab("form");
     toast({
       title: "OD carregada",
       description: "A ordem do dia foi carregada com sucesso!",
     });
+  };
+
+  const handleSelectProject = (project: Project) => {
+    setSelectedProject(project);
+  };
+
+  const handleBackToProjects = () => {
+    setSelectedProject(null);
+  };
+
+  const handleNewCallSheetFromProject = (projectId: string) => {
+    setCurrentProjectId(projectId);
+    setActiveTab("form");
+    // Clear current call sheet to start fresh
+    clearCallSheet();
+    toast({
+      title: "Nova OD iniciada",
+      description: "Começe a criar uma nova ordem do dia para este projeto.",
+    });
+  };
+
+  const handleEditCallSheetFromProject = (callSheet: CallSheet) => {
+    replaceCallSheet(callSheet);
+    setCurrentProjectId(callSheet.projectId);
+    setActiveTab("form");
+    toast({
+      title: "OD carregada",
+      description: "A ordem do dia foi carregada para edição.",
+    });
+  };
+
+  const handleSaveAsDraft = () => {
+    if (currentProjectId && saveToProject) {
+      const draftCallSheet = {
+        ...callSheet,
+        projectId: currentProjectId,
+        status: 'rascunho' as const,
+        createdAt: callSheet.createdAt || new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+      
+      const saved = saveToProject(draftCallSheet);
+      if (saved) {
+        toast({
+          title: "Rascunho salvo",
+          description: "Sua ordem do dia foi salva como rascunho no projeto.",
+        });
+      }
+    } else {
+      toast({
+        title: "Selecione um projeto",
+        description: "Você precisa estar em um projeto para salvar rascunhos.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleExportPDF = () => {
@@ -214,10 +294,14 @@ export default function CallSheetGenerator() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-8">
+          <TabsList className="grid w-full grid-cols-4 mb-8">
             <TabsTrigger value="form" className="flex items-center gap-2">
               <FileText className="w-4 h-4" />
               Nova OD
+            </TabsTrigger>
+            <TabsTrigger value="projects" className="flex items-center gap-2">
+              <FolderOpen className="w-4 h-4" />
+              Projetos
             </TabsTrigger>
             <TabsTrigger value="templates" className="flex items-center gap-2">
               <Layout className="w-4 h-4" />
@@ -230,6 +314,37 @@ export default function CallSheetGenerator() {
           </TabsList>
 
           <TabsContent value="form" className="space-y-8">
+            {currentProjectId && (
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <FolderOpen className="w-5 h-5 text-blue-600" />
+                    <span className="font-medium text-blue-900">
+                      Criando OD para projeto específico
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Button
+                      onClick={handleSaveAsDraft}
+                      variant="outline"
+                      size="sm"
+                      className="text-blue-700 border-blue-300 hover:bg-blue-100"
+                    >
+                      <StickyNote className="w-4 h-4 mr-1" />
+                      Salvar Rascunho
+                    </Button>
+                    <Button
+                      onClick={() => setCurrentProjectId(undefined)}
+                      variant="ghost"
+                      size="sm"
+                      className="text-blue-700"
+                    >
+                      Remover do Projeto
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )}
             <ProductionInfo
               productionTitle={callSheet.productionTitle}
               shootingDate={callSheet.shootingDate}
@@ -242,7 +357,11 @@ export default function CallSheetGenerator() {
         <ScriptSection
           scriptUrl={callSheet.scriptUrl || ''}
           scriptName={callSheet.scriptName || ''}
+          attachments={callSheet.attachments || []}
           onUpdateField={updateField}
+          onAddAttachment={addAttachment}
+          onUpdateAttachment={updateAttachment}
+          onRemoveAttachment={removeAttachment}
         />
 
         <LocationsSection
@@ -383,6 +502,19 @@ export default function CallSheetGenerator() {
             Gerar PDF
           </Button>
         </section>
+          </TabsContent>
+
+          <TabsContent value="projects">
+            {selectedProject ? (
+              <ProjectCallSheets 
+                project={selectedProject}
+                onBack={handleBackToProjects}
+                onNewCallSheet={handleNewCallSheetFromProject}
+                onEditCallSheet={handleEditCallSheetFromProject}
+              />
+            ) : (
+              <ProjectsManager onSelectProject={handleSelectProject} />
+            )}
           </TabsContent>
 
           <TabsContent value="templates">
