@@ -1,11 +1,14 @@
 import { nanoid } from "nanoid";
-import { 
-  callSheets, 
+import {
+  callSheets,
   templates,
-  type SelectCallSheet, 
+  projects,
+  type SelectCallSheet,
   type InsertCallSheet,
   type SelectTemplate,
-  type InsertTemplate
+  type InsertTemplate,
+  type SelectProject,
+  type InsertProject
 } from "@shared/schema";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
@@ -17,7 +20,7 @@ export interface IStorage {
   updateCallSheet(id: string, updates: Partial<InsertCallSheet>): Promise<SelectCallSheet | undefined>;
   deleteCallSheet(id: string): Promise<boolean>;
   listCallSheets(): Promise<SelectCallSheet[]>;
-  
+
   // Template operations
   getTemplate(id: string): Promise<SelectTemplate | undefined>;
   createTemplate(template: InsertTemplate): Promise<SelectTemplate>;
@@ -26,11 +29,19 @@ export interface IStorage {
   listTemplates(): Promise<SelectTemplate[]>;
   getTemplatesByCategory(category: string): Promise<SelectTemplate[]>;
   getDefaultTemplates(): Promise<SelectTemplate[]>;
+
+  // Project operations
+  getProject(id: string): Promise<SelectProject | undefined>;
+  createProject(project: InsertProject): Promise<SelectProject>;
+  updateProject(id: string, updates: Partial<InsertProject>): Promise<SelectProject | undefined>;
+  deleteProject(id: string): Promise<boolean>;
+  listProjects(): Promise<SelectProject[]>;
 }
 
 class MemoryStorage implements IStorage {
   private callSheets: SelectCallSheet[] = [];
   private templates: SelectTemplate[] = [];
+  private projects: SelectProject[] = [];
 
   async getCallSheet(id: string): Promise<SelectCallSheet | undefined> {
     return this.callSheets.find(cs => cs.id === id);
@@ -129,6 +140,52 @@ class MemoryStorage implements IStorage {
 
   async getDefaultTemplates(): Promise<SelectTemplate[]> {
     return this.templates.filter(t => t.isDefault);
+  }
+
+  // Project operations
+  async getProject(id: string): Promise<SelectProject | undefined> {
+    return this.projects.find(p => p.id === id);
+  }
+
+  async createProject(project: InsertProject): Promise<SelectProject> {
+    const now = new Date();
+    const newProject: SelectProject = {
+      ...project,
+      id: project.id || nanoid(),
+      description: project.description || '',
+      client: project.client || '',
+      status: project.status || 'ativo',
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    this.projects.push(newProject);
+    return newProject;
+  }
+
+  async updateProject(id: string, updates: Partial<InsertProject>): Promise<SelectProject | undefined> {
+    const index = this.projects.findIndex(p => p.id === id);
+    if (index === -1) return undefined;
+
+    this.projects[index] = {
+      ...this.projects[index],
+      ...updates,
+      updatedAt: new Date(),
+    };
+
+    return this.projects[index];
+  }
+
+  async deleteProject(id: string): Promise<boolean> {
+    const index = this.projects.findIndex(p => p.id === id);
+    if (index === -1) return false;
+
+    this.projects.splice(index, 1);
+    return true;
+  }
+
+  async listProjects(): Promise<SelectProject[]> {
+    return [...this.projects];
   }
 }
 
@@ -322,6 +379,76 @@ export class DatabaseStorage implements IStorage {
     } catch (error) {
       console.warn('Database error, using memory storage:', error.message);
       return this.fallbackStorage.getDefaultTemplates();
+    }
+  }
+
+  // Project operations
+  async getProject(id: string): Promise<SelectProject | undefined> {
+    try {
+      const [project] = await db.select().from(projects).where(eq(projects.id, id));
+      this.isDbConnected = true;
+      return project || undefined;
+    } catch (error) {
+      console.warn('Database error, using memory storage:', error.message);
+      return this.fallbackStorage.getProject(id);
+    }
+  }
+
+  async createProject(project: InsertProject): Promise<SelectProject> {
+    try {
+      const now = new Date();
+      const newProject = {
+        ...project,
+        id: project.id || nanoid(),
+        description: project.description || '',
+        client: project.client || '',
+        status: project.status || 'ativo',
+        createdAt: now,
+        updatedAt: now,
+      };
+
+      const [created] = await db.insert(projects).values([newProject]).returning();
+      this.isDbConnected = true;
+      return created;
+    } catch (error) {
+      console.warn('Database error, using memory storage:', error.message);
+      return this.fallbackStorage.createProject(project);
+    }
+  }
+
+  async updateProject(id: string, updates: Partial<InsertProject>): Promise<SelectProject | undefined> {
+    try {
+      const now = new Date();
+      const updateData: any = { ...updates, updatedAt: now };
+
+      const [updated] = await db.update(projects).set(updateData).where(eq(projects.id, id)).returning();
+      this.isDbConnected = true;
+      return updated || undefined;
+    } catch (error) {
+      console.warn('Database error, using memory storage:', error.message);
+      return this.fallbackStorage.updateProject(id, updates);
+    }
+  }
+
+  async deleteProject(id: string): Promise<boolean> {
+    try {
+      const result = await db.delete(projects).where(eq(projects.id, id));
+      this.isDbConnected = true;
+      return result.length > 0;
+    } catch (error) {
+      console.warn('Database error, using memory storage:', error.message);
+      return this.fallbackStorage.deleteProject(id);
+    }
+  }
+
+  async listProjects(): Promise<SelectProject[]> {
+    try {
+      const result = await db.select().from(projects);
+      this.isDbConnected = true;
+      return result;
+    } catch (error) {
+      console.warn('Database error, using memory storage:', error.message);
+      return this.fallbackStorage.listProjects();
     }
   }
 }
