@@ -108,28 +108,59 @@ export default function CallTimesSection({
             ) : (
               <div className="space-y-3">
                 {crewCallTimes.map((callTime) => (
-                  <div key={callTime.id} className="flex items-center space-x-3">
-                    <Input
-                      type="text"
-                      value={callTime.role}
-                      onChange={(e) => onUpdateCrew(callTime.id, { role: e.target.value })}
-                      placeholder="Nome/Função (ex: João - Diretor)"
-                      className="w-48 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brick-red focus:border-transparent text-sm"
-                    />
-                    <Input
-                      type="time"
-                      value={callTime.time}
-                      onChange={(e) => onUpdateCrew(callTime.id, { time: e.target.value })}
-                      className="w-24 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brick-red focus:border-transparent text-sm"
-                    />
-                    <Button
-                      onClick={() => onRemoveCrew(callTime.id)}
-                      variant="ghost"
-                      size="sm"
-                      className="text-gray-400 hover:text-red-500 transition-colors"
-                    >
-                      <Minus className="w-4 h-4" />
-                    </Button>
+                  <div key={callTime.id} className="space-y-2 p-3 bg-gray-50 rounded-lg">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-gray-700">Membro da Equipe</span>
+                      <Button
+                        onClick={() => onRemoveCrew(callTime.id)}
+                        variant="ghost"
+                        size="sm"
+                        className="text-gray-400 hover:text-red-500 transition-colors"
+                      >
+                        <Minus className="w-4 h-4" />
+                      </Button>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                      <div>
+                        <Label className="text-xs text-gray-600 mb-1 block">Nome</Label>
+                        <Input
+                          type="text"
+                          value={callTime.name}
+                          onChange={(e) => onUpdateCrew(callTime.id, { name: e.target.value })}
+                          placeholder="Ex: João Silva"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brick-red focus:border-transparent text-sm"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-xs text-gray-600 mb-1 block">Cargo</Label>
+                        <Input
+                          type="text"
+                          value={callTime.role}
+                          onChange={(e) => onUpdateCrew(callTime.id, { role: e.target.value })}
+                          placeholder="Ex: Diretor, Cinegrafista"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brick-red focus:border-transparent text-sm"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-xs text-gray-600 mb-1 block">Telefone</Label>
+                        <Input
+                          type="tel"
+                          value={callTime.phone || ''}
+                          onChange={(e) => onUpdateCrew(callTime.id, { phone: e.target.value })}
+                          placeholder="(11) 99999-9999"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brick-red focus:border-transparent text-sm"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-xs text-gray-600 mb-1 block">Horário</Label>
+                        <Input
+                          type="time"
+                          value={callTime.time}
+                          onChange={(e) => onUpdateCrew(callTime.id, { time: e.target.value })}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brick-red focus:border-transparent text-sm"
+                        />
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
