@@ -121,4 +121,13 @@
     border: 1px solid #e5e5e5;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   }
+  
+  /* Force high z-index for dialogs */
+  [data-radix-dialog-overlay] {
+    z-index: 9999 !important;
+  }
+  
+  [data-radix-dialog-content] {
+    z-index: 10000 !important;
+  }
 }
