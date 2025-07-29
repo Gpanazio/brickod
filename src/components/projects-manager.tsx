@@ -214,7 +214,10 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
         <Dialog open={showNewProjectDialog || !!editingProject} onOpenChange={(open) => {
           if (!open) {
             setShowNewProjectDialog(false);
-            resetForm();
+            setEditingProject(null);
+            setNewProjectName("");
+            setNewProjectDescription("");
+            setNewProjectClient("");
           }
         }}>
           <DialogTrigger asChild>
@@ -226,11 +229,14 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
               Novo Projeto
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-md">
+          <DialogContent className="sm:max-w-md" aria-describedby="project-dialog-description">
             <DialogHeader>
               <DialogTitle>
                 {editingProject ? 'Editar Projeto' : 'Criar Novo Projeto'}
               </DialogTitle>
+              <p id="project-dialog-description" className="text-sm text-gray-600">
+                {editingProject ? 'Edite as informações do projeto abaixo.' : 'Preencha os dados para criar um novo projeto para organizar suas ordens do dia.'}
+              </p>
             </DialogHeader>
             <div className="space-y-4">
               <div>
@@ -278,7 +284,10 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
                   variant="outline" 
                   onClick={() => {
                     setShowNewProjectDialog(false);
-                    resetForm();
+                    setEditingProject(null);
+                    setNewProjectName("");
+                    setNewProjectDescription("");
+                    setNewProjectClient("");
                   }}
                 >
                   Cancelar
