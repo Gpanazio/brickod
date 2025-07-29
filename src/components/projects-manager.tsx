@@ -4,12 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog-fixed";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useProjects, useProjectCallSheets } from "@/hooks/use-projects-final";
+import { SyncIndicator } from "@/components/sync-indicator";
 import type { SelectProject } from "@shared/schema";
 
 interface ProjectsManagerProps {
@@ -209,6 +210,13 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
         <div>
           <h2 className="text-2xl font-bold text-brick-dark">Projetos</h2>
           <p className="text-gray-600">Organize suas ordens do dia por projeto</p>
+          <div className="mt-2">
+            <SyncIndicator 
+              lastSync={lastSync} 
+              onForceSync={forceSync}
+              isLoading={false}
+            />
+          </div>
         </div>
         <Dialog open={showNewProjectDialog || !!editingProject} onOpenChange={(open) => {
           if (!open) {
@@ -228,7 +236,7 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
               Novo Projeto
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-md" aria-describedby="project-dialog-description">
+          <DialogContent className="sm:max-w-md dialog-create-project" aria-describedby="project-dialog-description">
             <DialogHeader>
               <DialogTitle>
                 {editingProject ? 'Editar Projeto' : 'Criar Novo Projeto'}

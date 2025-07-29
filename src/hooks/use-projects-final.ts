@@ -22,45 +22,71 @@ export function useProjects() {
   // Função de sincronização inteligente
   const syncData = async () => {
     try {
-      // Buscar dados do servidor
+      // 1. Buscar dados do servidor
       const serverProjects = await apiRequest("/api/projects");
+      console.log("Server projects:", serverProjects);
       
-      // Buscar dados locais
+      // 2. Buscar dados locais
       const localData = localStorage.getItem(STORAGE_KEY);
       const localProjects: SelectProject[] = localData ? JSON.parse(localData) : [];
+      console.log("Local projects:", localProjects);
       
-      // Merge inteligente baseado em timestamp
+      // 3. Primeiro, enviar projetos locais que não existem no servidor
+      const serverIds = new Set(serverProjects.map((p: SelectProject) => p.id));
+      const localOnlyProjects = localProjects.filter(p => !serverIds.has(p.id));
+      
+      for (const localProject of localOnlyProjects) {
+        try {
+          console.log("Uploading local project to server:", localProject.name);
+          await apiRequest("/api/projects", {
+            method: "POST",
+            body: JSON.stringify(localProject),
+            headers: { "Content-Type": "application/json" },
+          });
+        } catch (error) {
+          console.warn("Failed to upload local project:", error);
+        }
+      }
+      
+      // 4. Buscar dados atualizados do servidor após upload
+      const updatedServerProjects = await apiRequest("/api/projects");
+      
+      // 5. Merge inteligente baseado em timestamp
       const merged = new Map<string, SelectProject>();
       
-      // Adicionar projetos do servidor
-      serverProjects.forEach((project: SelectProject) => {
+      // Adicionar projetos do servidor (sempre prioridade)
+      updatedServerProjects.forEach((project: SelectProject) => {
         merged.set(project.id, project);
       });
       
-      // Verificar projetos locais e manter os mais recentes
+      // Verificar projetos locais mais recentes
       localProjects.forEach(localProject => {
         const serverProject = merged.get(localProject.id);
         
-        if (!serverProject) {
-          // Existe apenas localmente
-          merged.set(localProject.id, localProject);
-        } else {
-          // Comparar timestamps
+        if (serverProject) {
+          // Comparar timestamps e manter o mais recente
           const localDate = new Date(localProject.updatedAt);
           const serverDate = new Date(serverProject.updatedAt);
           
           if (localDate > serverDate) {
             merged.set(localProject.id, localProject);
+            // Atualizar no servidor também
+            apiRequest(`/api/projects/${localProject.id}`, {
+              method: "PUT",
+              body: JSON.stringify(localProject),
+              headers: { "Content-Type": "application/json" },
+            }).catch(err => console.warn("Failed to update server:", err));
           }
         }
       });
       
       const finalProjects = Array.from(merged.values());
       
-      // Salvar resultado no localStorage
+      // 6. Salvar resultado sincronizado no localStorage
       localStorage.setItem(STORAGE_KEY, JSON.stringify(finalProjects));
       
       setLastSync(new Date());
+      console.log("Sync completed, final projects:", finalProjects);
       return finalProjects;
       
     } catch (error) {
@@ -70,12 +96,14 @@ export function useProjects() {
     }
   };
 
-  // Query principal
+  // Query principal com sync mais agressivo
   const query = useQuery<SelectProject[]>({
     queryKey: ["/api/projects"],
     queryFn: syncData,
-    staleTime: 10000,
-    refetchInterval: 30000,
+    staleTime: 5000, // 5 segundos
+    refetchInterval: 15000, // 15 segundos (mais frequente)
+    refetchOnWindowFocus: true, // Sync quando volta para a aba
+    refetchOnMount: true, // Sempre sync ao montar
   });
 
   // Mutations
@@ -91,24 +119,35 @@ export function useProjects() {
         updatedAt: new Date(),
       };
 
-      // Salvar localmente primeiro
-      const localData = localStorage.getItem(STORAGE_KEY);
-      const localProjects: SelectProject[] = localData ? JSON.parse(localData) : [];
-      const updated = [...localProjects, newProject];
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-
-      // Tentar salvar no servidor
+      // 1. Tentar salvar no servidor PRIMEIRO
       try {
-        await apiRequest("/api/projects", {
+        console.log("Creating project on server:", newProject);
+        const serverProject = await apiRequest("/api/projects", {
           method: "POST",
           body: JSON.stringify(newProject),
           headers: { "Content-Type": "application/json" },
         });
+        
+        // 2. Salvar localmente após sucesso no servidor
+        const localData = localStorage.getItem(STORAGE_KEY);
+        const localProjects: SelectProject[] = localData ? JSON.parse(localData) : [];
+        const updated = [...localProjects, serverProject];
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+        
+        console.log("Project created successfully on server and local");
+        return serverProject;
+        
       } catch (error) {
-        console.warn("Server save failed, will sync later:", error);
+        console.warn("Server save failed, saving locally:", error);
+        
+        // 3. Fallback: salvar apenas localmente
+        const localData = localStorage.getItem(STORAGE_KEY);
+        const localProjects: SelectProject[] = localData ? JSON.parse(localData) : [];
+        const updated = [...localProjects, newProject];
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+        
+        return newProject;
       }
-
-      return newProject;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/projects"] });

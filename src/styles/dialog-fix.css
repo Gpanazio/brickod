@@ -1,0 +1,60 @@
+/* Correções específicas para modais no Netlify */
+[data-radix-popper-content-wrapper] {
+  z-index: 10000 !important;
+}
+
+[data-state="open"][data-radix-dialog-overlay] {
+  z-index: 9998 !important;
+  position: fixed !important;
+  inset: 0 !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-state="open"][data-radix-dialog-content] {
+  z-index: 9999 !important;
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  max-width: 90vw !important;
+  max-height: 90vh !important;
+  background: white !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Correção específica para o modal de criação de projeto */
+.dialog-create-project {
+  z-index: 10000 !important;
+}
+
+.dialog-create-project [data-radix-dialog-overlay] {
+  z-index: 9998 !important;
+  background: rgba(0, 0, 0, 0.6) !important;
+}
+
+.dialog-create-project [data-radix-dialog-content] {
+  z-index: 9999 !important;
+  background: white !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Garantir que inputs funcionem corretamente */
+.dialog-create-project input,
+.dialog-create-project textarea {
+  position: relative !important;
+  z-index: 10000 !important;
+  background: white !important;
+}
+
+/* Correção para botões */
+.dialog-create-project button {
+  position: relative !important;
+  z-index: 10000 !important;
+}
+
+/* Prevent body scroll when modal is open */
+body[data-scroll-locked] {
+  overflow: hidden !important;
+}
