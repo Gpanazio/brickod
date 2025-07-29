@@ -13,15 +13,6 @@ export default defineConfig({
   build: {
     outDir: "dist",
     sourcemap: false,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom'],
-          'ui-vendor': ['@radix-ui/react-dialog', '@radix-ui/react-tabs', '@radix-ui/react-dropdown-menu'],
-          'utils-vendor': ['lucide-react', 'date-fns', 'nanoid']
-        }
-      }
-    }
   },
   server: {
     port: 3000,
