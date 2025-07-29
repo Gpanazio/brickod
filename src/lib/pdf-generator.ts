@@ -127,7 +127,8 @@ export function generateCallSheetPDF(callSheet: CallSheet) {
   if (callSheet.crewCallTimes.length > 0) {
     yPosition = createSectionBlock("HORÁRIOS DA EQUIPE", yPosition, 8);
     callSheet.crewCallTimes.forEach((callTime) => {
-      yPosition = addContentLine(`${callTime.time}:`, `${callTime.name} - ${callTime.role}`, yPosition);
+      const phoneText = callTime.phone ? ` - Tel: ${callTime.phone}` : '';
+      yPosition = addContentLine(`${callTime.time}:`, `${callTime.name} - ${callTime.role}${phoneText}`, yPosition);
     });
     yPosition += blockSpacing;
   }
@@ -146,6 +147,15 @@ export function generateCallSheetPDF(callSheet: CallSheet) {
     yPosition = createSectionBlock("CONTATOS", yPosition, 8);
     callSheet.contacts.forEach((contact) => {
       yPosition = addContentLine(`${contact.name} (${contact.role}):`, contact.phone, yPosition);
+    });
+    yPosition += blockSpacing;
+  }
+  
+  // Attachments Block
+  if (callSheet.attachments && callSheet.attachments.length > 0) {
+    yPosition = createSectionBlock("ARQUIVOS ANEXOS", yPosition, 8);
+    callSheet.attachments.forEach((attachment) => {
+      yPosition = addContentLine(`${attachment.name} (${attachment.type}):`, attachment.url, yPosition);
     });
     yPosition += blockSpacing;
   }

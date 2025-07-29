@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import type { CallSheet } from "@shared/schema";
@@ -88,27 +87,17 @@ function saveCallSheetLocally(callSheet: CallSheet): CallSheet {
 }
 
 export function useDeleteCallSheet() {
-  const [isPending, setIsPending] = useState(false);
-
-  const mutateAsync = async (id: string): Promise<void> => {
-    setIsPending(true);
-    
-    try {
-      const stored = localStorage.getItem('brick_call_sheets_history');
-      const history = stored ? JSON.parse(stored) : [];
-      
-      const filteredHistory = history.filter((cs: CallSheet) => cs.id !== id);
-      localStorage.setItem('brick_call_sheets_history', JSON.stringify(filteredHistory));
-    } catch (error) {
-      console.error('Erro ao deletar call sheet:', error);
-      throw new Error('Falha ao deletar call sheet');
-    } finally {
-      setIsPending(false);
-    }
-  };
-
-  return {
-    mutateAsync,
-    isPending,
-  };
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const response = await fetch(`/api/call-sheets/${id}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) throw new Error('Failed to delete call sheet');
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/call-sheets'] });
+    },
+  });
 }

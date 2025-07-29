@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { CallSheet, Location, Scene, Contact, CallTime } from "@shared/schema";
+import { CallSheet, Location, Scene, Contact, CallTime, Attachment } from "@shared/schema";
 import { nanoid } from "nanoid";
 
 const STORAGE_KEY = "brick-call-sheet";
@@ -14,6 +14,7 @@ export function useCallSheet() {
     client: "",
     scriptUrl: "",
     scriptName: "",
+    attachments: [],
     startTime: "",
     lunchBreakTime: "",
     endTime: "",
@@ -209,6 +210,35 @@ export function useCallSheet() {
     }));
   };
 
+  const addAttachment = (name: string, url: string, type: string) => {
+    const newAttachment: Attachment = {
+      id: nanoid(),
+      name,
+      url,
+      type,
+    };
+    setCallSheet(prev => ({
+      ...prev,
+      attachments: [...prev.attachments, newAttachment],
+    }));
+  };
+
+  const updateAttachment = (id: string, updates: Partial<Attachment>) => {
+    setCallSheet(prev => ({
+      ...prev,
+      attachments: prev.attachments.map(attachment => 
+        attachment.id === id ? { ...attachment, ...updates } : attachment
+      ),
+    }));
+  };
+
+  const removeAttachment = (id: string) => {
+    setCallSheet(prev => ({
+      ...prev,
+      attachments: prev.attachments.filter(attachment => attachment.id !== id),
+    }));
+  };
+
   const saveToStorage = () => {
     try {
       const dataToSave = {
@@ -244,8 +274,15 @@ export function useCallSheet() {
       id: nanoid(),
       productionTitle: "",
       shootingDate: "",
+      producer: "",
+      director: "",
+      client: "",
       scriptUrl: "",
       scriptName: "",
+      attachments: [],
+      startTime: "",
+      lunchBreakTime: "",
+      endTime: "",
       locations: [],
       scenes: [],
       contacts: [],
@@ -278,6 +315,9 @@ export function useCallSheet() {
     addCastCallTime,
     updateCastCallTime,
     removeCastCallTime,
+    addAttachment,
+    updateAttachment,
+    removeAttachment,
     saveCallSheet: saveToStorage,
     clearCallSheet: clearData,
     replaceCallSheet: (newCallSheet: CallSheet) => {
