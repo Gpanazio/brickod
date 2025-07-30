@@ -68,6 +68,21 @@ DATABASE_URL=postgresql://postgres.XXX:sua-senha@aws-0-region.pooler.supabase.co
 - `@` → `%40`
 - `#` → `%23`
 
+#### Teste a conexão (opcional)
+Antes de prosseguir, confirme que a `DATABASE_URL` está correta e que a porta está acessível. Você pode utilizar o `netcat`:
+
+```bash
+nc -zv aws-0-us-east-2.pooler.supabase.com 6543
+```
+
+Se preferir, execute um teste rápido com `psql` (caso esteja instalado):
+
+```bash
+psql $DATABASE_URL -c '\\q'
+```
+
+Se a porta estiver bloqueada ou a string estiver incorreta, a aplicação entrará em modo de armazenamento em memória.
+
 #### Opção B: Armazenamento em Memória
 A aplicação funciona automaticamente com fallback para armazenamento em memória se o banco não estiver disponível.
 
