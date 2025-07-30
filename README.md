@@ -38,12 +38,19 @@ git clone https://github.com/seu-usuario/gerador-ordem-do-dia.git
 cd gerador-ordem-do-dia
 ```
 
-### 2. Instale as dependências
+### 2. Copie o arquivo de variáveis de ambiente
+```bash
+cp .env.example .env
+```
+Preencha `DATABASE_URL`, `PORT` (opcional) e, se utilizar o Supabase no frontend,
+`VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`.
+
+### 3. Instale as dependências
 ```bash
 npm install
 ```
 
-### 3. Configure o banco de dados
+### 4. Configure o banco de dados
 
 #### Opção A: Supabase (Recomendado)
 1. Crie um projeto no [Supabase](https://supabase.com)
@@ -64,17 +71,6 @@ DATABASE_URL=postgresql://postgres.XXX:sua-senha@aws-0-region.pooler.supabase.co
 #### Opção B: Armazenamento em Memória
 A aplicação funciona automaticamente com fallback para armazenamento em memória se o banco não estiver disponível.
 
-### 4. Configure o Supabase para o Frontend
-1. No painel do seu projeto Supabase, acesse **Settings > API**
-2. Copie o **Project URL** e a chave **anon public**
-3. Duplique o arquivo `.env.example` para `.env` e preencha:
-
-```bash
-VITE_SUPABASE_URL=https://seu-projeto.supabase.co
-VITE_SUPABASE_ANON_KEY=sua-chave-anon
-```
-
-Essas variáveis permitem que o frontend se conecte ao Supabase.
 
 ### 5. Execute as migrações
 ```bash
@@ -127,6 +123,13 @@ A aplicação segue a identidade visual da Brick Produtora:
 - Sanitização de inputs
 - Conexões seguras com banco de dados
 - Variáveis de ambiente para credenciais
+
+## 🔧 Solução de Problemas
+
+Se a aplicação não conseguir se conectar ao banco de dados durante o
+início, ela exibirá uma mensagem de erro e encerrará o processo. Verifique
+se a variável `DATABASE_URL` está correta e se o banco está acessível
+antes de reiniciar o servidor.
 
 ## 🤝 Contribuição
 
