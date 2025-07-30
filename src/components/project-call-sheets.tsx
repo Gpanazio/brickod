@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { useProjectCallSheets } from "@/hooks/use-projects-final";
+import { useProjectCallSheets } from "@/hooks/use-projects";
 import { generateCallSheetPDF } from "@/lib/pdf-generator";
 import type { SelectProject, SelectCallSheet } from "@shared/schema";
 
