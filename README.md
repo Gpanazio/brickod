@@ -38,12 +38,19 @@ git clone https://github.com/seu-usuario/gerador-ordem-do-dia.git
 cd gerador-ordem-do-dia
 ```
 
-### 2. Instale as dependências
+### 2. Copie o arquivo de variáveis de ambiente
+```bash
+cp .env.example .env
+```
+Preencha `DATABASE_URL`, `PORT` (opcional) e, se utilizar o Supabase no frontend,
+`VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`.
+
+### 3. Instale as dependências
 ```bash
 npm install
 ```
 
-### 3. Configure o banco de dados
+### 4. Configure o banco de dados
 
 #### Opção A: Supabase (Recomendado)
 1. Crie um projeto no [Supabase](https://supabase.com)
@@ -64,12 +71,12 @@ DATABASE_URL=postgresql://postgres.XXX:sua-senha@aws-0-region.pooler.supabase.co
 #### Opção B: Armazenamento em Memória
 A aplicação funciona automaticamente com fallback para armazenamento em memória se o banco não estiver disponível.
 
-### 4. Execute as migrações
+### 5. Execute as migrações
 ```bash
 npm run db:push
 ```
 
-### 5. Inicie a aplicação
+### 6. Inicie a aplicação
 ```bash
 npm run dev
 ```
