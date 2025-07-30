@@ -64,12 +64,24 @@ DATABASE_URL=postgresql://postgres.XXX:sua-senha@aws-0-region.pooler.supabase.co
 #### Opção B: Armazenamento em Memória
 A aplicação funciona automaticamente com fallback para armazenamento em memória se o banco não estiver disponível.
 
-### 4. Execute as migrações
+### 4. Configure o Supabase para o Frontend
+1. No painel do seu projeto Supabase, acesse **Settings > API**
+2. Copie o **Project URL** e a chave **anon public**
+3. Duplique o arquivo `.env.example` para `.env` e preencha:
+
+```bash
+VITE_SUPABASE_URL=https://seu-projeto.supabase.co
+VITE_SUPABASE_ANON_KEY=sua-chave-anon
+```
+
+Essas variáveis permitem que o frontend se conecte ao Supabase.
+
+### 5. Execute as migrações
 ```bash
 npm run db:push
 ```
 
-### 5. Inicie a aplicação
+### 6. Inicie a aplicação
 ```bash
 npm run dev
 ```
