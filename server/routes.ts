@@ -7,7 +7,11 @@ import { ZodError } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Test database connection on startup
-  await testConnection();
+  const connected = await testConnection();
+  if (!connected) {
+    console.error('❌ Unable to connect to the database. Exiting...');
+    process.exit(1);
+  }
   // Call Sheet routes
   app.get("/api/call-sheets", async (req, res) => {
     try {
