@@ -116,6 +116,13 @@ A aplicação segue a identidade visual da Brick Produtora:
 - Conexões seguras com banco de dados
 - Variáveis de ambiente para credenciais
 
+## 🔧 Solução de Problemas
+
+Se a aplicação não conseguir se conectar ao banco de dados durante o
+início, ela exibirá uma mensagem de erro e encerrará o processo. Verifique
+se a variável `DATABASE_URL` está correta e se o banco está acessível
+antes de reiniciar o servidor.
+
 ## 🤝 Contribuição
 
 1. Fork o projeto
