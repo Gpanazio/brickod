@@ -1,5 +1,6 @@
 import { nanoid } from "nanoid";
 import type { InsertTemplate } from "@shared/schema";
+import { apiRequest } from "@/lib/api";
 
 export const defaultTemplates: InsertTemplate[] = [
   {
@@ -251,7 +252,7 @@ export async function insertDefaultTemplates() {
 
   try {
     for (const template of templates) {
-      await fetch('/api/templates', {
+      await apiRequest('/api/templates', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(template),

@@ -44,6 +44,8 @@ cp .env.example .env
 ```
 Preencha `DATABASE_URL`, `PORT` (opcional) e, se utilizar o Supabase no frontend,
 `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`.
+Defina também `VITE_API_BASE_URL` (ou `API_BASE_URL` no servidor) com a URL
+base da API caso execute código fora do navegador.
 
 ### 3. Instale as dependências
 ```bash
@@ -145,6 +147,8 @@ Se a aplicação não conseguir se conectar ao banco de dados durante o
 início, ela exibirá uma mensagem de erro e encerrará o processo. Verifique
 se a variável `DATABASE_URL` está correta e se o banco está acessível
 antes de reiniciar o servidor.
+Ao executar scripts Node ou testes que utilizem `fetch`, defina
+`API_BASE_URL` ou `VITE_API_BASE_URL` para evitar erros de URL relativa.
 
 ## 🤝 Contribuição
 

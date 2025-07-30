@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { queryClient } from "@/lib/queryClient";
+import { apiRequest } from "@/lib/api";
 import type { SelectTemplate, InsertTemplate } from "@shared/schema";
 
 export function useTemplates(category?: string) {
@@ -8,12 +8,8 @@ export function useTemplates(category?: string) {
     queryFn: async () => {
       try {
         const url = category ? `/api/templates?category=${category}` : '/api/templates';
-        const response = await fetch(url);
-        if (!response.ok) {
-          console.warn('Banco de dados indisponível, usando armazenamento local');
-          return getLocalTemplates(category);
-        }
-        return response.json() as Promise<SelectTemplate[]>;
+        const data = await apiRequest(url) as SelectTemplate[];
+        return data;
       } catch (error) {
         console.warn('Erro de conexão com banco, usando armazenamento local:', error);
         return getLocalTemplates(category);
@@ -42,9 +38,7 @@ export function useDefaultTemplates() {
   return useQuery({
     queryKey: ['/api/templates/defaults'],
     queryFn: async () => {
-      const response = await fetch('/api/templates/defaults');
-      if (!response.ok) throw new Error('Failed to fetch default templates');
-      return response.json() as Promise<SelectTemplate[]>;
+      return apiRequest('/api/templates/defaults') as Promise<SelectTemplate[]>;
     },
   });
 }
@@ -53,9 +47,7 @@ export function useTemplate(id: string) {
   return useQuery({
     queryKey: ['/api/templates', id],
     queryFn: async () => {
-      const response = await fetch(`/api/templates/${id}`);
-      if (!response.ok) throw new Error('Failed to fetch template');
-      return response.json() as Promise<SelectTemplate>;
+      return apiRequest(`/api/templates/${id}`) as Promise<SelectTemplate>;
     },
     enabled: !!id,
   });
@@ -67,16 +59,11 @@ export function useCreateTemplate() {
   return useMutation({
     mutationFn: async (template: InsertTemplate) => {
       try {
-        const response = await fetch('/api/templates', {
+        return await apiRequest('/api/templates', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(template),
-        });
-        if (!response.ok) {
-          // Fallback para armazenamento local
-          return saveTemplateLocally(template);
-        }
-        return response.json() as Promise<SelectTemplate>;
+        }) as SelectTemplate;
       } catch (error) {
         console.warn('Salvando template localmente devido a erro de conexão:', error);
         return saveTemplateLocally(template);
@@ -93,13 +80,11 @@ export function useUpdateTemplate(id: string) {
   
   return useMutation({
     mutationFn: async (updates: Partial<InsertTemplate>) => {
-      const response = await fetch(`/api/templates/${id}`, {
+      return apiRequest(`/api/templates/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updates),
-      });
-      if (!response.ok) throw new Error('Failed to update template');
-      return response.json() as Promise<SelectTemplate>;
+      }) as Promise<SelectTemplate>;
     },
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ['/api/templates'] });
@@ -137,13 +122,9 @@ export function useDeleteTemplate() {
   return useMutation({
     mutationFn: async (id: string) => {
       try {
-        const response = await fetch(`/api/templates/${id}`, {
+        await apiRequest(`/api/templates/${id}`, {
           method: 'DELETE',
         });
-        if (!response.ok) {
-          // Fallback para exclusão local
-          return deleteTemplateLocally(id);
-        }
       } catch (error) {
         console.warn('Deletando template localmente devido a erro de conexão:', error);
         return deleteTemplateLocally(id);

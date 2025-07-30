@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
+import { apiRequest } from "@/lib/api";
 import type { CallSheet } from "@shared/schema";
 
 export function useCallSheetHistory() {
@@ -8,14 +8,9 @@ export function useCallSheetHistory() {
     queryKey: ['/api/call-sheets'],
     queryFn: async () => {
       try {
-        const response = await fetch('/api/call-sheets');
-        if (!response.ok) {
-          console.warn('Banco de dados indisponível, usando histórico local');
-          return getLocalHistory();
-        }
-        const data = await response.json() as CallSheet[];
-        return data.sort((a, b) => 
-          new Date(b.updatedAt || b.createdAt || '').getTime() - 
+        const data = await apiRequest('/api/call-sheets') as CallSheet[];
+        return data.sort((a, b) =>
+          new Date(b.updatedAt || b.createdAt || '').getTime() -
           new Date(a.updatedAt || a.createdAt || '').getTime()
         );
       } catch (error) {
@@ -47,13 +42,11 @@ export function useCreateCallSheet() {
   return useMutation({
     mutationFn: async (callSheet: CallSheet) => {
       try {
-        const response = await fetch('/api/call-sheets', {
+        return await apiRequest('/api/call-sheets', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(callSheet),
-        });
-        if (!response.ok) throw new Error('Failed to create call sheet');
-        return response.json();
+        }) as CallSheet;
       } catch (error) {
         console.warn('Salvando ordem do dia localmente devido a erro de conexão:', error);
         return saveCallSheetLocally(callSheet);
@@ -92,10 +85,9 @@ export function useDeleteCallSheet() {
   
   return useMutation({
     mutationFn: async (id: string) => {
-      const response = await fetch(`/api/call-sheets/${id}`, {
+      await apiRequest(`/api/call-sheets/${id}`, {
         method: 'DELETE',
       });
-      if (!response.ok) throw new Error('Failed to delete call sheet');
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/call-sheets'] });
