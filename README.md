@@ -71,6 +71,7 @@ DATABASE_URL=postgresql://postgres.XXX:sua-senha@aws-0-region.pooler.supabase.co
 #### Opção B: Armazenamento em Memória
 A aplicação funciona automaticamente com fallback para armazenamento em memória se o banco não estiver disponível.
 
+
 ### 5. Execute as migrações
 ```bash
 npm run db:push
