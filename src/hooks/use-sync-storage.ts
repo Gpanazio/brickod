@@ -3,17 +3,10 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import type { SelectProject, InsertProject, SelectCallSheet, InsertCallSheet } from "@shared/schema";
 import { nanoid } from "nanoid";
+import { apiRequest } from "@/lib/api";
 
 const PROJECTS_STORAGE_KEY = "brick-projects";
 const CALLSHEETS_STORAGE_KEY = "brick-call-sheets";
-
-async function apiRequest(url: string, options?: RequestInit) {
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-  return response.json();
-}
 
 // Sistema de sincronização inteligente
 export function useSyncProjects() {
