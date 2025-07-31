@@ -4,43 +4,42 @@
 
 ```
 gerador-ordem-do-dia-brick/
-├── 📁 client/                    # Frontend React
-│   ├── 📁 public/
-│   │   └── brick-logo.svg       # Logo da Brick
-│   ├── 📁 src/
-│   │   ├── 📁 components/       # Componentes React
-│   │   │   ├── brick-header.tsx
-│   │   │   ├── brick-footer.tsx
-│   │   │   ├── production-info.tsx
-│   │   │   ├── call-times-section.tsx
-│   │   │   ├── locations-section.tsx
-│   │   │   ├── scenes-section.tsx
-│   │   │   ├── contacts-section.tsx
-│   │   │   ├── template-manager.tsx
-│   │   │   ├── call-sheet-history.tsx
-│   │   │   └── 📁 ui/           # Componentes shadcn/ui
-│   │   ├── 📁 hooks/            # Custom hooks
-│   │   │   ├── use-call-sheet.tsx
-│   │   │   ├── use-templates.tsx
-│   │   │   ├── use-call-sheet-history.tsx
-│   │   │   ├── use-projects.ts
-│   │   │   ├── use-project-call-sheets.tsx
-│   │   │   ├── use-sync-storage.ts
-│   │   │   ├── use-toast.ts
-│   │   │   └── use-mobile.tsx
-│   │   ├── 📁 lib/              # Utilitários
-│   │   │   ├── pdf-generator.ts
-│   │   │   ├── queryClient.ts
-│   │   │   └── utils.ts
-│   │   ├── 📁 pages/            # Páginas
-│   │   │   ├── call-sheet-generator.tsx
-│   │   │   └── not-found.tsx
-│   │   ├── 📁 data/
-│   │   │   └── default-templates.ts
-│   │   ├── App.tsx              # App principal
-│   │   ├── main.tsx             # Entry point
-│   │   └── index.css            # Estilos globais
-│   └── index.html               # HTML base
+├── 📁 public/                   # Arquivos estáticos
+│   └── brick-logo.svg           # Logo da Brick
+├── 📁 src/                      # Frontend React
+│   ├── 📁 components/           # Componentes React
+│   │   ├── brick-header.tsx
+│   │   ├── brick-footer.tsx
+│   │   ├── production-info.tsx
+│   │   ├── call-times-section.tsx
+│   │   ├── locations-section.tsx
+│   │   ├── scenes-section.tsx
+│   │   ├── contacts-section.tsx
+│   │   ├── template-manager.tsx
+│   │   ├── call-sheet-history.tsx
+│   │   └── 📁 ui/               # Componentes shadcn/ui
+│   ├── 📁 hooks/                # Custom hooks
+│   │   ├── use-call-sheet.tsx
+│   │   ├── use-templates.tsx
+│   │   ├── use-call-sheet-history.tsx
+│   │   ├── use-projects.ts
+│   │   ├── use-project-call-sheets.tsx
+│   │   ├── use-sync-storage.ts
+│   │   ├── use-toast.ts
+│   │   └── use-mobile.tsx
+│   ├── 📁 lib/                  # Utilitários
+│   │   ├── pdf-generator.ts
+│   │   ├── queryClient.ts
+│   │   └── utils.ts
+│   ├── 📁 pages/                # Páginas
+│   │   ├── call-sheet-generator.tsx
+│   │   └── not-found.tsx
+│   ├── 📁 data/
+│   │   └── default-templates.ts
+│   ├── App.tsx                  # App principal
+│   ├── main.tsx                 # Entry point
+│   └── index.css                # Estilos globais
+├── index.html                   # HTML base
 ├── 📁 server/                   # Backend Express
 │   ├── index.ts                 # Servidor principal
 │   ├── routes.ts                # Rotas da API
@@ -111,9 +110,9 @@ git push -u origin main
 - **tailwind.config.ts**: Tema e cores da Brick
 
 ### Frontend
-- **client/src/App.tsx**: App principal com roteamento
-- **client/src/pages/call-sheet-generator.tsx**: Página principal
-- **client/src/components/**: Todos os componentes UI
+- **src/App.tsx**: App principal com roteamento
+- **src/pages/call-sheet-generator.tsx**: Página principal
+- **src/components/**: Todos os componentes UI
 
 ### Backend
 - **server/index.ts**: Servidor Express

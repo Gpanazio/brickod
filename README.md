@@ -103,12 +103,13 @@ A aplicação estará disponível em `http://localhost:5000`
 ## 📁 Estrutura do Projeto
 
 ```
-├── client/          # Frontend React
-│   ├── src/
-│   │   ├── components/  # Componentes UI
-│   │   ├── hooks/       # Custom hooks
-│   │   ├── pages/       # Páginas da aplicação
-│   │   └── lib/         # Utilitários e configurações
+├── src/             # Frontend React
+│   ├── components/  # Componentes UI
+│   ├── hooks/       # Custom hooks
+│   ├── pages/       # Páginas da aplicação
+│   └── lib/         # Utilitários e configurações
+├── public/          # Arquivos estáticos
+│   └── brick-logo.svg
 ├── server/          # Backend Express
 │   ├── index.ts     # Servidor principal
 │   ├── routes.ts    # Rotas da API
@@ -168,3 +169,4 @@ Para suporte técnico ou dúvidas sobre o projeto, entre em contato com a equipe
 ---
 
 **Desenvolvido com ❤️ pela Brick Produtora**
+
