@@ -143,10 +143,10 @@ A aplicação segue a identidade visual da Brick Produtora:
 
 ## 🔧 Solução de Problemas
 
-Se a aplicação não conseguir se conectar ao banco de dados durante o
-início, ela exibirá uma mensagem de erro e encerrará o processo. Verifique
-se a variável `DATABASE_URL` está correta e se o banco está acessível
-antes de reiniciar o servidor.
+Caso a aplicação não consiga se conectar ao banco durante o início
+(ou se `DATABASE_URL` não estiver definida), ela continuará em modo de
+armazenamento em memória. Verifique a variável `DATABASE_URL` e a
+acessibilidade do banco para voltar a persistir os dados.
 Ao executar scripts Node ou testes que utilizem `fetch`, defina
 `API_BASE_URL` ou `VITE_API_BASE_URL` para evitar erros de URL relativa.
 
