@@ -6,13 +6,13 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 let supabase: any = null;
 
-// Inicializa cliente Supabase apenas se as variáveis estiverem configuradas
+// Inicializa cliente Railway apenas se as variáveis estiverem configuradas
 if (supabaseUrl && supabaseKey) {
   try {
     supabase = createClient(supabaseUrl, supabaseKey);
-    console.log('✅ Cliente Supabase inicializado');
+    console.log('✅ Cliente Railway inicializado');
   } catch (error) {
-    console.error('❌ Erro ao inicializar Supabase:', error);
+    console.error('❌ Erro ao inicializar Railway:', error);
   }
 }
 
@@ -21,7 +21,7 @@ export { supabase };
 // Funções para Call Sheets
 export async function getCallSheets(): Promise<CallSheet[]> {
   if (!supabase) {
-    throw new Error('Supabase não configurado');
+    throw new Error('Railway não configurado');
   }
   
   const { data, error } = await supabase
@@ -35,7 +35,7 @@ export async function getCallSheets(): Promise<CallSheet[]> {
 
 export async function createCallSheet(callSheet: Omit<CallSheet, 'id' | 'createdAt' | 'updatedAt'>): Promise<CallSheet> {
   if (!supabase) {
-    throw new Error('Supabase não configurado');
+    throw new Error('Railway não configurado');
   }
   
   const { data, error } = await supabase
@@ -54,7 +54,7 @@ export async function createCallSheet(callSheet: Omit<CallSheet, 'id' | 'created
 
 export async function deleteCallSheet(id: string): Promise<void> {
   if (!supabase) {
-    throw new Error('Supabase não configurado');
+    throw new Error('Railway não configurado');
   }
   
   const { error } = await supabase
@@ -68,7 +68,7 @@ export async function deleteCallSheet(id: string): Promise<void> {
 // Funções para Templates
 export async function getTemplates(): Promise<Template[]> {
   if (!supabase) {
-    throw new Error('Supabase não configurado');
+    throw new Error('Railway não configurado');
   }
   
   const { data, error } = await supabase
@@ -82,7 +82,7 @@ export async function getTemplates(): Promise<Template[]> {
 
 export async function createTemplate(template: Omit<Template, 'id' | 'createdAt' | 'updatedAt'>): Promise<Template> {
   if (!supabase) {
-    throw new Error('Supabase não configurado');
+    throw new Error('Railway não configurado');
   }
   
   const { data, error } = await supabase
@@ -101,7 +101,7 @@ export async function createTemplate(template: Omit<Template, 'id' | 'createdAt'
 
 export async function deleteTemplate(id: string): Promise<void> {
   if (!supabase) {
-    throw new Error('Supabase não configurado');
+    throw new Error('Railway não configurado');
   }
   
   const { error } = await supabase

@@ -8,14 +8,14 @@ if (!process.env.DATABASE_URL) {
   );
 }
 
-// Configure postgres client for Supabase with proper SSL and auth settings
+// Configure postgres client for Railway with proper SSL and auth settings
 const client = postgres(process.env.DATABASE_URL, { 
   prepare: false,
   ssl: 'prefer',
   max: 1,
   idle_timeout: 20,
   connect_timeout: 10,
-  // Configurações específicas para pooling do Supabase
+  // Configurações específicas para pooling do Railway
   connection: {
     application_name: 'brick_call_sheet_app'
   }

@@ -20,7 +20,7 @@ O Gerador de Ordem do Dia é uma aplicação desenvolvida pela Brick Produtora p
 
 - **Frontend**: React 18 + TypeScript + Vite
 - **Backend**: Express.js + TypeScript
-- **Database**: PostgreSQL com Supabase + Drizzle ORM
+- **Database**: PostgreSQL com Railway + Drizzle ORM
 - **Styling**: Tailwind CSS + shadcn/ui
 - **PDF**: jsPDF para geração client-side
 - **State Management**: React Query + Local Storage
@@ -30,7 +30,7 @@ O Gerador de Ordem do Dia é uma aplicação desenvolvida pela Brick Produtora p
 ### Pré-requisitos
 - Node.js 18+ 
 - npm ou yarn
-- Conta no Supabase (para banco de dados)
+- Conta no Railway (para banco de dados)
 
 ### 1. Clone o repositório
 ```bash
@@ -42,8 +42,7 @@ cd gerador-ordem-do-dia
 ```bash
 cp .env.example .env
 ```
-Preencha `DATABASE_URL`, `PORT` (opcional) e, se utilizar o Supabase no frontend,
-`VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY`.
+Preencha `DATABASE_URL` e `PORT` (opcional).
 Defina também `VITE_API_BASE_URL` (ou `API_BASE_URL` no servidor) com a URL
 base da API caso execute código fora do navegador.
 
@@ -54,15 +53,15 @@ npm install
 
 ### 4. Configure o banco de dados
 
-#### Opção A: Supabase (Recomendado)
-1. Crie um projeto no [Supabase](https://supabase.com)
-2. Vá em Settings > Database
-3. Copie a URL de Connection Pooling (Transaction mode)
+#### Opção A: Railway (Recomendado)
+1. Crie um projeto no [Railway](https://railway.app)
+2. Clique em "Add New" e selecione **PostgreSQL**
+3. Abra a aba **Connect** e copie o campo `PostgreSQL connection`
 4. Configure a variável de ambiente:
 
 ```bash
 # .env
-DATABASE_URL=postgresql://postgres.XXX:sua-senha@aws-0-region.pooler.supabase.com:6543/postgres
+DATABASE_URL=postgresql://user:senha@host:port/database
 ```
 
 **Importante**: Se sua senha contém caracteres especiais, codifique-os:
@@ -74,7 +73,7 @@ DATABASE_URL=postgresql://postgres.XXX:sua-senha@aws-0-region.pooler.supabase.co
 Antes de prosseguir, confirme que a `DATABASE_URL` está correta e que a porta está acessível. Você pode utilizar o `netcat`:
 
 ```bash
-nc -zv aws-0-us-east-2.pooler.supabase.com 6543
+nc -zv host port
 ```
 
 Se preferir, execute um teste rápido com `psql` (caso esteja instalado):

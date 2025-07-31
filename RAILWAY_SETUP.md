@@ -1,8 +1,8 @@
-# Configuração do Supabase para o Gerador de Chamada Brick
+# Configuração do Railway para o Gerador de Chamada Brick
 
 ## ✅ Tabelas Criadas com Sucesso!
 
-As seguintes tabelas foram criadas em seu projeto Supabase:
+As seguintes tabelas foram criadas em seu projeto Railway:
 - `projects` - Para gerenciar produções
 - `call_sheets` - Para armazenar os mapas de filmagem
 - `templates` - Para armazenar os templates reutilizáveis
@@ -25,29 +25,24 @@ Agora você pode:
 
 ### 1. Obtendo a String de Conexão do Seu Projeto
 
-1. **No seu projeto Supabase existente**, vá para o projeto
-2. **No menu lateral**, clique em **"Settings" (Configurações)**
-3. **Clique em "Database"**
-4. **Na seção "Connection string"**, copie a URI de **"Transaction pooler"**
-5. A string será algo como:
+1. **Crie um projeto na [Railway](https://railway.app)**
+2. **Clique em "Add New" e escolha "PostgreSQL"**
+3. **Na aba "Connect"**, copie a string `PostgreSQL connection`
+4. A string será algo como:
    ```
-   postgresql://postgres.xxxxxxxxxxxxx:[YOUR-PASSWORD]@aws-0-sa-east-1.pooler.supabase.com:6543/postgres
+   postgresql://user:senha@host:port/database
    ```
 
 ### 2. Configurando a Variável de Ambiente
 
-1. **Substitua `[YOUR-PASSWORD]`** pela senha do seu banco Supabase
+1. **Substitua `[YOUR-PASSWORD]`** pela senha do seu banco Railway
 2. **No Replit**, clique no ícone **"Secrets" (🔒)** no painel lateral
 3. **Adicione uma nova secret**:
    - **Key**: `DATABASE_URL`
    - **Value**: A string de conexão completa com sua senha
 
 ### 4. Exemplo de DATABASE_URL
-
-```
-DATABASE_URL=postgresql://postgres.abcdefghijklmn:MinhaSenh@Super123@aws-0-sa-east-1.pooler.supabase.com:6543/postgres
-```
-
+DATABASE_URL=postgresql://user:senha@host:port/database
 ## Status Atual do Projeto
 
 ✅ **Configurações Completas:**
@@ -66,7 +61,7 @@ DATABASE_URL=postgresql://postgres.abcdefghijklmn:MinhaSenh@Super123@aws-0-sa-ea
 
 Após configurar a variável `DATABASE_URL`, o servidor irá:
 
-1. **Conectar automaticamente** ao Supabase
+1. **Conectar automaticamente** ao Railway
 2. **Sincronizar o schema** do banco de dados
 3. **Permitir operações CRUD** via API:
    - `GET /api/call-sheets` - Listar todas as chamadas
@@ -75,11 +70,11 @@ Após configurar a variável `DATABASE_URL`, o servidor irá:
    - `PUT /api/call-sheets/:id` - Atualizar chamada
    - `DELETE /api/call-sheets/:id` - Deletar chamada
 
-## Verificação no Supabase
+## Verificação no Railway
 
 Para verificar se os dados estão sendo salvos:
 
-1. No painel do Supabase, vá em "Table Editor"
+1. No painel do Railway, vá em "Table Editor"
 2. Você verá a tabela `call_sheets` 
 3. Os dados salvos pela aplicação aparecerão lá
 4. Você pode visualizar, editar ou deletar registros diretamente
@@ -88,15 +83,15 @@ Para verificar se os dados estão sendo salvos:
 
 Após configurar o `DATABASE_URL`:
 1. O servidor reiniciará automaticamente
-2. A aplicação passará a salvar no Supabase
+2. A aplicação passará a salvar no Railway
 3. Teste criando uma nova chamada na interface
-4. Verifique no painel do Supabase se os dados foram salvos
+4. Verifique no painel do Railway se os dados foram salvos
 
 ## Troubleshooting
 
 **Se der erro de conexão:**
 - Verifique se a senha está correta na DATABASE_URL
-- Confirme se a região do Supabase está acessível
+- Confirme se a região do Railway está acessível
 - Teste a string de conexão removendo caracteres especiais da senha
 
 **Se a tabela não existir:**
