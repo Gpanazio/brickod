@@ -1,5 +1,5 @@
--- SQL para criar a tabela de templates no Supabase
--- Execute este código no SQL Editor do seu projeto Supabase
+-- SQL para criar a tabela de templates no Railway
+-- Execute este código no SQL Editor do seu projeto Railway
 
 CREATE TABLE IF NOT EXISTS templates (
   id TEXT PRIMARY KEY NOT NULL,
