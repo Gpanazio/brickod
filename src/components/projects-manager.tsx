@@ -9,7 +9,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { useProjects, useProjectCallSheets } from "@/hooks/use-projects-final";
+import { useProjects, useProjectCallSheets } from "@/hooks/use-projects";
 import { SyncIndicator } from "@/components/sync-indicator";
 import type { SelectProject } from "@shared/schema";
 
