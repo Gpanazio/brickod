@@ -46,7 +46,10 @@ npm run build
 
 1. Conecte o repositório no [Railway](https://railway.app)
 2. Configure a variável `DATABASE_URL`
-3. Railway fará o deploy automaticamente
+3. Defina `VITE_API_BASE_URL` (ou `API_BASE_URL`) com o domínio HTTPS do
+   Railway ou deixe em branco para usar caminhos relativos
+4. No console do Railway, execute `npm run db:push` para criar as tabelas
+5. Railway fará o deploy automaticamente
 
 ### 3. Render
 

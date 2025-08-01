@@ -4,7 +4,7 @@ const API_BASE =
     : import.meta.env.VITE_API_BASE_URL || '';
 
 export async function apiRequest(path: string, options?: RequestInit) {
-  const url = new URL(path, API_BASE).toString();
+  const url = API_BASE ? new URL(path, API_BASE).toString() : path;
   const response = await fetch(url, options);
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
