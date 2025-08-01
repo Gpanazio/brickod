@@ -38,14 +38,11 @@ git clone https://github.com/seu-usuario/gerador-ordem-do-dia.git
 cd gerador-ordem-do-dia
 ```
 
-### 2. Copie o arquivo de variáveis de ambiente
-```bash
-cp .env.example .env
-```
+### 2. Configure as variáveis de ambiente
+Use o arquivo `.env.example` como referência para criar o seu `.env`.
 Preencha `DATABASE_URL` e `PORT` (opcional).
-Nunca envie o arquivo `.env` para o repositório, use-o apenas localmente.
-Defina também `VITE_API_BASE_URL` (ou `API_BASE_URL` no servidor) com a URL
-base da API caso execute código fora do navegador.
+As variáveis `VITE_API_BASE_URL` e `API_BASE_URL` devem apontar para um domínio HTTPS ou permanecer vazias em produção.
+Nunca envie o arquivo `.env` para o repositório.
 
 ### 3. Instale as dependências
 ```bash
@@ -161,7 +158,8 @@ Caso a aplicação não consiga se conectar ao banco durante o início
 armazenamento em memória. Verifique a variável `DATABASE_URL` e a
 acessibilidade do banco para voltar a persistir os dados.
 Ao executar scripts Node ou testes que utilizem `fetch`, defina
-`API_BASE_URL` ou `VITE_API_BASE_URL` para evitar erros de URL relativa.
+`API_BASE_URL` ou `VITE_API_BASE_URL`. Em produção essas variáveis devem
+usar HTTPS ou permanecer vazias para evitar avisos de conteúdo misto.
 
 ## 🤝 Contribuição
 
