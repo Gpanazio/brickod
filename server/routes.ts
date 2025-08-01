@@ -9,8 +9,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Test database connection on startup
   const connected = await testConnection();
   if (!connected) {
-    console.error('❌ Unable to connect to the database. Exiting...');
-    process.exit(1);
+    console.warn('❌ Unable to connect to the database. Falling back to in-memory storage.');
   }
   // Call Sheet routes
   app.get("/api/call-sheets", async (req, res) => {

@@ -43,6 +43,7 @@ cd gerador-ordem-do-dia
 cp .env.example .env
 ```
 Preencha `DATABASE_URL` e `PORT` (opcional).
+Nunca envie o arquivo `.env` para o repositório, use-o apenas localmente.
 Defina também `VITE_API_BASE_URL` (ou `API_BASE_URL` no servidor) com a URL
 base da API caso execute código fora do navegador.
 
@@ -102,7 +103,12 @@ A aplicação estará disponível em `http://localhost:5000`
 
 ### Executar no Railway
 
-Em um serviço **Node** do Railway utilize:
+Antes de iniciar em modo produção é necessário gerar os arquivos estáticos:
+```bash
+npm run build
+```
+
+Em um serviço **Node** do Railway utilize em seguida:
 ```bash
 npm start
 ```
