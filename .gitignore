@@ -5,3 +5,7 @@
 
 # Ignore node_modules (should not be tracked)
 node_modules/
+
+# Ignore build outputs
+dist/
+build/
