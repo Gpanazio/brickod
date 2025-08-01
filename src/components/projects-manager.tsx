@@ -9,7 +9,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { useProjects, useProjectCallSheets } from "@/hooks/use-projects";
+import { useProjects, useProjectCallSheets } from "@/hooks/use-projects-final";
 import { SyncIndicator } from "@/components/sync-indicator";
 import type { SelectProject } from "@shared/schema";
 
@@ -236,7 +236,7 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
               Novo Projeto
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-md dialog-create-project" aria-describedby="project-dialog-description">
+          <DialogContent className="sm:max-w-md w-full bg-white rounded-xl p-6 shadow-lg z-50" aria-describedby="project-dialog-description">
             <DialogHeader>
               <DialogTitle>
                 {editingProject ? 'Editar Projeto' : 'Criar Novo Projeto'}
