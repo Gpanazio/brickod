@@ -87,6 +87,15 @@ Após configurar o `DATABASE_URL`:
 3. Teste criando uma nova chamada na interface
 4. Verifique no painel do Railway se os dados foram salvos
 
+### Executar como serviço Node
+
+Crie um novo **Node service** no Railway e conecte este repositório.
+Defina o comando de inicialização como:
+```bash
+npm start
+```
+Isso executa o servidor via `tsx` em produção.
+
 ## Troubleshooting
 
 **Se der erro de conexão:**

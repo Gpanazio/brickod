@@ -100,6 +100,13 @@ npm run dev
 
 A aplicação estará disponível em `http://localhost:5000`
 
+### Executar no Railway
+
+Em um serviço **Node** do Railway utilize:
+```bash
+npm start
+```
+
 ## 📁 Estrutura do Projeto
 
 ```
