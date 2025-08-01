@@ -88,6 +88,11 @@
   .brick-red {
     background-color: var(--brick-red);
   }
+
+  /* Utility for hover background on outline buttons */
+  .hover\:bg-brick-red:hover {
+    background-color: var(--brick-red);
+  }
   
   .brick-red-hover:hover {
     background-color: var(--brick-red-hover);
