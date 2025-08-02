@@ -489,7 +489,8 @@ export default function CallSheetGenerator() {
                   <Button
                     onClick={handleSaveAsTemplate}
                     disabled={createTemplateMutation.isPending}
-                    className="brick-red brick-red-hover"
+                    variant="brick"
+                    className="text-white"
                   >
                     {createTemplateMutation.isPending ? "Salvando..." : "Salvar Template"}
                   </Button>
