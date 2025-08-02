@@ -38,7 +38,7 @@ export default function BrickHeader({ onExportPDF, onSave, hasUnsavedChanges }: 
             <Button
               onClick={onSave}
               variant="ghost"
-              className={`text-gray-300 hover:text-white transition-colors ${hasUnsavedChanges ? 'text-yellow-400' : ''}`}
+              className={`text-gray-300 hover:text-white hover:bg-[var(--brick-red)] transition-colors ${hasUnsavedChanges ? 'text-yellow-400' : ''}`}
             >
               <Save className="w-5 h-5" />
             </Button>
