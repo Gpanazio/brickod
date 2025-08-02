@@ -228,9 +228,9 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
           }
         }}>
           <DialogTrigger asChild>
-            <Button 
+            <Button
               onClick={() => setShowNewProjectDialog(true)}
-              className="brick-red brick-red-hover text-white"
+              variant="brick"
             >
               <Plus className="w-4 h-4 mr-2" />
               Novo Projeto

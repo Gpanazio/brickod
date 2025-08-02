@@ -27,9 +27,10 @@ export default function BrickHeader({ onExportPDF, onSave, hasUnsavedChanges }: 
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            <Button 
+            <Button
               onClick={onExportPDF}
-              className="brick-red brick-red-hover text-white px-4 py-2 rounded-lg font-medium transition-colors"
+              variant="brick"
+              className="px-4 py-2 rounded-lg font-medium transition-colors"
             >
               <FileText className="w-4 h-4 mr-2" />
               Gerar PDF
