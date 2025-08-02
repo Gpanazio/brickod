@@ -242,9 +242,9 @@ export function TemplateManager({ onSelectTemplate, currentCallSheet }: Template
                     </Badge>
                   </div>
                   <Button
-                    variant="ghost"
+                    variant="iconGhost"
                     size="sm"
-                    className="opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="opacity-0 group-hover:opacity-100 transition-opacity text-gray-400 hover:text-red-500"
                     onClick={() => handleDeleteTemplate(template.id, template.name)}
                   >
                     <Trash2 className="w-4 h-4" />
