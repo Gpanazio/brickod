@@ -151,9 +151,9 @@ export default function ScriptSection({
                 </Button>
                 <Button
                   onClick={clearScript}
-                  variant="ghost"
+                  variant="iconGhost"
                   size="sm"
-                  className="text-gray-500 hover:text-red-500"
+                  className="text-gray-500 hover:text-red-500 transition-colors"
                 >
                   <X className="w-4 h-4" />
                 </Button>
@@ -355,9 +355,9 @@ export default function ScriptSection({
                     </Button>
                     <Button
                       onClick={() => onRemoveAttachment(attachment.id)}
-                      variant="ghost"
+                      variant="iconGhost"
                       size="sm"
-                      className="text-gray-500 hover:text-red-500"
+                      className="text-gray-500 hover:text-red-500 transition-colors"
                     >
                       <X className="w-4 h-4" />
                     </Button>

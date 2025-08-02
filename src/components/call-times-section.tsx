@@ -113,7 +113,7 @@ export default function CallTimesSection({
                       <span className="text-sm font-medium text-gray-700">Membro da Equipe</span>
                       <Button
                         onClick={() => onRemoveCrew(callTime.id)}
-                        variant="ghost"
+                        variant="iconGhost"
                         size="sm"
                         className="text-gray-400 hover:text-red-500 transition-colors"
                       >
@@ -207,7 +207,7 @@ export default function CallTimesSection({
                     />
                     <Button
                       onClick={() => onRemoveCast(callTime.id)}
-                      variant="ghost"
+                      variant="iconGhost"
                       size="sm"
                       className="text-gray-400 hover:text-red-500 transition-colors"
                     >

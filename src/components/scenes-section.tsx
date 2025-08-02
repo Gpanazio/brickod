@@ -75,7 +75,7 @@ function SortableSceneItem({ scene, index, onUpdate, onRemove }: SortableSceneIt
         </div>
         <Button
           onClick={() => onRemove(scene.id)}
-          variant="ghost"
+          variant="iconGhost"
           size="sm"
           className="text-gray-400 hover:text-red-500 transition-colors"
         >
