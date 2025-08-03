@@ -130,7 +130,7 @@ export function TemplateManager({ onSelectTemplate, currentCallSheet }: Template
         
         <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
           <DialogTrigger asChild>
-            <Button>
+            <Button variant="brick">
               <Plus className="w-4 h-4 mr-2" />
               Criar Template
             </Button>
