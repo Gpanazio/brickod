@@ -428,8 +428,8 @@ export default function CallSheetGenerator() {
           <Dialog open={showTemplateDialog} onOpenChange={setShowTemplateDialog}>
             <DialogTrigger asChild>
               <Button
-                variant="outline"
-                className="border-brick-red text-brick-red hover:bg-brick-red hover:text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center text-lg"
+                variant="outlineBrick"
+                className="px-6 py-3 rounded-lg font-semibold transition-colors flex items-center text-lg"
               >
                 <Layout className="w-5 h-5 mr-2" />
                 Salvar como Template
