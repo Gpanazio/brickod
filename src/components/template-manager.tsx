@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -135,13 +135,16 @@ export function TemplateManager({ onSelectTemplate, currentCallSheet }: Template
               Criar Template
             </Button>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className="sm:max-w-md w-full bg-white rounded-xl p-6 shadow-lg z-50" aria-describedby="template-dialog-description">
             <form onSubmit={handleCreateTemplate}>
               <DialogHeader>
                 <DialogTitle>Criar Novo Template</DialogTitle>
-                <DialogDescription>
-                  Salve o mapa atual como um template para reutilizar
-                </DialogDescription>
+                <p
+                  id="template-dialog-description"
+                  className="text-sm text-gray-600"
+                >
+                  Salve o mapa atual como um template para reutilizar.
+                </p>
               </DialogHeader>
               
               <div className="grid gap-4 py-4">
@@ -182,14 +185,22 @@ export function TemplateManager({ onSelectTemplate, currentCallSheet }: Template
                 </div>
               </div>
               
-              <DialogFooter>
-                <Button type="button" variant="outline" onClick={() => setIsCreateOpen(false)}>
+              <div className="flex justify-end space-x-2 pt-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setIsCreateOpen(false)}
+                >
                   Cancelar
                 </Button>
-                <Button type="submit" disabled={createTemplate.isPending}>
+                <Button
+                  type="submit"
+                  className="brick-red brick-red-hover text-white"
+                  disabled={createTemplate.isPending}
+                >
                   {createTemplate.isPending ? "Salvando..." : "Salvar Template"}
                 </Button>
-              </DialogFooter>
+              </div>
             </form>
           </DialogContent>
         </Dialog>
