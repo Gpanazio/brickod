@@ -21,6 +21,8 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         brick:
           "bg-[var(--brick-red)] text-white hover:bg-[var(--brick-red-hover)] hover:text-white",
+        outlineBrick:
+          "border border-brick-red bg-background text-brick-red hover:bg-[var(--brick-red)] hover:text-white",
       },
       size: {
         default: "h-10 px-4 py-2",

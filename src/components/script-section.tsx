@@ -229,11 +229,7 @@ export default function ScriptSection({
             <h3 className="text-lg font-medium text-gray-900">Outros Arquivos</h3>
             <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
               <DialogTrigger asChild>
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  className="text-brick-red border-brick-red hover:bg-brick-red hover:text-white"
-                >
+                <Button variant="outlineBrick" size="sm">
                   <Plus className="w-4 h-4 mr-1" />
                   Adicionar Arquivo
                 </Button>

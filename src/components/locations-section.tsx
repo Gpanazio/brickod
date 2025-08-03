@@ -146,9 +146,10 @@ export default function LocationsSection({
             </div>
             <h2 className="text-xl font-semibold text-brick-dark">Locações</h2>
           </div>
-          <Button 
+          <Button
             onClick={onAdd}
-            className="brick-red brick-red-hover text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+            variant="brick"
+            className="text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
           >
             <Plus className="w-4 h-4 mr-2" />
             Nova Locação
