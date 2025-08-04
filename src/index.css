@@ -83,19 +83,6 @@
     background-color: var(--brick-light);
   }
   
-  .brick-red {
-    background-color: var(--brick-red);
-  }
-
-  /* Utility for hover background on outline buttons */
-  .hover\:bg-brick-red:hover {
-    background-color: var(--brick-red);
-  }
-  
-  .brick-red-hover:hover {
-    background-color: var(--brick-red-hover);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
-  }
   
   .text-brick-black {
     color: var(--brick-black);
@@ -105,17 +92,6 @@
     color: var(--brick-dark);
   }
   
-  .text-brick-red {
-    color: var(--brick-red);
-  }
-  
-  .border-brick-red {
-    border-color: var(--brick-red);
-  }
-  
-  .focus\:ring-brick-red:focus {
-    --tw-ring-color: var(--brick-red);
-  }
   
   /* Dialog overlay custom styles */
   .dialog-overlay-light {

@@ -97,7 +97,7 @@ export default function CallTimesSection({
           <div className="border border-gray-200 rounded-lg p-4">
             <div className="flex justify-between items-center mb-4">
               <h3 className="font-medium text-gray-900 flex items-center">
-                <Users className="w-4 h-4 mr-2 text-brick-red" />
+                <Users className="w-4 h-4 mr-2 text-[var(--brick-red)]" />
                 Equipe Técnica
               </h3>
               <Button
@@ -204,7 +204,7 @@ export default function CallTimesSection({
           <div className="border border-gray-200 rounded-lg p-4">
             <div className="flex justify-between items-center mb-4">
               <h3 className="font-medium text-gray-900 flex items-center">
-                <Star className="w-4 h-4 mr-2 text-brick-red" />
+                <Star className="w-4 h-4 mr-2 text-[var(--brick-red)]" />
                 Elenco
               </h3>
               <Button
