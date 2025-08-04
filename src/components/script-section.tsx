@@ -149,18 +149,16 @@ export default function ScriptSection({
               <div className="flex items-center space-x-2">
                 <Button
                   onClick={openScript}
-                  variant="outline"
+                  variant="successOutline"
                   size="sm"
-                  className="text-green-700 border-green-300 hover:bg-green-100"
                 >
                   <ExternalLink className="w-4 h-4 mr-1" />
                   Abrir
                 </Button>
                 <Button
                   onClick={clearScript}
-                  variant="iconGhost"
+                  variant="iconDestructive"
                   size="sm"
-                  className="text-gray-500 hover:text-red-500 transition-colors"
                 >
                   <X className="w-4 h-4" />
                 </Button>
@@ -351,18 +349,16 @@ export default function ScriptSection({
                   <div className="flex items-center space-x-2">
                     <Button
                       onClick={() => window.open(attachment.url, '_blank')}
-                      variant="outline"
+                      variant="successOutline"
                       size="sm"
-                      className="text-blue-600 border-blue-300 hover:bg-blue-50"
                     >
                       <ExternalLink className="w-4 h-4 mr-1" />
                       Abrir
                     </Button>
                     <Button
                       onClick={() => onRemoveAttachment(attachment.id)}
-                      variant="iconGhost"
+                      variant="iconDestructive"
                       size="sm"
-                      className="text-gray-500 hover:text-red-500 transition-colors"
                     >
                       <X className="w-4 h-4" />
                     </Button>
