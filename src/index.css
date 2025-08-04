@@ -81,9 +81,7 @@
   }
   
   .dialog-content-enhanced {
-    background-color: white;
-    border: 1px solid #e5e5e5;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    @apply bg-background border border-border shadow-2xl;
   }
   
   /* Force high z-index for dialogs */
