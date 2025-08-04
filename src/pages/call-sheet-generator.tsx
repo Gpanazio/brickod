@@ -8,6 +8,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
 
 import { useToast } from "@/hooks/use-toast";
 import { useCallSheet } from "@/hooks/use-call-sheet";
@@ -474,18 +481,21 @@ export default function CallSheetGenerator() {
                 </div>
                 <div>
                   <Label htmlFor="template-category">Categoria</Label>
-                  <select
-                    id="template-category"
+                  <Select
                     value={templateCategory}
-                    onChange={(e) => setTemplateCategory(e.target.value)}
-                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brick-red focus:border-transparent"
+                    onValueChange={setTemplateCategory}
                   >
-                    <option value="produção">Produção</option>
-                    <option value="comercial">Comercial</option>
-                    <option value="documentário">Documentário</option>
-                    <option value="evento">Evento</option>
-                    <option value="outros">Outros</option>
-                  </select>
+                    <SelectTrigger id="template-category" className="mt-1">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="produção">Produção</SelectItem>
+                      <SelectItem value="comercial">Comercial</SelectItem>
+                      <SelectItem value="documentário">Documentário</SelectItem>
+                      <SelectItem value="evento">Evento</SelectItem>
+                      <SelectItem value="outros">Outros</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div className="flex justify-end gap-2 pt-4">
                   <Button
