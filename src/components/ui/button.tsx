@@ -20,11 +20,15 @@ const buttonVariants = cva(
         ghostBrick:
           "text-gray-300 hover:text-white hover:bg-[var(--brick-red)]",
         iconGhost: "hover:bg-transparent",
+        iconDestructive:
+          "text-gray-500 hover:text-destructive focus-visible:text-destructive hover:bg-transparent focus-visible:ring-destructive",
         link: "text-primary underline-offset-4 hover:underline",
         brick:
           "bg-[var(--brick-red)] text-white hover:bg-[var(--brick-red-hover)] hover:text-white",
         outlineBrick:
           "border border-[var(--brick-red)] bg-background text-[var(--brick-red)] hover:bg-[var(--brick-red)] hover:text-white",
+        successOutline:
+          "border border-green-300 bg-background text-green-700 hover:bg-green-100",
       },
       size: {
         default: "h-10 px-4 py-2",
