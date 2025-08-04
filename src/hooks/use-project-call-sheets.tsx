@@ -68,6 +68,10 @@ export function useProjectCallSheets(projectId?: string) {
     }
   };
 
+  const duplicateCallSheet = (cs: CallSheet, title: string) => {
+    return saveCallSheet({ ...cs, id: undefined, productionTitle: title });
+  };
+
   const deleteCallSheet = (id: string) => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
@@ -110,6 +114,7 @@ export function useProjectCallSheets(projectId?: string) {
   return {
     callSheets,
     saveCallSheet,
+    duplicateCallSheet,
     deleteCallSheet,
     updateCallSheetStatus,
     refreshCallSheets: loadFromStorage,
