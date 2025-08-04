@@ -122,8 +122,8 @@ export function TemplateManager({ onSelectTemplate, currentCallSheet }: Template
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Templates</h2>
-          <p className="text-gray-600 dark:text-gray-300">
+          <h2 className="text-2xl font-bold text-foreground">Templates</h2>
+          <p className="text-muted-foreground">
             Gerencie seus modelos de mapa de filmagem
           </p>
         </div>
@@ -135,13 +135,13 @@ export function TemplateManager({ onSelectTemplate, currentCallSheet }: Template
               Criar Template
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-md w-full bg-white rounded-xl p-6 shadow-lg z-50" aria-describedby="template-dialog-description">
+          <DialogContent className="sm:max-w-md w-full bg-background rounded-xl p-6 shadow-lg z-50" aria-describedby="template-dialog-description">
             <form onSubmit={handleCreateTemplate}>
               <DialogHeader>
                 <DialogTitle>Criar Novo Template</DialogTitle>
                 <p
                   id="template-dialog-description"
-                  className="text-sm text-gray-600"
+                  className="text-sm text-muted-foreground"
                 >
                   Salve o mapa atual como um template para reutilizar.
                 </p>
@@ -231,13 +231,13 @@ export function TemplateManager({ onSelectTemplate, currentCallSheet }: Template
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {isLoading ? (
           <div className="col-span-full text-center py-8">
-            <p className="text-gray-500">Carregando templates...</p>
+            <p className="text-muted-foreground">Carregando templates...</p>
           </div>
         ) : templates.length === 0 ? (
           <div className="col-span-full text-center py-8">
-            <Layers className="w-12 h-12 mx-auto text-gray-400 mb-2" />
-            <p className="text-gray-500">Nenhum template encontrado</p>
-            <p className="text-sm text-gray-400">
+            <Layers className="w-12 h-12 mx-auto text-muted-foreground mb-2" />
+            <p className="text-muted-foreground">Nenhum template encontrado</p>
+            <p className="text-sm text-muted-foreground">
               Crie seu primeiro template a partir de um mapa existente
             </p>
           </div>
@@ -268,7 +268,7 @@ export function TemplateManager({ onSelectTemplate, currentCallSheet }: Template
                   {template.description}
                 </CardDescription>
                 
-                <div className="space-y-2 text-sm text-gray-600 dark:text-gray-300 mb-4">
+                <div className="space-y-2 text-sm text-muted-foreground mb-4">
                   <div>Locações: {template.templateData.locations.length}</div>
                   <div>Cenas: {template.templateData.scenes.length}</div>
                   <div>Contatos: {template.templateData.contacts.length}</div>
