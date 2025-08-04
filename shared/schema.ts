@@ -39,6 +39,17 @@ export const callTimeSchema = z.object({
   phone: z.string().optional(),
 });
 
+export const teamMemberSchema = z.object({
+  id: z.string().optional(),
+  projectId: z.string().optional(),
+  name: z.string(),
+  role: z.string().optional(),
+  email: z.string().optional(),
+  phone: z.string().optional(),
+  createdAt: z.string().optional(),
+  updatedAt: z.string().optional(),
+});
+
 export const projectSchema = z.object({
   id: z.string().optional(),
   name: z.string(),
@@ -155,6 +166,17 @@ export const templates = pgTable('templates', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
 
+export const teamMembers = pgTable('team_members', {
+  id: text('id').primaryKey().notNull(),
+  projectId: text('project_id'),
+  name: text('name').notNull(),
+  role: text('role'),
+  email: text('email'),
+  phone: text('phone'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
 // Insert schemas for validation
 export const insertProjectSchema = createInsertSchema(projects).omit({
   createdAt: true,
@@ -171,6 +193,11 @@ export const insertTemplateSchema = createInsertSchema(templates).omit({
   updatedAt: true,
 });
 
+export const insertTeamMemberSchema = createInsertSchema(teamMembers).omit({
+  createdAt: true,
+  updatedAt: true,
+});
+
 // Types
 export type Location = z.infer<typeof locationSchema>;
 export type Scene = z.infer<typeof sceneSchema>;
@@ -180,9 +207,12 @@ export type Attachment = z.infer<typeof attachmentSchema>;
 export type Project = z.infer<typeof projectSchema>;
 export type CallSheet = z.infer<typeof callSheetSchema>;
 export type Template = z.infer<typeof templateSchema>;
+export type TeamMember = z.infer<typeof teamMemberSchema>;
 export type InsertProject = z.infer<typeof insertProjectSchema>;
 export type InsertCallSheet = z.infer<typeof insertCallSheetSchema>;
 export type InsertTemplate = z.infer<typeof insertTemplateSchema>;
+export type InsertTeamMember = z.infer<typeof insertTeamMemberSchema>;
 export type SelectProject = typeof projects.$inferSelect;
 export type SelectCallSheet = typeof callSheets.$inferSelect;
 export type SelectTemplate = typeof templates.$inferSelect;
+export type SelectTeamMember = typeof teamMembers.$inferSelect;
