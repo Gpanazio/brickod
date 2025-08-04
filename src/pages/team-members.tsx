@@ -126,7 +126,7 @@ export default function TeamMembers() {
         role: role.trim(),
         email: email.trim(),
         phone: phone.trim(),
-        projectId,
+        ...(projectId ? { projectId } : {}),
       });
     }
   };
