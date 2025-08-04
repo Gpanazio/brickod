@@ -49,6 +49,16 @@ export default function TeamMembers() {
       setPhone("");
       setProjectId(undefined);
     },
+    onError: (error: unknown) => {
+      toast({
+        title: "Erro ao adicionar membro",
+        description:
+          error instanceof Error
+            ? error.message
+            : "Não foi possível adicionar o membro.",
+        variant: "destructive",
+      });
+    },
   });
 
   const updateMutation = useMutation({
@@ -68,6 +78,16 @@ export default function TeamMembers() {
       setPhone("");
       setProjectId(undefined);
     },
+    onError: (error: unknown) => {
+      toast({
+        title: "Erro ao atualizar membro",
+        description:
+          error instanceof Error
+            ? error.message
+            : "Não foi possível atualizar o membro.",
+        variant: "destructive",
+      });
+    },
   });
 
   const deleteMutation = useMutation({
@@ -76,6 +96,16 @@ export default function TeamMembers() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/team-members"] });
       toast({ title: "Membro removido" });
+    },
+    onError: (error: unknown) => {
+      toast({
+        title: "Erro ao remover membro",
+        description:
+          error instanceof Error
+            ? error.message
+            : "Não foi possível remover o membro.",
+        variant: "destructive",
+      });
     },
   });
 
