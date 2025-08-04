@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Plus, FolderOpen, Calendar, User, MoreVertical, Edit, Trash2, Archive, Play, Pause } from "lucide-react";
+import { Plus, FolderOpen, Calendar, User, MoreVertical, Edit, Trash2, Archive, Play, Pause, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useProjects, useProjectCallSheets } from "@/hooks/use-projects";
 import { SyncIndicator } from "@/components/sync-indicator";
 import type { SelectProject } from "@shared/schema";
+import { nanoid } from "nanoid";
 
 interface ProjectsManagerProps {
   onSelectProject: (project: SelectProject) => void;
@@ -19,7 +20,7 @@ interface ProjectsManagerProps {
 
 export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
   const { toast } = useToast();
-  const { projects, addProject, updateProject, deleteProject, lastSync, forceSync } = useProjects();
+  const { projects, addProject, updateProject, deleteProject, duplicateProject, lastSync, forceSync } = useProjects();
   const [showNewProjectDialog, setShowNewProjectDialog] = useState(false);
   const [editingProject, setEditingProject] = useState<SelectProject | null>(null);
   const [newProjectName, setNewProjectName] = useState("");
@@ -74,6 +75,38 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
         description: `O projeto "${project.name}" foi excluído.`,
       });
     }
+  };
+
+  const handleDuplicateProject = (project: SelectProject) => {
+    const newName = prompt("Digite o nome do novo projeto", `${project.name} (cópia)`);
+    if (!newName || !newName.trim()) return;
+
+    const newId = duplicateProject(project, newName.trim());
+
+    try {
+      const stored = localStorage.getItem("brick-project-call-sheets");
+      if (stored) {
+        const allCallSheets = JSON.parse(stored);
+        const projectCallSheets = allCallSheets.filter((cs: any) => cs.projectId === project.id);
+        const duplicatedCallSheets = projectCallSheets.map((cs: any) => ({
+          ...cs,
+          id: nanoid(),
+          projectId: newId,
+          updatedAt: new Date().toISOString(),
+        }));
+        localStorage.setItem(
+          "brick-project-call-sheets",
+          JSON.stringify([...allCallSheets, ...duplicatedCallSheets])
+        );
+      }
+    } catch (error) {
+      console.error("Error duplicating call sheets:", error);
+    }
+
+    toast({
+      title: "Projeto duplicado",
+      description: `O projeto "${project.name}" foi duplicado como "${newName}".`,
+    });
   };
 
   const handleStatusChange = (project: SelectProject, newStatus: 'ativo' | 'pausado' | 'concluído') => {
@@ -146,6 +179,10 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
                   <DropdownMenuItem onClick={(e) => { e.stopPropagation(); openEditDialog(project); }}>
                     <Edit className="w-4 h-4 mr-2" />
                     Editar
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={(e) => { e.stopPropagation(); handleDuplicateProject(project); }}>
+                    <Copy className="w-4 h-4 mr-2" />
+                    Duplicar
                   </DropdownMenuItem>
                   {project.status === 'ativo' && (
                     <DropdownMenuItem onClick={(e) => { e.stopPropagation(); handleStatusChange(project, 'pausado'); }}>
