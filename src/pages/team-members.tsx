@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
+import { BrickHeader, BrickFooter } from "@/components";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/api";
 
@@ -88,82 +89,90 @@ export default function TeamMembers() {
   };
 
   return (
-    <div className="p-4 space-y-4">
-      <Card>
-        <CardHeader>
-          <CardTitle>{editing ? "Editar membro" : "Adicionar membro"}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-2">
-            <Input
-              placeholder="Nome"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="md:w-1/3"
-            />
-            <Input
-              placeholder="Função"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              className="md:w-1/3"
-            />
-            <Button type="submit">
-              {editing ? "Atualizar" : "Adicionar"}
-            </Button>
-            {editing && (
-              <Button type="button" variant="outline" onClick={handleCancel}>
-                Cancelar
+    <div className="min-h-screen brick-light font-inter text-brick-dark">
+      <BrickHeader
+        onExportPDF={() => {}}
+        onSave={() => {}}
+        hasUnsavedChanges={false}
+      />
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-4">
+        <Card>
+          <CardHeader>
+            <CardTitle>{editing ? "Editar membro" : "Adicionar membro"}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-2">
+              <Input
+                placeholder="Nome"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="md:w-1/3"
+              />
+              <Input
+                placeholder="Função"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                className="md:w-1/3"
+              />
+              <Button type="submit">
+                {editing ? "Atualizar" : "Adicionar"}
               </Button>
-            )}
-          </form>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Membros da equipe</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Nome</TableHead>
-                <TableHead>Função</TableHead>
-                <TableHead className="w-[150px]">Ações</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {members?.map((member) => (
-                <TableRow key={member.id}>
-                  <TableCell>{member.name}</TableCell>
-                  <TableCell>{member.role}</TableCell>
-                  <TableCell>
-                    <div className="flex gap-2">
-                      <Button size="sm" variant="secondary" onClick={() => handleEdit(member)}>
-                        Editar
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="destructive"
-                        onClick={() => deleteMutation.mutate(member.id)}
-                      >
-                        Excluir
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-              {(!members || members.length === 0) && (
-                <TableRow>
-                  <TableCell colSpan={3} className="text-center">
-                    Nenhum membro encontrado
-                  </TableCell>
-                </TableRow>
+              {editing && (
+                <Button type="button" variant="outline" onClick={handleCancel}>
+                  Cancelar
+                </Button>
               )}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+            </form>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Membros da equipe</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Nome</TableHead>
+                  <TableHead>Função</TableHead>
+                  <TableHead className="w-[150px]">Ações</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {members?.map((member) => (
+                  <TableRow key={member.id}>
+                    <TableCell>{member.name}</TableCell>
+                    <TableCell>{member.role}</TableCell>
+                    <TableCell>
+                      <div className="flex gap-2">
+                        <Button size="sm" variant="secondary" onClick={() => handleEdit(member)}>
+                          Editar
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          onClick={() => deleteMutation.mutate(member.id)}
+                        >
+                          Excluir
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+                {(!members || members.length === 0) && (
+                  <TableRow>
+                    <TableCell colSpan={3} className="text-center">
+                      Nenhum membro encontrado
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+      </main>
+      <BrickFooter />
     </div>
   );
 }
