@@ -7,6 +7,7 @@ import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@
 import { BrickHeader, BrickFooter } from "@/components";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/api";
+import { Plus } from "lucide-react";
 
 interface TeamMember {
   id: string;
@@ -66,8 +67,7 @@ export default function TeamMembers() {
     },
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     if (!name.trim() || !role.trim()) return;
     if (editing) {
       updateMutation.mutate({ ...editing, name: name.trim(), role: role.trim() });
@@ -101,7 +101,7 @@ export default function TeamMembers() {
             <CardTitle>{editing ? "Editar membro" : "Adicionar membro"}</CardTitle>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-2">
+            <form className="flex flex-col md:flex-row gap-2">
               <Input
                 placeholder="Nome"
                 value={name}
@@ -114,7 +114,13 @@ export default function TeamMembers() {
                 onChange={(e) => setRole(e.target.value)}
                 className="md:w-1/3"
               />
-              <Button type="submit">
+              <Button
+                type="button"
+                variant="brick"
+                disabled={!name.trim() || !role.trim()}
+                onClick={handleSubmit}
+              >
+                <Plus className="w-4 h-4 mr-2" />
                 {editing ? "Atualizar" : "Adicionar"}
               </Button>
               {editing && (
