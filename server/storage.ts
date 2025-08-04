@@ -3,12 +3,15 @@ import {
   callSheets,
   templates,
   projects,
+  teamMembers,
   type SelectCallSheet,
   type InsertCallSheet,
   type SelectTemplate,
   type InsertTemplate,
   type SelectProject,
-  type InsertProject
+  type InsertProject,
+  type SelectTeamMember,
+  type InsertTeamMember
 } from "@shared/schema";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
@@ -36,12 +39,20 @@ export interface IStorage {
   updateProject(id: string, updates: Partial<InsertProject>): Promise<SelectProject | undefined>;
   deleteProject(id: string): Promise<boolean>;
   listProjects(): Promise<SelectProject[]>;
+
+  // Team member operations
+  getTeamMember(id: string): Promise<SelectTeamMember | undefined>;
+  createTeamMember(teamMember: InsertTeamMember): Promise<SelectTeamMember>;
+  updateTeamMember(id: string, updates: Partial<InsertTeamMember>): Promise<SelectTeamMember | undefined>;
+  deleteTeamMember(id: string): Promise<boolean>;
+  listTeamMembers(): Promise<SelectTeamMember[]>;
 }
 
 class MemoryStorage implements IStorage {
   private callSheets: SelectCallSheet[] = [];
   private templates: SelectTemplate[] = [];
   private projects: SelectProject[] = [];
+  private teamMembers: SelectTeamMember[] = [];
 
   async getCallSheet(id: string): Promise<SelectCallSheet | undefined> {
     return this.callSheets.find(cs => cs.id === id);
@@ -186,6 +197,45 @@ class MemoryStorage implements IStorage {
 
   async listProjects(): Promise<SelectProject[]> {
     return [...this.projects];
+  }
+
+  // Team member operations
+  async getTeamMember(id: string): Promise<SelectTeamMember | undefined> {
+    return this.teamMembers.find(tm => tm.id === id);
+  }
+
+  async createTeamMember(teamMember: InsertTeamMember): Promise<SelectTeamMember> {
+    const now = new Date();
+    const newMember: SelectTeamMember = {
+      ...teamMember,
+      id: teamMember.id || nanoid(),
+      createdAt: now,
+      updatedAt: now,
+    } as SelectTeamMember;
+    this.teamMembers.push(newMember);
+    return newMember;
+  }
+
+  async updateTeamMember(id: string, updates: Partial<InsertTeamMember>): Promise<SelectTeamMember | undefined> {
+    const index = this.teamMembers.findIndex(tm => tm.id === id);
+    if (index === -1) return undefined;
+    this.teamMembers[index] = {
+      ...this.teamMembers[index],
+      ...updates,
+      updatedAt: new Date(),
+    } as SelectTeamMember;
+    return this.teamMembers[index];
+  }
+
+  async deleteTeamMember(id: string): Promise<boolean> {
+    const index = this.teamMembers.findIndex(tm => tm.id === id);
+    if (index === -1) return false;
+    this.teamMembers.splice(index, 1);
+    return true;
+  }
+
+  async listTeamMembers(): Promise<SelectTeamMember[]> {
+    return [...this.teamMembers];
   }
 }
 
@@ -449,6 +499,71 @@ export class DatabaseStorage implements IStorage {
     } catch (error) {
       console.warn('Database error, using memory storage:', error.message);
       return this.fallbackStorage.listProjects();
+    }
+  }
+
+  // Team member operations
+  async getTeamMember(id: string): Promise<SelectTeamMember | undefined> {
+    try {
+      const [teamMember] = await db.select().from(teamMembers).where(eq(teamMembers.id, id));
+      this.isDbConnected = true;
+      return teamMember || undefined;
+    } catch (error) {
+      console.warn('Database error, using memory storage:', error.message);
+      return this.fallbackStorage.getTeamMember(id);
+    }
+  }
+
+  async createTeamMember(teamMember: InsertTeamMember): Promise<SelectTeamMember> {
+    try {
+      const now = new Date();
+      const newMember = {
+        ...teamMember,
+        id: teamMember.id || nanoid(),
+        createdAt: now,
+        updatedAt: now,
+      };
+      const [created] = await db.insert(teamMembers).values([newMember]).returning();
+      this.isDbConnected = true;
+      return created;
+    } catch (error) {
+      console.warn('Database error, using memory storage:', error.message);
+      return this.fallbackStorage.createTeamMember(teamMember);
+    }
+  }
+
+  async updateTeamMember(id: string, updates: Partial<InsertTeamMember>): Promise<SelectTeamMember | undefined> {
+    try {
+      const now = new Date();
+      const updateData: any = { ...updates, updatedAt: now };
+      const [updated] = await db.update(teamMembers).set(updateData).where(eq(teamMembers.id, id)).returning();
+      this.isDbConnected = true;
+      return updated || undefined;
+    } catch (error) {
+      console.warn('Database error, using memory storage:', error.message);
+      return this.fallbackStorage.updateTeamMember(id, updates);
+    }
+  }
+
+  async deleteTeamMember(id: string): Promise<boolean> {
+    try {
+      const result = await db.delete(teamMembers).where(eq(teamMembers.id, id));
+      this.isDbConnected = true;
+      return result.length > 0;
+    } catch (error) {
+      console.warn('Database error, using memory storage:', error.message);
+      return this.fallbackStorage.deleteTeamMember(id);
+    }
+  }
+
+  async listTeamMembers(): Promise<SelectTeamMember[]> {
+    try {
+      const result = await db.select().from(teamMembers);
+      this.isDbConnected = true;
+      return result;
+    } catch (error) {
+      console.warn('Database error, using memory storage:', error.message);
+      return this.fallbackStorage.listTeamMembers();
     }
   }
 }
