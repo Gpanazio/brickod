@@ -138,7 +138,7 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
       case 'pausado':
         return <Badge className="bg-yellow-100 text-yellow-800">Pausado</Badge>;
       case 'concluído':
-        return <Badge className="bg-gray-100 text-gray-800">Concluído</Badge>;
+        return <Badge className="bg-muted text-foreground">Concluído</Badge>;
       default:
         return <Badge>{status}</Badge>;
     }
@@ -160,7 +160,7 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
               <div>
                 <CardTitle className="text-lg text-[var(--brick-dark)]">{project.name}</CardTitle>
                 {project.client && (
-                  <p className="text-sm text-gray-600 flex items-center mt-1">
+                  <p className="text-sm text-muted-foreground flex items-center mt-1">
                     <User className="w-3 h-3 mr-1" />
                     {project.client}
                   </p>
@@ -214,9 +214,9 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
         </CardHeader>
         <CardContent className="pt-0">
           {project.description && (
-            <p className="text-sm text-gray-600 mb-3 line-clamp-2">{project.description}</p>
+            <p className="text-sm text-muted-foreground mb-3 line-clamp-2">{project.description}</p>
           )}
-          <div className="flex items-center justify-between text-xs text-gray-500">
+          <div className="flex items-center justify-between text-xs text-muted-foreground">
             <div className="flex items-center space-x-4">
               <span className="flex items-center">
                 <Calendar className="w-3 h-3 mr-1" />
@@ -245,8 +245,8 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-[var(--brick-dark)]">Projetos</h2>
-          <p className="text-gray-600">Organize suas ordens do dia por projeto</p>
+          <h2 className="text-2xl font-bold text-foreground">Projetos</h2>
+          <p className="text-muted-foreground">Organize suas ordens do dia por projeto</p>
           <div className="mt-2">
             <SyncIndicator 
               lastSync={lastSync} 
@@ -273,12 +273,12 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
               Novo Projeto
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-md w-full bg-white rounded-xl p-6 shadow-lg z-50" aria-describedby="project-dialog-description">
+          <DialogContent className="sm:max-w-md w-full bg-background rounded-xl p-6 shadow-lg z-50" aria-describedby="project-dialog-description">
             <DialogHeader>
               <DialogTitle>
                 {editingProject ? 'Editar Projeto' : 'Criar Novo Projeto'}
               </DialogTitle>
-              <p id="project-dialog-description" className="text-sm text-gray-600">
+              <p id="project-dialog-description" className="text-sm text-muted-foreground">
                 {editingProject ? 'Edite as informações do projeto abaixo.' : 'Preencha os dados para criar um novo projeto para organizar suas ordens do dia.'}
               </p>
             </DialogHeader>
@@ -354,9 +354,9 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
 
       {projects.length === 0 ? (
         <div className="text-center py-12">
-          <FolderOpen className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">Nenhum projeto criado</h3>
-          <p className="text-gray-600 mb-6">Comece criando seu primeiro projeto para organizar suas ordens do dia.</p>
+          <FolderOpen className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+          <h3 className="text-lg font-medium text-foreground mb-2">Nenhum projeto criado</h3>
+          <p className="text-muted-foreground mb-6">Comece criando seu primeiro projeto para organizar suas ordens do dia.</p>
           <Button
             onClick={() => setShowNewProjectDialog(true)}
             variant="brick"

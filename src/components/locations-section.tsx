@@ -59,18 +59,18 @@ function SortableLocationItem({ location, index, onUpdate, onRemove }: SortableL
     <div
       ref={setNodeRef}
       style={style}
-      className={`border border-gray-200 rounded-lg p-4 bg-white ${isDragging ? 'shadow-lg' : ''}`}
+      className={`border border-gray-200 rounded-lg p-4 bg-card ${isDragging ? 'shadow-lg' : ''}`}
     >
       <div className="flex justify-between items-start mb-3">
         <div className="flex items-center gap-2">
           <div
             {...attributes}
             {...listeners}
-            className="cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600 p-1"
+            className="cursor-grab active:cursor-grabbing text-muted-foreground hover:text-foreground p-1"
           >
             <GripVertical className="w-4 h-4" />
           </div>
-          <h3 className="font-medium text-gray-900">Locação #{index + 1}</h3>
+          <h3 className="font-medium text-foreground">Locação #{index + 1}</h3>
         </div>
         <Button
           onClick={() => onRemove(location.id)}
@@ -82,7 +82,7 @@ function SortableLocationItem({ location, index, onUpdate, onRemove }: SortableL
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <Label className="block text-sm font-medium text-gray-600 mb-1">
+          <Label className="block text-sm font-medium text-muted-foreground mb-1">
             Endereço
           </Label>
           <Input
@@ -93,7 +93,7 @@ function SortableLocationItem({ location, index, onUpdate, onRemove }: SortableL
           />
         </div>
         <div>
-          <Label className="block text-sm font-medium text-gray-600 mb-1">
+          <Label className="block text-sm font-medium text-muted-foreground mb-1">
             Observações
           </Label>
           <Input
@@ -154,7 +154,7 @@ export default function LocationsSection({
         </div>
 
         {locations.length === 0 ? (
-          <div className="text-center py-8 text-gray-500 italic">
+          <div className="text-center py-8 text-muted-foreground italic">
             Clique em "Nova Locação" para adicionar locações
           </div>
         ) : (

@@ -113,12 +113,12 @@ export default function PDFPreviewDemo({ onClose }: PDFPreviewDemoProps) {
             {/* Header Section */}
             <div className="brick-black text-white p-4 flex justify-between items-center">
               <div className="flex items-center space-x-4">
-                <div className="w-12 h-8 bg-white flex items-center justify-center">
+                <div className="w-12 h-8 bg-card flex items-center justify-center">
                   <span className="text-[var(--brick-black)] font-bold text-xs">BRICK</span>
                 </div>
                 <div>
                   <h2 className="text-lg font-bold">MAPA DE FILMAGEM</h2>
-                  <p className="text-sm text-gray-300">Produção Audiovisual</p>
+                  <p className="text-sm text-muted-foreground">Produção Audiovisual</p>
                 </div>
               </div>
               <div className="text-right text-xs">
@@ -127,11 +127,11 @@ export default function PDFPreviewDemo({ onClose }: PDFPreviewDemoProps) {
             </div>
 
             {/* Content Preview */}
-            <div className="bg-white p-6 space-y-6 text-sm">
+            <div className="bg-background p-6 space-y-6 text-sm">
               {/* Production Info */}
               <section>
                 <h3 className="font-bold text-base mb-3 text-[var(--brick-dark)]">INFORMAÇÕES DA PRODUÇÃO</h3>
-                <div className="space-y-1 text-gray-700">
+                <div className="space-y-1 text-foreground">
                   <p><strong>Título:</strong> Curta-Metragem Brick - Projeto Exemplo</p>
                   <p><strong>Data de Filmagem:</strong> 15/02/2025</p>
                   <p><strong>Roteiro:</strong> Roteiro Final v3.2 - Brick Curta</p>
@@ -142,7 +142,7 @@ export default function PDFPreviewDemo({ onClose }: PDFPreviewDemoProps) {
               {/* Locations */}
               <section>
                 <h3 className="font-bold text-base mb-3 text-[var(--brick-dark)]">LOCAÇÕES</h3>
-                <div className="space-y-3 text-gray-700">
+                <div className="space-y-3 text-foreground">
                   <div>
                     <p className="font-semibold">Locação 1:</p>
                     <p className="ml-4">Endereço: Rua Augusta, 123 - Vila Madalena, São Paulo - SP</p>
@@ -159,7 +159,7 @@ export default function PDFPreviewDemo({ onClose }: PDFPreviewDemoProps) {
               {/* Scenes */}
               <section>
                 <h3 className="font-bold text-base mb-3 text-[var(--brick-dark)]">CENAS PROGRAMADAS</h3>
-                <div className="space-y-3 text-gray-700">
+                <div className="space-y-3 text-foreground">
                   <div>
                     <p className="font-semibold">Cena 1A:</p>
                     <p className="ml-4">Descrição: Conversa entre protagonistas no café</p>
@@ -176,7 +176,7 @@ export default function PDFPreviewDemo({ onClose }: PDFPreviewDemoProps) {
               {/* Call Times */}
               <section>
                 <h3 className="font-bold text-base mb-3 text-[var(--brick-dark)]">HORÁRIOS DE CHAMADA</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-foreground">
                   <div>
                     <p className="font-semibold mb-2">Equipe Técnica:</p>
                     <div className="ml-4 space-y-1">
@@ -198,7 +198,7 @@ export default function PDFPreviewDemo({ onClose }: PDFPreviewDemoProps) {
               {/* General Notes */}
               <section>
                 <h3 className="font-bold text-base mb-3 text-[var(--brick-dark)]">OBSERVAÇÕES GERAIS</h3>
-                <div className="text-gray-700">
+                <div className="text-foreground">
                   <p>ATENÇÃO: Previsão de chuva pela manhã. Equipamento de proteção disponível no caminhão de produção. Catering será servido às 12h no local...</p>
                 </div>
               </section>
@@ -206,7 +206,7 @@ export default function PDFPreviewDemo({ onClose }: PDFPreviewDemoProps) {
               {/* Contacts */}
               <section>
                 <h3 className="font-bold text-base mb-3 text-[var(--brick-dark)]">CONTATOS IMPORTANTES</h3>
-                <div className="space-y-2 text-gray-700">
+                <div className="space-y-2 text-foreground">
                   <div>
                     <p>Maria Produtora - Produtora Executiva</p>
                     <p className="ml-4">Tel: (11) 99999-1234</p>
@@ -247,7 +247,7 @@ export default function PDFPreviewDemo({ onClose }: PDFPreviewDemoProps) {
             )}
           </div>
 
-          <div className="text-center text-gray-600 text-sm">
+          <div className="text-center text-muted-foreground text-sm">
             <p>Este é um exemplo de como fica o PDF gerado pela aplicação.</p>
             <p>O documento mantém a identidade visual da Brick com header e footer personalizados.</p>
           </div>
