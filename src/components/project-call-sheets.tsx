@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowLeft, Calendar, FileText, Plus, MoreVertical, Edit, Trash2, Eye, Download, Archive, Save } from "lucide-react";
+import { ArrowLeft, Calendar, FileText, Plus, MoreVertical, Edit, Trash2, Eye, Download, Archive, Save, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -80,6 +80,35 @@ export function ProjectCallSheets({ project, onBack, onNewCallSheet, onEditCallS
     }
   };
 
+  const handleDuplicateCallSheet = (callSheet: SelectCallSheet) => {
+    const newTitle = prompt(
+      "Novo título da ordem do dia",
+      `${callSheet.productionTitle} (cópia)`
+    );
+    if (!newTitle) return;
+    try {
+      const duplicated = saveCallSheet({
+        ...callSheet,
+        id: undefined,
+        productionTitle: newTitle,
+      });
+      if (duplicated) {
+        toast({
+          title: "OD duplicada",
+          description: `A ordem do dia "${callSheet.productionTitle}" foi duplicada.`,
+        });
+      } else {
+        throw new Error("Duplicate failed");
+      }
+    } catch (error) {
+      toast({
+        title: "Erro ao duplicar",
+        description: "Não foi possível duplicar a ordem do dia.",
+        variant: "destructive",
+      });
+    }
+  };
+
   const handleStatusChange = (callSheet: SelectCallSheet, newStatus: 'rascunho' | 'finalizada') => {
     try {
       const localData = localStorage.getItem("brick-call-sheets");
@@ -141,6 +170,10 @@ export function ProjectCallSheets({ project, onBack, onNewCallSheet, onEditCallS
                 <DropdownMenuItem onClick={() => onEditCallSheet(callSheet)}>
                   <Edit className="w-4 h-4 mr-2" />
                   Editar
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleDuplicateCallSheet(callSheet)}>
+                  <Copy className="w-4 h-4 mr-2" />
+                  Duplicar
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => handleExportPDF(callSheet)}>
                   <Download className="w-4 h-4 mr-2" />
