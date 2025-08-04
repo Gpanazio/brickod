@@ -231,6 +231,17 @@ export function useProjects() {
     deleteProject: (id: string) => {
       return deleteMutation.mutate(id);
     },
+    duplicateProject: (original: SelectProject, name: string) => {
+      const newId = nanoid();
+      createMutation.mutate({
+        id: newId,
+        name,
+        description: original.description || '',
+        client: original.client || '',
+        status: original.status || 'ativo'
+      });
+      return newId;
+    },
     getProject: (id: string) => {
       const projects = query.data || [];
       return projects.find((project: SelectProject) => project.id === id);
