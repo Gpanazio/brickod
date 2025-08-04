@@ -40,7 +40,7 @@ export default function ProductionInfo({
               value={client}
               onChange={(e) => onUpdateField('client', e.target.value)}
               placeholder="Nome do cliente ou empresa"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brick-red focus:border-transparent transition-all"
+              size="lg"
             />
           </div>
           <div>
@@ -52,7 +52,7 @@ export default function ProductionInfo({
               value={productionTitle}
               onChange={(e) => onUpdateField('productionTitle', e.target.value)}
               placeholder="Nome do projeto ou filme"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brick-red focus:border-transparent transition-all"
+              size="lg"
             />
           </div>
           <div>
@@ -63,7 +63,7 @@ export default function ProductionInfo({
               type="date"
               value={shootingDate}
               onChange={(e) => onUpdateField('shootingDate', e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brick-red focus:border-transparent transition-all"
+              size="lg"
             />
           </div>
           <div>
@@ -75,7 +75,7 @@ export default function ProductionInfo({
               value={producer}
               onChange={(e) => onUpdateField('producer', e.target.value)}
               placeholder="Nome do produtor"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brick-red focus:border-transparent transition-all"
+              size="lg"
             />
           </div>
           <div>
@@ -87,7 +87,7 @@ export default function ProductionInfo({
               value={director}
               onChange={(e) => onUpdateField('director', e.target.value)}
               placeholder="Nome do diretor"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brick-red focus:border-transparent transition-all"
+              size="lg"
             />
           </div>
         </div>

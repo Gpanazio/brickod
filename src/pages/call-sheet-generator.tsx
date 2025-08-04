@@ -417,7 +417,8 @@ export default function CallSheetGenerator() {
               value={callSheet.generalNotes}
               onChange={(e) => updateField('generalNotes', e.target.value)}
               placeholder="Informações importantes para toda a equipe: condições climáticas, equipamentos especiais, restrições de acesso, contatos de emergência, etc."
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brick-red focus:border-transparent transition-all h-32 resize-none"
+              size="lg"
+              className="h-32 resize-none"
             />
           </CardContent>
         </Card>

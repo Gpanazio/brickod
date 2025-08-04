@@ -92,7 +92,6 @@ function SortableSceneItem({ scene, index, onUpdate, onRemove }: SortableSceneIt
             value={scene.number}
             onChange={(e) => onUpdate(scene.id, { number: e.target.value })}
             placeholder="Ex: 1A, 2B, 15"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brick-red focus:border-transparent text-sm"
           />
         </div>
         <div className="md:col-span-2">
@@ -104,7 +103,6 @@ function SortableSceneItem({ scene, index, onUpdate, onRemove }: SortableSceneIt
             value={scene.description}
             onChange={(e) => onUpdate(scene.id, { description: e.target.value })}
             placeholder="Breve descrição da cena"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brick-red focus:border-transparent text-sm"
           />
         </div>
         <div>
@@ -116,7 +114,6 @@ function SortableSceneItem({ scene, index, onUpdate, onRemove }: SortableSceneIt
             value={scene.estimatedTime || ''}
             onChange={(e) => onUpdate(scene.id, { estimatedTime: e.target.value })}
             placeholder="Ex: 2h, 30min"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brick-red focus:border-transparent text-sm"
           />
         </div>
       </div>
@@ -128,7 +125,7 @@ function SortableSceneItem({ scene, index, onUpdate, onRemove }: SortableSceneIt
           value={scene.cast}
           onChange={(e) => onUpdate(scene.id, { cast: e.target.value })}
           placeholder="Liste os atores necessários para esta cena"
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brick-red focus:border-transparent text-sm h-20 resize-none"
+          className="h-20 resize-none"
         />
       </div>
     </div>

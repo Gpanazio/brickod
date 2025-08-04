@@ -91,7 +91,6 @@ function SortableLocationItem({ location, index, onUpdate, onRemove }: SortableL
             value={location.address}
             onChange={(e) => onUpdate(location.id, { address: e.target.value })}
             placeholder="Endereço completo da locação"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brick-red focus:border-transparent text-sm"
           />
         </div>
         <div>
@@ -103,7 +102,6 @@ function SortableLocationItem({ location, index, onUpdate, onRemove }: SortableL
             value={location.notes || ''}
             onChange={(e) => onUpdate(location.id, { notes: e.target.value })}
             placeholder="Informações adicionais"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brick-red focus:border-transparent text-sm"
           />
         </div>
       </div>

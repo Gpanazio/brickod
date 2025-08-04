@@ -65,7 +65,7 @@ export default function CallTimesSection({
               type="time"
               value={startTime || ''}
               onChange={(e) => onUpdateField('startTime', e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brick-red focus:border-transparent transition-all"
+              size="lg"
             />
           </div>
           <div>
@@ -76,7 +76,7 @@ export default function CallTimesSection({
               type="time"
               value={lunchBreakTime || ''}
               onChange={(e) => onUpdateField('lunchBreakTime', e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brick-red focus:border-transparent transition-all"
+              size="lg"
             />
           </div>
           <div>
@@ -87,7 +87,7 @@ export default function CallTimesSection({
               type="time"
               value={endTime || ''}
               onChange={(e) => onUpdateField('endTime', e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brick-red focus:border-transparent transition-all"
+              size="lg"
             />
           </div>
         </div>
@@ -165,7 +165,6 @@ export default function CallTimesSection({
                           value={callTime.name}
                           onChange={(e) => onUpdateCrew(callTime.id, { name: e.target.value })}
                           placeholder="Ex: João Silva"
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brick-red focus:border-transparent text-sm"
                         />
                       </div>
                       <div>
@@ -175,7 +174,6 @@ export default function CallTimesSection({
                           value={callTime.role}
                           onChange={(e) => onUpdateCrew(callTime.id, { role: e.target.value })}
                           placeholder="Ex: Diretor, Cinegrafista"
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brick-red focus:border-transparent text-sm"
                         />
                       </div>
                       <div>
@@ -185,7 +183,6 @@ export default function CallTimesSection({
                           value={callTime.phone || ''}
                           onChange={(e) => onUpdateCrew(callTime.id, { phone: e.target.value })}
                           placeholder="(11) 99999-9999"
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brick-red focus:border-transparent text-sm"
                         />
                       </div>
                       <div>
@@ -194,7 +191,6 @@ export default function CallTimesSection({
                           type="time"
                           value={callTime.time}
                           onChange={(e) => onUpdateCrew(callTime.id, { time: e.target.value })}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brick-red focus:border-transparent text-sm"
                         />
                       </div>
                     </div>
@@ -233,13 +229,13 @@ export default function CallTimesSection({
                       value={callTime.name}
                       onChange={(e) => onUpdateCast(callTime.id, { name: e.target.value })}
                       placeholder="Nome do Ator/Atriz"
-                      className="w-48 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brick-red focus:border-transparent text-sm"
+                      className="w-48"
                     />
                     <Input
                       type="time"
                       value={callTime.time}
                       onChange={(e) => onUpdateCast(callTime.id, { time: e.target.value })}
-                      className="w-24 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brick-red focus:border-transparent text-sm"
+                      className="w-24"
                     />
                     <Button
                       onClick={() => onRemoveCast(callTime.id)}
