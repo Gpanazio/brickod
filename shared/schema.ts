@@ -34,6 +34,7 @@ export const attachmentSchema = z.object({
 export const callTimeSchema = z.object({
   id: z.string(),
   time: z.string(),
+  memberId: z.string().optional(),
   name: z.string(),
   role: z.string(),
   phone: z.string().optional(),

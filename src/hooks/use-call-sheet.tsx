@@ -158,6 +158,8 @@ export function useCallSheet() {
       time: "",
       name: "",
       role: "",
+      phone: "",
+      memberId: undefined,
     };
     setCallSheet(prev => ({
       ...prev,
