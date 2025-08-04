@@ -31,6 +31,8 @@
   --brick-light: hsl(0, 0%, 98%);
   --brick-red: hsl(0, 79%, 43%);
   --brick-red-hover: hsl(0, 84%, 38%);
+  --z-dialog-overlay: 50;
+  --z-dialog-content: 60;
 }
 
 .dark {
@@ -86,10 +88,10 @@
   
   /* Force high z-index for dialogs */
   [data-radix-dialog-overlay] {
-    z-index: 9999 !important;
+    z-index: var(--z-dialog-overlay);
   }
-  
+
   [data-radix-dialog-content] {
-    z-index: 10000 !important;
+    z-index: var(--z-dialog-content);
   }
 }
