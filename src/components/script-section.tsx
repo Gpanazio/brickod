@@ -196,7 +196,6 @@ export default function ScriptSection({
                     placeholder="Cole o link do roteiro (Google Drive, Dropbox, etc.)"
                     value={scriptUrl}
                     onChange={(e) => handleUrlInput(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brick-red focus:border-transparent text-sm"
                   />
                 </div>
               </div>
@@ -219,7 +218,6 @@ export default function ScriptSection({
               value={scriptName}
               onChange={(e) => onUpdateField('scriptName', e.target.value)}
               placeholder="Ex: Roteiro Final v3.0, Script - Cena Externa"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brick-red focus:border-transparent text-sm"
             />
           </div>
         )}

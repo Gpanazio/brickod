@@ -91,7 +91,6 @@ function SortableContactItem({ contact, index, onUpdate, onRemove }: SortableCon
             value={contact.name}
             onChange={(e) => onUpdate(contact.id, { name: e.target.value })}
             placeholder="Nome completo"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brick-red focus:border-transparent text-sm"
           />
         </div>
         <div>
@@ -103,7 +102,6 @@ function SortableContactItem({ contact, index, onUpdate, onRemove }: SortableCon
             value={contact.role}
             onChange={(e) => onUpdate(contact.id, { role: e.target.value })}
             placeholder="ex: Diretor, Produtor, etc."
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brick-red focus:border-transparent text-sm"
           />
         </div>
         <div>
@@ -115,7 +113,6 @@ function SortableContactItem({ contact, index, onUpdate, onRemove }: SortableCon
             value={contact.phone}
             onChange={(e) => onUpdate(contact.id, { phone: e.target.value })}
             placeholder="(11) 99999-9999"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brick-red focus:border-transparent text-sm"
           />
         </div>
       </div>
