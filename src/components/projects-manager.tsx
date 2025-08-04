@@ -154,7 +154,7 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
         <CardHeader className="pb-3">
           <div className="flex items-start justify-between">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 brick-red rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-[var(--brick-red)] rounded-lg flex items-center justify-center">
                 <FolderOpen className="w-5 h-5 text-white" />
               </div>
               <div>
