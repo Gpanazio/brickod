@@ -70,29 +70,11 @@
   .brick-black {
     background-color: var(--brick-black);
   }
-  
-  .brick-dark {
-    background-color: var(--brick-dark);
-  }
-  
+
   .brick-gray {
     background-color: var(--brick-gray);
   }
-  
-  .brick-light {
-    background-color: var(--brick-light);
-  }
-  
-  
-  .text-brick-black {
-    color: var(--brick-black);
-  }
-  
-  .text-brick-dark {
-    color: var(--brick-dark);
-  }
-  
-  
+
   /* Dialog overlay custom styles */
   .dialog-overlay-light {
     background-color: rgba(0, 0, 0, 0.1);

@@ -100,7 +100,7 @@ export default function PDFPreviewDemo({ onClose }: PDFPreviewDemoProps) {
 
   return (
     <Card className="max-w-4xl mx-auto my-8">
-      <CardHeader className="brick-dark text-white">
+      <CardHeader className="bg-[var(--brick-dark)] text-white">
         <CardTitle className="flex items-center">
           <FileText className="w-6 h-6 mr-3" />
           Demonstração do PDF Gerado
@@ -114,7 +114,7 @@ export default function PDFPreviewDemo({ onClose }: PDFPreviewDemoProps) {
             <div className="brick-black text-white p-4 flex justify-between items-center">
               <div className="flex items-center space-x-4">
                 <div className="w-12 h-8 bg-white flex items-center justify-center">
-                  <span className="text-brick-black font-bold text-xs">BRICK</span>
+                  <span className="text-[var(--brick-black)] font-bold text-xs">BRICK</span>
                 </div>
                 <div>
                   <h2 className="text-lg font-bold">MAPA DE FILMAGEM</h2>
@@ -130,7 +130,7 @@ export default function PDFPreviewDemo({ onClose }: PDFPreviewDemoProps) {
             <div className="bg-white p-6 space-y-6 text-sm">
               {/* Production Info */}
               <section>
-                <h3 className="font-bold text-base mb-3 text-brick-dark">INFORMAÇÕES DA PRODUÇÃO</h3>
+                <h3 className="font-bold text-base mb-3 text-[var(--brick-dark)]">INFORMAÇÕES DA PRODUÇÃO</h3>
                 <div className="space-y-1 text-gray-700">
                   <p><strong>Título:</strong> Curta-Metragem Brick - Projeto Exemplo</p>
                   <p><strong>Data de Filmagem:</strong> 15/02/2025</p>
@@ -141,7 +141,7 @@ export default function PDFPreviewDemo({ onClose }: PDFPreviewDemoProps) {
 
               {/* Locations */}
               <section>
-                <h3 className="font-bold text-base mb-3 text-brick-dark">LOCAÇÕES</h3>
+                <h3 className="font-bold text-base mb-3 text-[var(--brick-dark)]">LOCAÇÕES</h3>
                 <div className="space-y-3 text-gray-700">
                   <div>
                     <p className="font-semibold">Locação 1:</p>
@@ -158,7 +158,7 @@ export default function PDFPreviewDemo({ onClose }: PDFPreviewDemoProps) {
 
               {/* Scenes */}
               <section>
-                <h3 className="font-bold text-base mb-3 text-brick-dark">CENAS PROGRAMADAS</h3>
+                <h3 className="font-bold text-base mb-3 text-[var(--brick-dark)]">CENAS PROGRAMADAS</h3>
                 <div className="space-y-3 text-gray-700">
                   <div>
                     <p className="font-semibold">Cena 1A:</p>
@@ -175,7 +175,7 @@ export default function PDFPreviewDemo({ onClose }: PDFPreviewDemoProps) {
 
               {/* Call Times */}
               <section>
-                <h3 className="font-bold text-base mb-3 text-brick-dark">HORÁRIOS DE CHAMADA</h3>
+                <h3 className="font-bold text-base mb-3 text-[var(--brick-dark)]">HORÁRIOS DE CHAMADA</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
                   <div>
                     <p className="font-semibold mb-2">Equipe Técnica:</p>
@@ -197,7 +197,7 @@ export default function PDFPreviewDemo({ onClose }: PDFPreviewDemoProps) {
 
               {/* General Notes */}
               <section>
-                <h3 className="font-bold text-base mb-3 text-brick-dark">OBSERVAÇÕES GERAIS</h3>
+                <h3 className="font-bold text-base mb-3 text-[var(--brick-dark)]">OBSERVAÇÕES GERAIS</h3>
                 <div className="text-gray-700">
                   <p>ATENÇÃO: Previsão de chuva pela manhã. Equipamento de proteção disponível no caminhão de produção. Catering será servido às 12h no local...</p>
                 </div>
@@ -205,7 +205,7 @@ export default function PDFPreviewDemo({ onClose }: PDFPreviewDemoProps) {
 
               {/* Contacts */}
               <section>
-                <h3 className="font-bold text-base mb-3 text-brick-dark">CONTATOS IMPORTANTES</h3>
+                <h3 className="font-bold text-base mb-3 text-[var(--brick-dark)]">CONTATOS IMPORTANTES</h3>
                 <div className="space-y-2 text-gray-700">
                   <div>
                     <p>Maria Produtora - Produtora Executiva</p>

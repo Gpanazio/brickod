@@ -150,10 +150,10 @@ export default function ContactsSection({
       <CardContent className="p-6">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center">
-            <div className="w-8 h-8 brick-dark rounded-lg flex items-center justify-center mr-3">
+            <div className="w-8 h-8 bg-[var(--brick-dark)] rounded-lg flex items-center justify-center mr-3">
               <Users className="text-white w-4 h-4" />
             </div>
-            <h2 className="text-xl font-semibold text-brick-dark">Contatos Importantes</h2>
+            <h2 className="text-xl font-semibold text-[var(--brick-dark)]">Contatos Importantes</h2>
           </div>
           <Button
             onClick={onAdd}

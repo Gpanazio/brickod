@@ -24,10 +24,10 @@ export default function ProductionInfo({
     <Card className="mb-8">
       <CardContent className="p-6">
         <div className="flex items-center mb-6">
-          <div className="w-8 h-8 brick-dark rounded-lg flex items-center justify-center mr-3">
+          <div className="w-8 h-8 bg-[var(--brick-dark)] rounded-lg flex items-center justify-center mr-3">
             <Film className="text-white w-4 h-4" />
           </div>
-          <h2 className="text-xl font-semibold text-brick-dark">Informações da Produção</h2>
+          <h2 className="text-xl font-semibold text-[var(--brick-dark)]">Informações da Produção</h2>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -95,7 +95,7 @@ export function CallSheetHistory({ onSelectCallSheet }: CallSheetHistoryProps) {
             <CardHeader className="pb-3">
               <div className="flex justify-between items-start">
                 <div className="flex-1">
-                  <CardTitle className="text-lg text-brick-dark flex items-center gap-2">
+                  <CardTitle className="text-lg text-[var(--brick-dark)] flex items-center gap-2">
                     <FileText className="w-5 h-5" />
                     {callSheet.productionTitle || "Sem título"}
                   </CardTitle>
