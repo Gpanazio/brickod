@@ -74,9 +74,8 @@ function SortableLocationItem({ location, index, onUpdate, onRemove }: SortableL
         </div>
         <Button
           onClick={() => onRemove(location.id)}
-          variant="iconGhost"
+          variant="iconDestructive"
           size="sm"
-          className="text-gray-400 hover:text-red-500 transition-colors"
         >
           <Trash2 className="w-4 h-4" />
         </Button>

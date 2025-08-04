@@ -74,9 +74,8 @@ function SortableContactItem({ contact, index, onUpdate, onRemove }: SortableCon
         </div>
         <Button
           onClick={() => onRemove(contact.id)}
-          variant="iconGhost"
+          variant="iconDestructive"
           size="sm"
-          className="text-gray-400 hover:text-red-500 transition-colors"
         >
           <Trash2 className="w-4 h-4" />
         </Button>

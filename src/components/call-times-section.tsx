@@ -150,9 +150,8 @@ export default function CallTimesSection({
                       </div>
                       <Button
                         onClick={() => onRemoveCrew(callTime.id)}
-                        variant="iconGhost"
+                        variant="iconDestructive"
                         size="sm"
-                        className="text-gray-400 hover:text-red-500 transition-colors"
                       >
                         <Minus className="w-4 h-4" />
                       </Button>
@@ -239,9 +238,8 @@ export default function CallTimesSection({
                     />
                     <Button
                       onClick={() => onRemoveCast(callTime.id)}
-                      variant="iconGhost"
+                      variant="iconDestructive"
                       size="sm"
-                      className="text-gray-400 hover:text-red-500 transition-colors"
                     >
                       <Minus className="w-4 h-4" />
                     </Button>
