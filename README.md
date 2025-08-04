@@ -13,6 +13,7 @@ O Gerador de Ordem do Dia é uma aplicação desenvolvida pela Brick Produtora p
 - **Histórico de Produções**: Acesse e gerencie ordens do dia anteriores
 - **Exportação em PDF**: Gere PDFs profissionais com layout organizado
 - **Gerenciamento de Equipe**: Organize contatos, locações e horários de chamada
+- **Membros da equipe**: Acesse e gerencie rapidamente os participantes pelo menu do cabeçalho
 - **Drag & Drop**: Reorganize seções facilmente (exceto horários de chamada)
 - **Design Responsivo**: Funciona perfeitamente em desktop e mobile
 

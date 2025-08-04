@@ -33,6 +33,7 @@ gerador-ordem-do-dia-brick/
 │   │   └── utils.ts
 │   ├── 📁 pages/                # Páginas
 │   │   ├── call-sheet-generator.tsx
+│   │   ├── team-members.tsx
 │   │   └── not-found.tsx
 │   ├── 📁 data/
 │   │   └── default-templates.ts
