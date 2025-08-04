@@ -246,7 +246,7 @@ export function ProjectCallSheets({ project, onBack, onNewCallSheet, onEditCallS
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <Button variant="ghost" onClick={onBack} className="p-2">
+          <Button variant="iconGhost" size="icon" onClick={onBack}>
             <ArrowLeft className="w-4 h-4" />
           </Button>
           <div>
