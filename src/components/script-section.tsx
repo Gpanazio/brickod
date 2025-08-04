@@ -4,6 +4,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import type { Attachment } from "@shared/schema";
 import { useState } from "react";
@@ -255,19 +262,22 @@ export default function ScriptSection({
                     <Label htmlFor="attachment-type" className="text-sm font-medium">
                       Tipo de Arquivo
                     </Label>
-                    <select
-                      id="attachment-type"
+                    <Select
                       value={newAttachmentType}
-                      onChange={(e) => setNewAttachmentType(e.target.value)}
-                      className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-brick-red focus:border-transparent text-sm"
+                      onValueChange={setNewAttachmentType}
                     >
-                      <option value="documento">Documento</option>
-                      <option value="imagem">Imagem</option>
-                      <option value="vídeo">Vídeo</option>
-                      <option value="áudio">Áudio</option>
-                      <option value="planilha">Planilha</option>
-                      <option value="apresentação">Apresentação</option>
-                    </select>
+                      <SelectTrigger id="attachment-type" className="mt-1">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="documento">Documento</SelectItem>
+                        <SelectItem value="imagem">Imagem</SelectItem>
+                        <SelectItem value="vídeo">Vídeo</SelectItem>
+                        <SelectItem value="áudio">Áudio</SelectItem>
+                        <SelectItem value="planilha">Planilha</SelectItem>
+                        <SelectItem value="apresentação">Apresentação</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
 
                   <div>
