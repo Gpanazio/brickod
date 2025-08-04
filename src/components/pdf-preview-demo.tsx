@@ -230,7 +230,8 @@ export default function PDFPreviewDemo({ onClose }: PDFPreviewDemoProps) {
           <div className="flex justify-center space-x-4">
             <Button
               onClick={handleGenerateExamplePDF}
-              className="brick-red brick-red-hover text-white px-6 py-2"
+              variant="brick"
+              className="px-6 py-2"
             >
               <Download className="w-4 h-4 mr-2" />
               Baixar PDF de Exemplo

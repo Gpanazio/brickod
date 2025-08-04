@@ -195,7 +195,7 @@ export function TemplateManager({ onSelectTemplate, currentCallSheet }: Template
                 </Button>
                 <Button
                   type="submit"
-                  className="brick-red brick-red-hover text-white"
+                  variant="brick"
                   disabled={createTemplate.isPending}
                 >
                   {createTemplate.isPending ? "Salvando..." : "Salvar Template"}

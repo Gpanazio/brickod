@@ -220,9 +220,9 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
           }
         }}>
           <DialogTrigger asChild>
-            <Button 
+            <Button
               onClick={() => setShowNewProjectDialog(true)}
-              className="brick-red brick-red-hover text-white"
+              variant="brick"
             >
               <Plus className="w-4 h-4 mr-2" />
               Novo Projeto
@@ -294,9 +294,9 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
                 >
                   Cancelar
                 </Button>
-                <Button 
+                <Button
                   onClick={editingProject ? handleUpdateProject : handleCreateProject}
-                  className="brick-red brick-red-hover text-white"
+                  variant="brick"
                   disabled={!newProjectName.trim()}
                 >
                   {editingProject ? 'Atualizar' : 'Criar'}
@@ -312,9 +312,9 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
           <FolderOpen className="w-16 h-16 text-gray-400 mx-auto mb-4" />
           <h3 className="text-lg font-medium text-gray-900 mb-2">Nenhum projeto criado</h3>
           <p className="text-gray-600 mb-6">Comece criando seu primeiro projeto para organizar suas ordens do dia.</p>
-          <Button 
+          <Button
             onClick={() => setShowNewProjectDialog(true)}
-            className="brick-red brick-red-hover text-white"
+            variant="brick"
           >
             <Plus className="w-4 h-4 mr-2" />
             Criar Primeiro Projeto
