@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { ArrowLeft, Calendar, FileText, Plus, MoreVertical, Edit, Trash2, Eye, Download, Archive } from "lucide-react";
+import { ArrowLeft, Calendar, FileText, Plus, MoreVertical, Edit, Trash2, Eye, Download, Archive, Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { useProjectCallSheets } from "@/hooks/use-projects";
+import { useProjectCallSheets } from "@/hooks/use-project-call-sheets";
 import { generateCallSheetPDF } from "@/lib/pdf-generator";
 import type { SelectProject, SelectCallSheet } from "@shared/schema";
 
@@ -19,7 +19,7 @@ interface ProjectCallSheetsProps {
 
 export function ProjectCallSheets({ project, onBack, onNewCallSheet, onEditCallSheet }: ProjectCallSheetsProps) {
   const { toast } = useToast();
-  const { callSheets } = useProjectCallSheets(project.id);
+  const { callSheets, saveCallSheet } = useProjectCallSheets(project.id);
   const [showDeleteDialog, setShowDeleteDialog] = useState<SelectCallSheet | null>(null);
 
   const handleDeleteCallSheet = (callSheet: SelectCallSheet) => {
@@ -55,6 +55,26 @@ export function ProjectCallSheets({ project, onBack, onNewCallSheet, onEditCallS
       toast({
         title: "Erro ao gerar PDF",
         description: "Não foi possível gerar o arquivo PDF.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleSaveCallSheet = (callSheet: SelectCallSheet) => {
+    try {
+      const saved = saveCallSheet(callSheet);
+      if (saved) {
+        toast({
+          title: "OD salva",
+          description: `A ordem do dia "${callSheet.productionTitle}" foi salva com sucesso.`,
+        });
+      } else {
+        throw new Error("Save failed");
+      }
+    } catch (error) {
+      toast({
+        title: "Erro ao salvar",
+        description: "Não foi possível salvar a ordem do dia.",
         variant: "destructive",
       });
     }
@@ -125,6 +145,10 @@ export function ProjectCallSheets({ project, onBack, onNewCallSheet, onEditCallS
                 <DropdownMenuItem onClick={() => handleExportPDF(callSheet)}>
                   <Download className="w-4 h-4 mr-2" />
                   Exportar PDF
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleSaveCallSheet(callSheet)}>
+                  <Save className="w-4 h-4 mr-2" />
+                  Salvar OD
                 </DropdownMenuItem>
                 {callSheet.status === 'rascunho' && (
                   <DropdownMenuItem onClick={() => handleStatusChange(callSheet, 'finalizada')}>
