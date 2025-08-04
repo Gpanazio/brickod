@@ -194,7 +194,8 @@ export const insertTemplateSchema = createInsertSchema(templates).omit({
   updatedAt: true,
 });
 
-export const insertTeamMemberSchema = teamMemberSchema.omit({ id: true });
+export const insertTeamMemberSchema = teamMemberSchema.omit({
+  id: true,
   createdAt: true,
   updatedAt: true,
 });
