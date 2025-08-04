@@ -13,6 +13,9 @@ interface TeamMember {
   id: string;
   name: string;
   role: string;
+  email: string;
+  phone: string;
+  projectId?: string;
 }
 
 export default function TeamMembers() {
@@ -20,6 +23,9 @@ export default function TeamMembers() {
   const queryClient = useQueryClient();
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [projectId, setProjectId] = useState<string | undefined>(undefined);
   const [editing, setEditing] = useState<TeamMember | null>(null);
 
   const { data: members } = useQuery<TeamMember[]>({
@@ -39,6 +45,9 @@ export default function TeamMembers() {
       toast({ title: "Membro adicionado" });
       setName("");
       setRole("");
+      setEmail("");
+      setPhone("");
+      setProjectId(undefined);
     },
   });
 
@@ -55,6 +64,9 @@ export default function TeamMembers() {
       setEditing(null);
       setName("");
       setRole("");
+      setEmail("");
+      setPhone("");
+      setProjectId(undefined);
     },
   });
 
@@ -68,11 +80,24 @@ export default function TeamMembers() {
   });
 
   const handleSubmit = () => {
-    if (!name.trim() || !role.trim()) return;
+    if (!name.trim() || !role.trim() || !email.trim() || !phone.trim()) return;
     if (editing) {
-      updateMutation.mutate({ ...editing, name: name.trim(), role: role.trim() });
+      updateMutation.mutate({
+        ...editing,
+        name: name.trim(),
+        role: role.trim(),
+        email: email.trim(),
+        phone: phone.trim(),
+        projectId,
+      });
     } else {
-      createMutation.mutate({ name: name.trim(), role: role.trim() });
+      createMutation.mutate({
+        name: name.trim(),
+        role: role.trim(),
+        email: email.trim(),
+        phone: phone.trim(),
+        projectId,
+      });
     }
   };
 
@@ -80,12 +105,18 @@ export default function TeamMembers() {
     setEditing(member);
     setName(member.name);
     setRole(member.role);
+    setEmail(member.email);
+    setPhone(member.phone);
+    setProjectId(member.projectId);
   };
 
   const handleCancel = () => {
     setEditing(null);
     setName("");
     setRole("");
+    setEmail("");
+    setPhone("");
+    setProjectId(undefined);
   };
 
   return (
@@ -114,10 +145,22 @@ export default function TeamMembers() {
                 onChange={(e) => setRole(e.target.value)}
                 className="md:w-1/3"
               />
+              <Input
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="md:w-1/3"
+              />
+              <Input
+                placeholder="Telefone"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="md:w-1/3"
+              />
               <Button
                 type="button"
                 variant="brick"
-                disabled={!name.trim() || !role.trim()}
+                disabled={!name.trim() || !role.trim() || !email.trim() || !phone.trim()}
                 onClick={handleSubmit}
               >
                 <Plus className="w-4 h-4 mr-2" />
