@@ -16,7 +16,7 @@ interface TeamMember {
   role: string;
   email: string;
   phone: string;
-  projectId?: string;
+  projectId?: string | null;
 }
 
 export default function TeamMembers() {
@@ -114,12 +114,12 @@ export default function TeamMembers() {
     if (!name.trim() || !role.trim() || !email.trim() || !phone.trim()) return;
     if (editing) {
       updateMutation.mutate({
-        ...editing,
+        id: editing.id,
         name: name.trim(),
         role: role.trim(),
         email: email.trim(),
         phone: phone.trim(),
-        projectId,
+        ...(projectId ? { projectId } : {}),
       });
     } else {
       createMutation.mutate({
@@ -138,7 +138,7 @@ export default function TeamMembers() {
     setRole(member.role);
     setEmail(member.email);
     setPhone(member.phone);
-    setProjectId(member.projectId);
+    setProjectId(member.projectId ?? undefined);
   };
 
   const handleCancel = () => {
