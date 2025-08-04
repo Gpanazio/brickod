@@ -18,7 +18,7 @@
   transform: translate(-50%, -50%) !important;
   max-width: 90vw !important;
   max-height: 90vh !important;
-  background: white !important;
+  background: var(--background) !important;
   border-radius: 8px !important;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
 }
@@ -35,8 +35,8 @@
 
 .dialog-create-project [data-radix-dialog-content] {
   z-index: 9999 !important;
-  background: white !important;
-  border: 1px solid #e5e7eb !important;
+  background: var(--background) !important;
+  border: 1px solid var(--border) !important;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
 }
 
@@ -45,7 +45,7 @@
 .dialog-create-project textarea {
   position: relative !important;
   z-index: 10000 !important;
-  background: white !important;
+  background: var(--background) !important;
 }
 
 /* Correção para botões */
