@@ -49,11 +49,10 @@ export function SyncIndicator({ lastSync, onForceSync, isLoading }: SyncIndicato
 
       {/* Botão de Sincronização Manual */}
       <Button
-        variant="outline"
+        variant="outlineBrick"
         size="sm"
         onClick={onForceSync}
         disabled={isLoading || !isOnline}
-        className="text-brick-red hover:bg-brick-red hover:text-white"
       >
         <RefreshCw className={`w-4 h-4 mr-1 ${isLoading ? 'animate-spin' : ''}`} />
         Sincronizar

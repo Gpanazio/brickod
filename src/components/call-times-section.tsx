@@ -102,9 +102,8 @@ export default function CallTimesSection({
               </h3>
               <Button
                 onClick={onAddCrew}
-                variant="outline"
+                variant="outlineBrick"
                 size="sm"
-                className="text-brick-red border-brick-red hover:bg-brick-red hover:text-white"
               >
                 <Plus className="w-4 h-4" />
               </Button>
@@ -214,9 +213,8 @@ export default function CallTimesSection({
               </h3>
               <Button
                 onClick={onAddCast}
-                variant="outline"
+                variant="outlineBrick"
                 size="sm"
-                className="text-brick-red border-brick-red hover:bg-brick-red hover:text-white"
               >
                 <Plus className="w-4 h-4" />
               </Button>

@@ -256,9 +256,9 @@ export function ProjectCallSheets({ project, onBack, onNewCallSheet, onEditCallS
             </p>
           </div>
         </div>
-        <Button 
+        <Button
           onClick={() => onNewCallSheet(project.id!)}
-          className="brick-red brick-red-hover text-white"
+          variant="brick"
         >
           <Plus className="w-4 h-4 mr-2" />
           Nova OD
@@ -270,9 +270,9 @@ export function ProjectCallSheets({ project, onBack, onNewCallSheet, onEditCallS
           <FileText className="w-16 h-16 text-gray-400 mx-auto mb-4" />
           <h3 className="text-lg font-medium text-gray-900 mb-2">Nenhuma ordem do dia criada</h3>
           <p className="text-gray-600 mb-6">Comece criando a primeira ordem do dia para este projeto.</p>
-          <Button 
+          <Button
             onClick={() => onNewCallSheet(project.id!)}
-            className="brick-red brick-red-hover text-white"
+            variant="brick"
           >
             <Plus className="w-4 h-4 mr-2" />
             Criar Primeira OD

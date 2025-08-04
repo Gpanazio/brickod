@@ -178,7 +178,8 @@ export default function ScriptSection({
                   />
                   <Button
                     asChild
-                    className="brick-red brick-red-hover text-white px-6 py-2 cursor-pointer"
+                    variant="brick"
+                    className="px-6 py-2 cursor-pointer"
                   >
                     <label htmlFor="script-upload">
                       <Upload className="w-4 h-4 mr-2" />
@@ -313,9 +314,9 @@ export default function ScriptSection({
                     >
                       Cancelar
                     </Button>
-                    <Button 
+                    <Button
                       onClick={handleAddAttachment}
-                      className="brick-red brick-red-hover text-white"
+                      variant="brick"
                       disabled={!newAttachmentName.trim() || !newAttachmentUrl.trim()}
                     >
                       Adicionar

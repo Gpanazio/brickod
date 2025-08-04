@@ -117,9 +117,8 @@ export function CallSheetHistory({ onSelectCallSheet }: CallSheetHistoryProps) {
                 <div className="flex gap-2">
                   <Button
                     size="sm"
-                    variant="outline"
+                    variant="outlineBrick"
                     onClick={() => onSelectCallSheet(callSheet)}
-                    className="border-brick-red text-brick-red hover:bg-brick-red hover:text-white"
                   >
                     <Eye className="w-4 h-4 mr-1" />
                     Carregar
