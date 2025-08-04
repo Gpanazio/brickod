@@ -505,7 +505,16 @@ export default function CallSheetGenerator() {
               </div>
             </DialogContent>
           </Dialog>
-          
+
+          <Button
+            onClick={handleSave}
+            variant="brick"
+            className="px-8 py-3 rounded-lg font-semibold transition-colors flex items-center text-lg"
+          >
+            <Save className="w-5 h-5 mr-2" />
+            Salvar OD
+          </Button>
+
           <Button
             onClick={handleExportPDF}
             variant="brick"
