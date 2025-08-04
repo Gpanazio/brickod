@@ -200,9 +200,9 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
                     <Archive className="w-4 h-4 mr-2" />
                     Concluir
                   </DropdownMenuItem>
-                  <DropdownMenuItem 
+                  <DropdownMenuItem
                     onClick={(e) => { e.stopPropagation(); handleDeleteProject(project); }}
-                    className="text-red-600"
+                    variant="destructive"
                   >
                     <Trash2 className="w-4 h-4 mr-2" />
                     Excluir
