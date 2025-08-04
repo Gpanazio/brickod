@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertCallSheetSchema, insertTemplateSchema, insertProjectSchema } from "@shared/schema";
+import { insertCallSheetSchema, insertTemplateSchema, insertProjectSchema, insertTeamMemberSchema } from "@shared/schema";
 import { testConnection } from "./db";
 import { ZodError } from "zod";
 
@@ -174,6 +174,73 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error deleting project:", error);
       res.status(500).json({ error: "Failed to delete project" });
+    }
+  });
+
+  // Team member routes
+  app.get("/api/team-members", async (_req, res) => {
+    try {
+      const members = await storage.listTeamMembers();
+      res.json(members);
+    } catch (error) {
+      console.error("Error fetching team members:", error);
+      res.status(500).json({ error: "Failed to fetch team members" });
+    }
+  });
+
+  app.post("/api/team-members", async (req, res) => {
+    try {
+      const validatedData = insertTeamMemberSchema.parse(req.body);
+      const member = await storage.createTeamMember(validatedData);
+      res.status(201).json(member);
+    } catch (error) {
+      if (error instanceof ZodError) {
+        return res.status(400).json({
+          error: "Validation error",
+          details: error.issues
+        });
+      }
+      console.error("Error creating team member:", error);
+      res.status(500).json({ error: "Failed to create team member" });
+    }
+  });
+
+  app.put("/api/team-members/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const validatedData = insertTeamMemberSchema.partial().parse(req.body);
+      const member = await storage.updateTeamMember(id, validatedData);
+
+      if (!member) {
+        return res.status(404).json({ error: "Team member not found" });
+      }
+
+      res.json(member);
+    } catch (error) {
+      if (error instanceof ZodError) {
+        return res.status(400).json({
+          error: "Validation error",
+          details: error.issues
+        });
+      }
+      console.error("Error updating team member:", error);
+      res.status(500).json({ error: "Failed to update team member" });
+    }
+  });
+
+  app.delete("/api/team-members/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const success = await storage.deleteTeamMember(id);
+
+      if (!success) {
+        return res.status(404).json({ error: "Team member not found" });
+      }
+
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting team member:", error);
+      res.status(500).json({ error: "Failed to delete team member" });
     }
   });
 
