@@ -151,7 +151,7 @@ export default function TeamMembers() {
   };
 
   return (
-    <div className="min-h-screen brick-light font-inter text-brick-dark">
+    <div className="min-h-screen bg-[var(--brick-light)] font-inter text-[var(--brick-dark)]">
       <BrickHeader
         onExportPDF={() => {}}
         onSave={() => {}}

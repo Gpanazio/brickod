@@ -158,7 +158,7 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
                 <FolderOpen className="w-5 h-5 text-white" />
               </div>
               <div>
-                <CardTitle className="text-lg text-brick-dark">{project.name}</CardTitle>
+                <CardTitle className="text-lg text-[var(--brick-dark)]">{project.name}</CardTitle>
                 {project.client && (
                   <p className="text-sm text-gray-600 flex items-center mt-1">
                     <User className="w-3 h-3 mr-1" />
@@ -245,7 +245,7 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-brick-dark">Projetos</h2>
+          <h2 className="text-2xl font-bold text-[var(--brick-dark)]">Projetos</h2>
           <p className="text-gray-600">Organize suas ordens do dia por projeto</p>
           <div className="mt-2">
             <SyncIndicator 

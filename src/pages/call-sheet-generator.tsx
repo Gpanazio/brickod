@@ -284,7 +284,7 @@ export default function CallSheetGenerator() {
 
   if (showPreview) {
     return (
-      <div className="min-h-screen brick-light font-inter text-brick-dark">
+      <div className="min-h-screen bg-[var(--brick-light)] font-inter text-[var(--brick-dark)]">
         <BrickHeader 
           onExportPDF={handleExportPDF}
           onSave={handleSave}
@@ -299,7 +299,7 @@ export default function CallSheetGenerator() {
   }
 
   return (
-    <div className="min-h-screen brick-light font-inter text-brick-dark">
+    <div className="min-h-screen bg-[var(--brick-light)] font-inter text-[var(--brick-dark)]">
       <BrickHeader 
         onExportPDF={handleExportPDF}
         onSave={handleSave}
@@ -414,10 +414,10 @@ export default function CallSheetGenerator() {
         <Card className="mb-8">
           <CardContent className="p-6">
             <div className="flex items-center mb-6">
-              <div className="w-8 h-8 brick-dark rounded-lg flex items-center justify-center mr-3">
+              <div className="w-8 h-8 bg-[var(--brick-dark)] rounded-lg flex items-center justify-center mr-3">
                 <StickyNote className="text-white w-4 h-4" />
               </div>
-              <h2 className="text-xl font-semibold text-brick-dark">Observações Gerais</h2>
+              <h2 className="text-xl font-semibold text-[var(--brick-dark)]">Observações Gerais</h2>
             </div>
             
             <Textarea
