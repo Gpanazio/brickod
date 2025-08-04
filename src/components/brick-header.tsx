@@ -1,5 +1,6 @@
-import { Film, FileText, Save } from "lucide-react";
+import { FileText, Save, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "wouter";
 
 interface BrickHeaderProps {
   onExportPDF: () => void;
@@ -35,6 +36,15 @@ export default function BrickHeader({ onExportPDF, onSave, hasUnsavedChanges }: 
               <FileText className="w-4 h-4 mr-2" />
               Gerar PDF
             </Button>
+            <Link href="/team-members">
+              <Button
+                variant="ghost"
+                className="text-gray-300 hover:text-white hover:bg-[var(--brick-red)] transition-colors"
+              >
+                <Users className="w-4 h-4 mr-2" />
+                Membros da equipe
+              </Button>
+            </Link>
             <Button
               onClick={onSave}
               variant="ghost"
