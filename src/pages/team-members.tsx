@@ -8,6 +8,7 @@ import { BrickHeader, BrickFooter } from "@/components";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/api";
 import { Plus } from "lucide-react";
+import { Link } from "wouter";
 
 interface TeamMember {
   id: string;
@@ -157,6 +158,9 @@ export default function TeamMembers() {
         hasUnsavedChanges={false}
       />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-4">
+        <Link href="/" className="block w-fit">
+          <Button variant="ghost">Voltar</Button>
+        </Link>
         <Card>
           <CardHeader>
             <CardTitle>{editing ? "Editar membro" : "Adicionar membro"}</CardTitle>
