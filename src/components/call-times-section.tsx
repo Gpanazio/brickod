@@ -3,7 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
-import { CallTime } from "@shared/schema";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
+import type { CallTime, TeamMember } from "@shared/schema";
 
 interface CallTimesSectionProps {
   crewCallTimes: CallTime[];
@@ -18,9 +25,10 @@ interface CallTimesSectionProps {
   onUpdateCast: (id: string, updates: Partial<CallTime>) => void;
   onRemoveCast: (id: string) => void;
   onUpdateField: (field: any, value: any) => void;
+  members: TeamMember[];
 }
 
-export default function CallTimesSection({ 
+export default function CallTimesSection({
   crewCallTimes,
   castCallTimes,
   startTime,
@@ -32,7 +40,8 @@ export default function CallTimesSection({
   onAddCast,
   onUpdateCast,
   onRemoveCast,
-  onUpdateField
+  onUpdateField,
+  members
 }: CallTimesSectionProps) {
   return (
     <Card className="mb-8">
@@ -109,8 +118,37 @@ export default function CallTimesSection({
               <div className="space-y-3">
                 {crewCallTimes.map((callTime) => (
                   <div key={callTime.id} className="space-y-2 p-3 bg-gray-50 rounded-lg">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-gray-700">Membro da Equipe</span>
+                    <div className="flex items-start justify-between">
+                      <div className="w-full mr-2">
+                        <Label className="text-xs text-gray-600 mb-1 block">Membro da Equipe</Label>
+                        <Select
+                          value={callTime.memberId || undefined}
+                          onValueChange={(value) => {
+                            const member = members.find((m) => m.id === value);
+                            if (member) {
+                              onUpdateCrew(callTime.id, {
+                                memberId: member.id,
+                                name: member.name,
+                                role: member.role || '',
+                                phone: member.phone || '',
+                              });
+                            } else {
+                              onUpdateCrew(callTime.id, { memberId: undefined });
+                            }
+                          }}
+                        >
+                          <SelectTrigger className="w-full px-3 py-2 text-sm">
+                            <SelectValue placeholder="Selecione um membro" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {members.map((member) => (
+                              <SelectItem key={member.id} value={member.id}>
+                                {member.name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
                       <Button
                         onClick={() => onRemoveCrew(callTime.id)}
                         variant="iconGhost"

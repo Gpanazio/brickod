@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { StickyNote, Save, FileText, Eye, Layers, History, Layout, FolderOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -13,6 +14,7 @@ import { useCallSheet } from "@/hooks/use-call-sheet";
 import { useCreateCallSheet } from "@/hooks/use-call-sheet-history";
 import { useCreateTemplate } from "@/hooks/use-templates";
 import { generateCallSheetPDF } from "@/lib/pdf-generator";
+import { apiRequest } from "@/lib/api";
 
 import BrickHeader from "@/components/brick-header";
 import BrickFooter from "@/components/brick-footer";
@@ -28,7 +30,7 @@ import { CallSheetHistory } from "@/components/call-sheet-history";
 import { ProjectsManager } from "@/components/projects-manager";
 import { ProjectCallSheets } from "@/components/project-call-sheets";
 import { useProjectCallSheets } from "@/hooks/use-project-call-sheets";
-import type { CallSheet, Project } from "@shared/schema";
+import type { CallSheet, Project, TeamMember } from "@shared/schema";
 
 export default function CallSheetGenerator() {
   const { toast } = useToast();
@@ -41,9 +43,13 @@ export default function CallSheetGenerator() {
   const [templateCategory, setTemplateCategory] = useState("produção");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [currentProjectId, setCurrentProjectId] = useState<string | undefined>(undefined);
-  
+
   const createCallSheet = useCreateCallSheet();
   const createTemplateMutation = useCreateTemplate();
+  const { data: members } = useQuery<TeamMember[]>({
+    queryKey: ["/api/team-members"],
+    queryFn: () => apiRequest("/api/team-members"),
+  });
   const {
     callSheet,
     hasUnsavedChanges,
@@ -394,6 +400,7 @@ export default function CallSheetGenerator() {
           onUpdateCast={updateCastCallTime}
           onRemoveCast={removeCastCallTime}
           onUpdateField={updateField}
+          members={members || []}
         />
 
         {/* General Notes Section */}
