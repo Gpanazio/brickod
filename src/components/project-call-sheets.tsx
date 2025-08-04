@@ -195,9 +195,9 @@ export function ProjectCallSheets({ project, onBack, onNewCallSheet, onEditCallS
                     Voltar para Rascunho
                   </DropdownMenuItem>
                 )}
-                <DropdownMenuItem 
+                <DropdownMenuItem
                   onClick={() => setShowDeleteDialog(callSheet)}
-                  className="text-red-600"
+                  variant="destructive"
                 >
                   <Trash2 className="w-4 h-4 mr-2" />
                   Excluir
