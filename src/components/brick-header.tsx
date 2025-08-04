@@ -37,18 +37,15 @@ export default function BrickHeader({ onExportPDF, onSave, hasUnsavedChanges }: 
               Gerar PDF
             </Button>
             <Link href="/team-members">
-              <Button
-                variant="ghost"
-                className="text-gray-300 hover:text-white hover:bg-[var(--brick-red)] transition-colors"
-              >
+              <Button variant="ghostBrick">
                 <Users className="w-4 h-4 mr-2" />
                 Membros da equipe
               </Button>
             </Link>
             <Button
               onClick={onSave}
-              variant="ghost"
-              className={`${hasUnsavedChanges ? 'text-yellow-400' : 'text-gray-300'} hover:text-white hover:bg-[var(--brick-red)] transition-colors`}
+              variant="ghostBrick"
+              className={hasUnsavedChanges ? 'text-yellow-400' : undefined}
             >
               <Save className="w-4 h-4 mr-2" />
               Salvar OD
