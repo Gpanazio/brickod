@@ -63,11 +63,17 @@ export default function TeamMembers() {
   });
 
   const updateMutation = useMutation({
-    mutationFn: (data: TeamMember) =>
-      apiRequest(`/api/team-members/${data.id}`, {
+    mutationFn: ({ id, name, role, email, phone, projectId }: TeamMember) =>
+      apiRequest(`/api/team-members/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          name,
+          role,
+          email,
+          phone,
+          ...(projectId ? { projectId } : {}),
+        }),
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/team-members"] });
@@ -113,23 +119,17 @@ export default function TeamMembers() {
 
   const handleSubmit = () => {
     if (!name.trim() || !role.trim() || !email.trim() || !phone.trim()) return;
+    const payload = {
+      name: name.trim(),
+      role: role.trim(),
+      email: email.trim(),
+      phone: phone.trim(),
+      ...(projectId ? { projectId } : {}),
+    };
     if (editing) {
-      updateMutation.mutate({
-        id: editing.id,
-        name: name.trim(),
-        role: role.trim(),
-        email: email.trim(),
-        phone: phone.trim(),
-        ...(projectId ? { projectId } : {}),
-      });
+      updateMutation.mutate({ id: editing.id, ...payload });
     } else {
-      createMutation.mutate({
-        name: name.trim(),
-        role: role.trim(),
-        email: email.trim(),
-        phone: phone.trim(),
-        ...(projectId ? { projectId } : {}),
-      });
+      createMutation.mutate(payload);
     }
   };
 
