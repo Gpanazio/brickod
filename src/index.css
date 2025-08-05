@@ -31,6 +31,8 @@
   --brick-light: hsl(0, 0%, 98%);
   --brick-red: hsl(0, 79%, 43%);
   --brick-red-hover: hsl(0, 84%, 38%);
+  --z-navigation: 10;
+  --z-toast: 40;
   --z-dialog-overlay: 50;
   --z-dialog-content: 60;
 }
@@ -93,5 +95,13 @@
 
   [data-radix-dialog-content] {
     z-index: var(--z-dialog-content);
+  }
+
+  .z-navigation {
+    z-index: var(--z-navigation);
+  }
+
+  .z-toast {
+    z-index: var(--z-toast);
   }
 }
