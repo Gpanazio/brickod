@@ -308,8 +308,9 @@ export class DatabaseStorage implements IStorage {
     try {
       const result = await db
         .delete(callSheets)
-        .where(eq(callSheets.id, id));
-      
+        .where(eq(callSheets.id, id))
+        .returning({ id: callSheets.id });
+
       this.isDbConnected = true;
       return result.length > 0;
     } catch (error) {
@@ -389,8 +390,9 @@ export class DatabaseStorage implements IStorage {
     try {
       const result = await db
         .delete(templates)
-        .where(eq(templates.id, id));
-      
+        .where(eq(templates.id, id))
+        .returning({ id: templates.id });
+
       this.isDbConnected = true;
       return result.length > 0;
     } catch (error) {
@@ -482,7 +484,10 @@ export class DatabaseStorage implements IStorage {
 
   async deleteProject(id: string): Promise<boolean> {
     try {
-      const result = await db.delete(projects).where(eq(projects.id, id));
+      const result = await db
+        .delete(projects)
+        .where(eq(projects.id, id))
+        .returning({ id: projects.id });
       this.isDbConnected = true;
       return result.length > 0;
     } catch (error) {
@@ -547,7 +552,10 @@ export class DatabaseStorage implements IStorage {
 
   async deleteTeamMember(id: string): Promise<boolean> {
     try {
-      const result = await db.delete(teamMembers).where(eq(teamMembers.id, id));
+      const result = await db
+        .delete(teamMembers)
+        .where(eq(teamMembers.id, id))
+        .returning({ id: teamMembers.id });
       this.isDbConnected = true;
       return result.length > 0;
     } catch (error) {
