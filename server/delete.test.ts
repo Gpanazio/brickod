@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { DatabaseStorage } from './storage';
+import { DatabaseStorage } from './database-storage';
 
 async function run() {
   const storage = new DatabaseStorage();
