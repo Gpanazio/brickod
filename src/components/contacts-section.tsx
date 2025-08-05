@@ -151,14 +151,14 @@ export default function ContactsSection({
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center">
             <div className="w-8 h-8 bg-[var(--brick-dark)] rounded-lg flex items-center justify-center mr-3">
-              <Users className="text-white w-4 h-4" />
+              <Users className="text-[var(--brick-light)] w-4 h-4" />
             </div>
             <h2 className="text-xl font-semibold text-[var(--brick-dark)]">Contatos Importantes</h2>
           </div>
           <Button
             onClick={onAdd}
             variant="brick"
-            className="text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+            className="text-[var(--brick-light)] px-4 py-2 rounded-lg text-sm font-medium transition-colors"
           >
             <Plus className="w-4 h-4 mr-2" />
             Novo Contato
