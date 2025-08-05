@@ -92,8 +92,9 @@ export default function TeamMembers() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id: string) =>
-      apiRequest(`/api/team-members/${id}`, { method: "DELETE" }),
+    mutationFn: async (id: string) => {
+      await apiRequest(`/api/team-members/${id}`, { method: "DELETE" });
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/team-members"] });
       toast({ title: "Membro removido" });
