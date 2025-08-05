@@ -329,11 +329,11 @@ export default function CallSheetGenerator() {
 
           <TabsContent value="form" className="space-y-8">
             {currentProjectId && (
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+              <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 mb-6">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
-                    <FolderOpen className="w-5 h-5 text-blue-600" />
-                    <span className="font-medium text-blue-900">
+                    <FolderOpen className="w-5 h-5 text-primary" />
+                    <span className="font-medium text-primary">
                       Criando OD para projeto específico
                     </span>
                   </div>
@@ -342,7 +342,7 @@ export default function CallSheetGenerator() {
                       onClick={handleSaveAsDraft}
                       variant="outline"
                       size="sm"
-                      className="text-blue-700 border-blue-300 hover:bg-blue-100"
+                      className="text-primary border-primary/50 hover:bg-primary/10"
                     >
                       <StickyNote className="w-4 h-4 mr-1" />
                       Salvar Rascunho
@@ -351,7 +351,7 @@ export default function CallSheetGenerator() {
                       onClick={() => setCurrentProjectId(undefined)}
                       variant="ghost"
                       size="sm"
-                      className="text-blue-700"
+                      className="text-primary"
                     >
                       Remover do Projeto
                     </Button>
@@ -453,7 +453,7 @@ export default function CallSheetGenerator() {
             <DialogContent className="sm:max-w-md" aria-describedby="template-dialog-description">
               <DialogHeader>
                 <DialogTitle>Salvar como Template</DialogTitle>
-                <p id="template-dialog-description" className="text-sm text-gray-600">
+                <p id="template-dialog-description" className="text-sm text-muted-foreground">
                   Salve esta ordem do dia como template para reutilizar em projetos futuros.
                 </p>
               </DialogHeader>
