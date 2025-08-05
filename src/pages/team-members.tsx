@@ -7,7 +7,7 @@ import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@
 import { BrickHeader, BrickFooter } from "@/components";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/api";
-import { Plus, Check } from "lucide-react";
+import { Plus, Check, Edit, Trash2 } from "lucide-react";
 import { Link } from "wouter";
 
 interface TeamMember {
@@ -233,6 +233,7 @@ export default function TeamMembers() {
                     <TableCell>
                       <div className="flex gap-2">
                         <Button size="sm" variant="secondary" onClick={() => handleEdit(member)}>
+                          <Edit className='w-4 h-4 mr-1' />
                           Editar
                         </Button>
                         <Button
@@ -240,6 +241,7 @@ export default function TeamMembers() {
                           variant="destructive"
                           onClick={() => deleteMutation.mutate(member.id)}
                         >
+                          <Trash2 className='w-4 h-4 mr-1' />
                           Excluir
                         </Button>
                       </div>
