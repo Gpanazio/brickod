@@ -168,9 +168,9 @@ export default function ScriptSection({
         ) : (
           // No script attached state
           <div className="space-y-4">
-            <div className="text-center py-8 border-2 border-dashed border-gray-300 rounded-lg">
-              <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600 mb-4">Anexe o roteiro da produção</p>
+          <div className="text-center py-8 border-2 border-dashed border-border rounded-lg">
+            <FileText className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+            <p className="text-muted-foreground mb-4">Anexe o roteiro da produção</p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <div className="relative">
@@ -193,7 +193,7 @@ export default function ScriptSection({
                   </Button>
                 </div>
                 
-                <span className="text-gray-400">ou</span>
+                <span className="text-muted-foreground">ou</span>
                 
                 <div className="flex-1 max-w-md">
                   <Input
@@ -206,7 +206,7 @@ export default function ScriptSection({
               </div>
             </div>
 
-            <div className="text-sm text-gray-500 space-y-1">
+            <div className="text-sm text-muted-foreground space-y-1">
               <p><strong>Dica:</strong> O link do roteiro será incluído no PDF da chamada para fácil acesso da equipe.</p>
               <p><strong>Formatos aceitos:</strong> PDF, DOC, DOCX, TXT ou links para Google Drive, Dropbox, etc.</p>
             </div>
@@ -215,7 +215,7 @@ export default function ScriptSection({
 
         {scriptUrl && (
           <div className="mt-4">
-            <Label className="block text-sm font-medium text-gray-700 mb-2">
+            <Label className="block text-sm font-medium text-muted-foreground mb-2">
               Nome do Roteiro (opcional)
             </Label>
             <Input
@@ -228,9 +228,9 @@ export default function ScriptSection({
         )}
 
         {/* Seção de Outros Arquivos */}
-        <div className="mt-8 pt-6 border-t border-gray-200">
+        <div className="mt-8 pt-6 border-t border-border">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-medium text-gray-900">Outros Arquivos</h3>
+            <h3 className="text-lg font-medium text-foreground">Outros Arquivos</h3>
             <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
               <DialogTrigger asChild>
                 <Button variant="outlineBrick" size="sm">
@@ -289,7 +289,7 @@ export default function ScriptSection({
                       />
                       
                       <div className="flex items-center justify-center">
-                        <span className="text-sm text-gray-400">ou</span>
+                        <span className="text-sm text-muted-foreground">ou</span>
                       </div>
                       
                       <div className="relative">
@@ -336,14 +336,14 @@ export default function ScriptSection({
           {attachments.length > 0 ? (
             <div className="space-y-2">
               {attachments.map((attachment) => (
-                <div key={attachment.id} className="flex items-center justify-between p-3 border border-gray-200 rounded-lg bg-gray-50">
+                <div key={attachment.id} className="flex items-center justify-between p-3 border border-border rounded-lg bg-muted">
                   <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
                       {getAttachmentIcon(attachment.type)}
                     </div>
                     <div>
-                      <p className="font-medium text-gray-900">{attachment.name}</p>
-                      <p className="text-sm text-gray-500 capitalize">{attachment.type}</p>
+                      <p className="font-medium text-foreground">{attachment.name}</p>
+                      <p className="text-sm text-muted-foreground capitalize">{attachment.type}</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-2">
@@ -367,10 +367,10 @@ export default function ScriptSection({
               ))}
             </div>
           ) : (
-            <div className="text-center py-6 text-gray-500">
-              <File className="w-8 h-8 mx-auto mb-2 text-gray-400" />
+            <div className="text-center py-6 text-muted-foreground">
+              <File className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
               <p className="text-sm">Nenhum arquivo adicional anexado</p>
-              <p className="text-xs text-gray-400 mt-1">Use o botão "+" para adicionar storyboards, cronogramas, etc.</p>
+              <p className="text-xs text-muted-foreground mt-1">Use o botão "+" para adicionar storyboards, cronogramas, etc.</p>
             </div>
           )}
         </div>

@@ -147,12 +147,12 @@ export function ProjectCallSheets({ project, onBack, onNewCallSheet, onEditCallS
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-              <FileText className="w-5 h-5 text-blue-600" />
+            <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+              <FileText className="w-5 h-5 text-primary" />
             </div>
             <div>
               <CardTitle className="text-lg text-[var(--brick-dark)]">{callSheet.productionTitle}</CardTitle>
-              <p className="text-sm text-gray-600 flex items-center mt-1">
+              <p className="text-sm text-muted-foreground flex items-center mt-1">
                 <Calendar className="w-3 h-3 mr-1" />
                 {new Date(callSheet.shootingDate).toLocaleDateString('pt-BR')}
               </p>
@@ -210,24 +210,24 @@ export function ProjectCallSheets({ project, onBack, onNewCallSheet, onEditCallS
       <CardContent className="pt-0">
         <div className="space-y-2">
           {callSheet.producer && (
-            <p className="text-sm text-gray-600"><strong>Produtor:</strong> {callSheet.producer}</p>
+            <p className="text-sm text-muted-foreground"><strong>Produtor:</strong> {callSheet.producer}</p>
           )}
           {callSheet.director && (
-            <p className="text-sm text-gray-600"><strong>Diretor:</strong> {callSheet.director}</p>
+            <p className="text-sm text-muted-foreground"><strong>Diretor:</strong> {callSheet.director}</p>
           )}
           {callSheet.locations.length > 0 && (
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-muted-foreground">
               <strong>Locações:</strong> {callSheet.locations.length} local{callSheet.locations.length !== 1 ? 'is' : ''}
             </p>
           )}
           {callSheet.scenes.length > 0 && (
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-muted-foreground">
               <strong>Cenas:</strong> {callSheet.scenes.length} cena{callSheet.scenes.length !== 1 ? 's' : ''}
             </p>
           )}
         </div>
-        <div className="flex items-center justify-between mt-4 pt-3 border-t border-gray-100">
-          <p className="text-xs text-gray-500">
+        <div className="flex items-center justify-between mt-4 pt-3 border-t border-border">
+          <p className="text-xs text-muted-foreground">
             Atualizado em {new Date(callSheet.updatedAt!).toLocaleDateString('pt-BR')}
           </p>
           <div className="flex items-center space-x-2">
@@ -251,7 +251,7 @@ export function ProjectCallSheets({ project, onBack, onNewCallSheet, onEditCallS
           </Button>
           <div>
             <h2 className="text-2xl font-bold text-[var(--brick-dark)]">{project.name}</h2>
-            <p className="text-gray-600">
+            <p className="text-muted-foreground">
               {callSheets.length} ordem{callSheets.length !== 1 ? 's' : ''} do dia
             </p>
           </div>
@@ -267,9 +267,9 @@ export function ProjectCallSheets({ project, onBack, onNewCallSheet, onEditCallS
 
       {callSheets.length === 0 ? (
         <div className="text-center py-12">
-          <FileText className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">Nenhuma ordem do dia criada</h3>
-          <p className="text-gray-600 mb-6">Comece criando a primeira ordem do dia para este projeto.</p>
+          <FileText className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+          <h3 className="text-lg font-medium text-foreground mb-2">Nenhuma ordem do dia criada</h3>
+          <p className="text-muted-foreground mb-6">Comece criando a primeira ordem do dia para este projeto.</p>
           <Button
             onClick={() => onNewCallSheet(project.id!)}
             variant="brick"
@@ -291,13 +291,13 @@ export function ProjectCallSheets({ project, onBack, onNewCallSheet, onEditCallS
         <DialogContent className="sm:max-w-md" aria-describedby="delete-dialog-description">
           <DialogHeader>
             <DialogTitle>Confirmar Exclusão</DialogTitle>
-            <p id="delete-dialog-description" className="text-sm text-gray-600">
+            <p id="delete-dialog-description" className="text-sm text-muted-foreground">
               Esta ação não pode ser desfeita. A ordem do dia será removida permanentemente.
             </p>
           </DialogHeader>
           <div className="space-y-4">
-            <p className="text-sm text-gray-600">
-              Tem certeza que deseja excluir a ordem do dia <strong>"{showDeleteDialog?.productionTitle}"</strong>? 
+            <p className="text-sm text-muted-foreground">
+              Tem certeza que deseja excluir a ordem do dia <strong>"{showDeleteDialog?.productionTitle}"</strong>?
               Esta ação não pode ser desfeita.
             </p>
             <div className="flex justify-end space-x-2">

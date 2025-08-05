@@ -69,7 +69,7 @@ export function CallSheetHistory({ onSelectCallSheet }: CallSheetHistoryProps) {
       <div className="flex items-center justify-center py-8">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--brick-red)] mx-auto mb-4"></div>
-          <p className="text-gray-500">Carregando histórico...</p>
+          <p className="text-muted-foreground">Carregando histórico...</p>
         </div>
       </div>
     );
@@ -78,9 +78,9 @@ export function CallSheetHistory({ onSelectCallSheet }: CallSheetHistoryProps) {
   if (!callSheets || callSheets.length === 0) {
     return (
       <div className="text-center py-8">
-        <FileText className="w-12 h-12 mx-auto text-gray-400 mb-4" />
-        <p className="text-gray-500 mb-2">Nenhuma ordem do dia encontrada</p>
-        <p className="text-sm text-gray-400">
+        <FileText className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
+        <p className="text-muted-foreground mb-2">Nenhuma ordem do dia encontrada</p>
+        <p className="text-sm text-muted-foreground">
           Crie sua primeira ordem do dia para vê-la aqui
         </p>
       </div>
@@ -99,7 +99,7 @@ export function CallSheetHistory({ onSelectCallSheet }: CallSheetHistoryProps) {
                     <FileText className="w-5 h-5" />
                     {callSheet.productionTitle || "Sem título"}
                   </CardTitle>
-                  <div className="flex items-center gap-4 mt-2 text-sm text-gray-600">
+                  <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
                     <div className="flex items-center gap-1">
                       <Calendar className="w-4 h-4" />
                       {callSheet.shootingDate || "Data não definida"}
@@ -127,7 +127,7 @@ export function CallSheetHistory({ onSelectCallSheet }: CallSheetHistoryProps) {
                     size="sm"
                     variant="outline"
                     onClick={() => handleExportPDF(callSheet)}
-                    className="border-gray-400 text-gray-600 hover:bg-gray-100"
+                    className="border-border text-muted-foreground hover:bg-muted"
                   >
                     <FileText className="w-4 h-4 mr-1" />
                     PDF
@@ -161,7 +161,7 @@ export function CallSheetHistory({ onSelectCallSheet }: CallSheetHistoryProps) {
                   </Badge>
                 )}
               </div>
-              <div className="text-xs text-gray-500">
+              <div className="text-xs text-muted-foreground">
                 Criado em: {formatDate(callSheet.createdAt)}
                 {callSheet.updatedAt && callSheet.updatedAt !== callSheet.createdAt && (
                   <> • Atualizado em: {formatDate(callSheet.updatedAt)}</>

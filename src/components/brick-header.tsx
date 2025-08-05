@@ -24,7 +24,7 @@ export default function BrickHeader({ onExportPDF, onSave, hasUnsavedChanges }: 
             </div>
             <div className="text-[var(--brick-light)]">
               <h1 className="text-lg font-semibold">Gerador de Ordem do Dia</h1>
-              <p className="text-xs text-gray-300">Produção Audiovisual</p>
+              <p className="text-xs text-muted-foreground">Produção Audiovisual</p>
             </div>
           </div>
           <div className="flex items-center space-x-4">

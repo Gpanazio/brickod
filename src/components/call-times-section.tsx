@@ -56,9 +56,9 @@ export default function CallTimesSection({
         </div>
 
         {/* Horários Gerais */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6 p-4 bg-gray-50 rounded-lg">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6 p-4 bg-muted rounded-lg">
           <div>
-            <Label className="block text-sm font-medium text-gray-700 mb-2">
+            <Label className="block text-sm font-medium text-muted-foreground mb-2">
               Horário de Início
             </Label>
             <Input
@@ -69,7 +69,7 @@ export default function CallTimesSection({
             />
           </div>
           <div>
-            <Label className="block text-sm font-medium text-gray-700 mb-2">
+            <Label className="block text-sm font-medium text-muted-foreground mb-2">
               Horário do Almoço
             </Label>
             <Input
@@ -80,7 +80,7 @@ export default function CallTimesSection({
             />
           </div>
           <div>
-            <Label className="block text-sm font-medium text-gray-700 mb-2">
+            <Label className="block text-sm font-medium text-muted-foreground mb-2">
               Horário de Fim
             </Label>
             <Input
@@ -94,9 +94,9 @@ export default function CallTimesSection({
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Crew Section */}
-          <div className="border border-gray-200 rounded-lg p-4">
+          <div className="border border-border rounded-lg p-4">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="font-medium text-gray-900 flex items-center">
+              <h3 className="font-medium text-foreground flex items-center">
                 <Users className="w-4 h-4 mr-2 text-[var(--brick-red)]" />
                 Equipe Técnica
               </h3>
@@ -110,16 +110,16 @@ export default function CallTimesSection({
             </div>
             
             {crewCallTimes.length === 0 ? (
-              <div className="text-center py-4 text-gray-500 text-sm italic">
+              <div className="text-center py-4 text-muted-foreground text-sm italic">
                 Nenhum horário de equipe adicionado
               </div>
             ) : (
               <div className="space-y-3">
                 {crewCallTimes.map((callTime) => (
-                  <div key={callTime.id} className="space-y-2 p-3 bg-gray-50 rounded-lg">
+                  <div key={callTime.id} className="space-y-2 p-3 bg-muted rounded-lg">
                     <div className="flex items-start justify-between">
                       <div className="w-full mr-2">
-                        <Label className="text-xs text-gray-600 mb-1 block">Membro da Equipe</Label>
+                        <Label className="text-xs text-muted-foreground mb-1 block">Membro da Equipe</Label>
                         <Select
                           value={callTime.memberId || undefined}
                           onValueChange={(value) => {
@@ -158,7 +158,7 @@ export default function CallTimesSection({
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                       <div>
-                        <Label className="text-xs text-gray-600 mb-1 block">Nome</Label>
+                        <Label className="text-xs text-muted-foreground mb-1 block">Nome</Label>
                         <Input
                           type="text"
                           value={callTime.name}
@@ -167,7 +167,7 @@ export default function CallTimesSection({
                         />
                       </div>
                       <div>
-                        <Label className="text-xs text-gray-600 mb-1 block">Cargo</Label>
+                        <Label className="text-xs text-muted-foreground mb-1 block">Cargo</Label>
                         <Input
                           type="text"
                           value={callTime.role}
@@ -176,7 +176,7 @@ export default function CallTimesSection({
                         />
                       </div>
                       <div>
-                        <Label className="text-xs text-gray-600 mb-1 block">Telefone</Label>
+                        <Label className="text-xs text-muted-foreground mb-1 block">Telefone</Label>
                         <Input
                           type="tel"
                           value={callTime.phone || ''}
@@ -185,7 +185,7 @@ export default function CallTimesSection({
                         />
                       </div>
                       <div>
-                        <Label className="text-xs text-gray-600 mb-1 block">Horário</Label>
+                        <Label className="text-xs text-muted-foreground mb-1 block">Horário</Label>
                         <Input
                           type="time"
                           value={callTime.time}
@@ -200,9 +200,9 @@ export default function CallTimesSection({
           </div>
 
           {/* Cast Section */}
-          <div className="border border-gray-200 rounded-lg p-4">
+          <div className="border border-border rounded-lg p-4">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="font-medium text-gray-900 flex items-center">
+              <h3 className="font-medium text-foreground flex items-center">
                 <Star className="w-4 h-4 mr-2 text-[var(--brick-red)]" />
                 Elenco
               </h3>
@@ -216,7 +216,7 @@ export default function CallTimesSection({
             </div>
             
             {castCallTimes.length === 0 ? (
-              <div className="text-center py-4 text-gray-500 text-sm italic">
+              <div className="text-center py-4 text-muted-foreground text-sm italic">
                 Nenhum horário de elenco adicionado
               </div>
             ) : (

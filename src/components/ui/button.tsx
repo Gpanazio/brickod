@@ -18,10 +18,10 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         ghostBrick:
-          "text-gray-300 hover:text-white hover:bg-[var(--brick-red)]",
+          "text-muted-foreground hover:text-white hover:bg-[var(--brick-red)]",
         iconGhost: "hover:bg-transparent",
         iconDestructive:
-          "text-gray-500 hover:text-destructive focus-visible:text-destructive hover:bg-transparent focus-visible:ring-destructive",
+          "text-muted-foreground hover:text-destructive focus-visible:text-destructive hover:bg-transparent focus-visible:ring-destructive",
         link: "text-primary underline-offset-4 hover:underline",
         brick:
           "bg-[var(--brick-red)] text-white hover:bg-[var(--brick-red-hover)] hover:text-white",

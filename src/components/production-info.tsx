@@ -32,7 +32,7 @@ export default function ProductionInfo({
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="md:col-span-2">
-            <Label className="block text-sm font-medium text-gray-700 mb-2">
+            <Label className="block text-sm font-medium text-muted-foreground mb-2">
               Cliente
             </Label>
             <Input
@@ -44,7 +44,7 @@ export default function ProductionInfo({
             />
           </div>
           <div>
-            <Label className="block text-sm font-medium text-gray-700 mb-2">
+            <Label className="block text-sm font-medium text-muted-foreground mb-2">
               Título da Produção
             </Label>
             <Input
@@ -56,7 +56,7 @@ export default function ProductionInfo({
             />
           </div>
           <div>
-            <Label className="block text-sm font-medium text-gray-700 mb-2">
+            <Label className="block text-sm font-medium text-muted-foreground mb-2">
               Data de Filmagem
             </Label>
             <Input
@@ -67,7 +67,7 @@ export default function ProductionInfo({
             />
           </div>
           <div>
-            <Label className="block text-sm font-medium text-gray-700 mb-2">
+            <Label className="block text-sm font-medium text-muted-foreground mb-2">
               Produtor
             </Label>
             <Input
@@ -79,7 +79,7 @@ export default function ProductionInfo({
             />
           </div>
           <div>
-            <Label className="block text-sm font-medium text-gray-700 mb-2">
+            <Label className="block text-sm font-medium text-muted-foreground mb-2">
               Diretor
             </Label>
             <Input

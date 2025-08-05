@@ -109,7 +109,7 @@ export default function PDFPreviewDemo({ onClose }: PDFPreviewDemoProps) {
       <CardContent className="p-6">
         <div className="space-y-6">
           {/* PDF Preview Visual Representation */}
-          <div className="border-2 border-gray-300 rounded-lg overflow-hidden shadow-lg">
+          <div className="border-2 border-border rounded-lg overflow-hidden shadow-lg">
             {/* Header Section */}
             <div className="brick-black text-[var(--brick-light)] p-4 flex justify-between items-center">
               <div className="flex items-center space-x-4">
@@ -135,7 +135,7 @@ export default function PDFPreviewDemo({ onClose }: PDFPreviewDemoProps) {
                   <p><strong>Título:</strong> Curta-Metragem Brick - Projeto Exemplo</p>
                   <p><strong>Data de Filmagem:</strong> 15/02/2025</p>
                   <p><strong>Roteiro:</strong> Roteiro Final v3.2 - Brick Curta</p>
-                  <p className="text-blue-600"><strong>Link:</strong> https://drive.google.com/file/d/1234567890/view</p>
+                  <p className="text-primary"><strong>Link:</strong> https://drive.google.com/file/d/1234567890/view</p>
                 </div>
               </section>
 

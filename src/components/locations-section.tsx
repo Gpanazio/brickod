@@ -59,7 +59,7 @@ function SortableLocationItem({ location, index, onUpdate, onRemove }: SortableL
     <div
       ref={setNodeRef}
       style={style}
-      className={`border border-gray-200 rounded-lg p-4 bg-card ${isDragging ? 'shadow-lg' : ''}`}
+      className={`border border-border rounded-lg p-4 bg-card ${isDragging ? 'shadow-lg' : ''}`}
     >
       <div className="flex justify-between items-start mb-3">
         <div className="flex items-center gap-2">
