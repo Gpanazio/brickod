@@ -182,17 +182,17 @@ export const teamMembers = pgTable('team_members', {
 export const insertProjectSchema = createInsertSchema(projects).omit({
   createdAt: true,
   updatedAt: true,
-});
+}).extend({ id: z.string().optional() });
 
 export const insertCallSheetSchema = createInsertSchema(callSheets).omit({
   createdAt: true,
   updatedAt: true,
-});
+}).extend({ id: z.string().optional() });
 
 export const insertTemplateSchema = createInsertSchema(templates).omit({
   createdAt: true,
   updatedAt: true,
-});
+}).extend({ id: z.string().optional() });
 
 export const insertTeamMemberSchema = teamMemberSchema.omit({
   id: true,
