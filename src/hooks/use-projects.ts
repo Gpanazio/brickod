@@ -218,11 +218,10 @@ export function useProjects() {
     error: query.error,
     lastSync,
     addProject: (name: string, description?: string, client?: string) => {
-      return createMutation.mutate({ 
-        id: nanoid(),
-        name, 
-        description: description || '', 
-        client: client || '' 
+      return createMutation.mutate({
+        name,
+        description: description || '',
+        client: client || ''
       });
     },
     updateProject: (id: string, updates: Partial<InsertProject>) => {
