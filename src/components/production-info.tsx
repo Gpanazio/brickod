@@ -25,7 +25,7 @@ export default function ProductionInfo({
       <CardContent className="p-6">
         <div className="flex items-center mb-6">
           <div className="w-8 h-8 bg-[var(--brick-dark)] rounded-lg flex items-center justify-center mr-3">
-            <Film className="text-white w-4 h-4" />
+            <Film className="text-[var(--brick-light)] w-4 h-4" />
           </div>
           <h2 className="text-xl font-semibold text-[var(--brick-dark)]">Informações da Produção</h2>
         </div>

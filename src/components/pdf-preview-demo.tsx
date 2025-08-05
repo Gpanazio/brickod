@@ -100,7 +100,7 @@ export default function PDFPreviewDemo({ onClose }: PDFPreviewDemoProps) {
 
   return (
     <Card className="max-w-4xl mx-auto my-8">
-      <CardHeader className="bg-[var(--brick-dark)] text-white">
+      <CardHeader className="bg-[var(--brick-dark)] text-[var(--brick-light)]">
         <CardTitle className="flex items-center">
           <FileText className="w-6 h-6 mr-3" />
           Demonstração do PDF Gerado
@@ -111,7 +111,7 @@ export default function PDFPreviewDemo({ onClose }: PDFPreviewDemoProps) {
           {/* PDF Preview Visual Representation */}
           <div className="border-2 border-gray-300 rounded-lg overflow-hidden shadow-lg">
             {/* Header Section */}
-            <div className="brick-black text-white p-4 flex justify-between items-center">
+            <div className="brick-black text-[var(--brick-light)] p-4 flex justify-between items-center">
               <div className="flex items-center space-x-4">
                 <div className="w-12 h-8 bg-card flex items-center justify-center">
                   <span className="text-[var(--brick-black)] font-bold text-xs">BRICK</span>
@@ -220,7 +220,7 @@ export default function PDFPreviewDemo({ onClose }: PDFPreviewDemoProps) {
             </div>
 
             {/* Footer */}
-            <div className="brick-black text-white p-3 text-xs flex justify-between">
+            <div className="brick-black text-[var(--brick-light)] p-3 text-xs flex justify-between">
               <span>BRICK Produtora - 7 anos de experiência em produção audiovisual</span>
               <span>Página 1 de 1</span>
             </div>
