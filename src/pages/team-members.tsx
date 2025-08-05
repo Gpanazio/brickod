@@ -7,7 +7,7 @@ import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@
 import { BrickHeader, BrickFooter } from "@/components";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/api";
-import { Plus } from "lucide-react";
+import { Plus, Check } from "lucide-react";
 import { Link } from "wouter";
 
 interface TeamMember {
@@ -197,8 +197,11 @@ export default function TeamMembers() {
                 disabled={!name.trim() || !role.trim() || !email.trim() || !phone.trim()}
                 onClick={handleSubmit}
               >
-                <Plus className="w-4 h-4 mr-2" />
-                {editing ? "Atualizar" : "Adicionar"}
+                {editing ? (
+                  <Check className="w-4 h-4" />
+                ) : (
+                  <Plus className="w-4 h-4" />
+                )}
               </Button>
               {editing && (
                 <Button type="button" variant="outline" onClick={handleCancel}>
