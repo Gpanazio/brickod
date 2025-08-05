@@ -63,6 +63,11 @@ export function generateCallSheetPDF(callSheet: CallSheet) {
   doc.setFontSize(8);
   doc.text(callSheet.productionTitle || "Sem título", pageWidth - 80, 12);
   doc.text(callSheet.shootingDate || "Data não informada", pageWidth - 80, 18);
+  doc.text(
+    `Gerado em: ${new Date().toLocaleDateString('pt-BR')}`,
+    pageWidth - 80,
+    24,
+  );
   
   let yPosition = 40;
   
