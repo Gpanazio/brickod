@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,49 +5,28 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import { BrickHeader, BrickFooter } from "@/components";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/api";
 import { Plus, Check, Edit, Trash2 } from "lucide-react";
 import { Link } from "wouter";
-
-interface TeamMember {
-  id: string;
-  name: string;
-  role: string;
-  email: string;
-  phone: string;
-  projectId?: string | null;
-}
+import { createTeamMember, updateTeamMember, deleteTeamMember, listTeamMembers, type TeamMember } from "@/lib/team-members";
+import { useTeamMemberForm } from "@/hooks/use-team-member-form";
 
 export default function TeamMembers() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  const [name, setName] = useState("");
-  const [role, setRole] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [projectId, setProjectId] = useState<string | undefined>(undefined);
-  const [editing, setEditing] = useState<TeamMember | null>(null);
+  const { state, setField, startEdit, reset } = useTeamMemberForm();
+  const { name, role, email, phone, projectId, editing } = state;
 
   const { data: members } = useQuery<TeamMember[]>({
     queryKey: ["/api/team-members"],
-    queryFn: () => apiRequest("/api/team-members"),
+    queryFn: listTeamMembers,
   });
 
   const createMutation = useMutation({
-    mutationFn: (data: Omit<TeamMember, "id">) =>
-      apiRequest("/api/team-members", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      }),
+    mutationFn: (data: Omit<TeamMember, "id">) => createTeamMember(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/team-members"] });
       toast({ title: "Membro adicionado" });
-      setName("");
-      setRole("");
-      setEmail("");
-      setPhone("");
-      setProjectId(undefined);
+      reset();
     },
     onError: (error: unknown) => {
       toast({
@@ -63,27 +41,12 @@ export default function TeamMembers() {
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, name, role, email, phone, projectId }: TeamMember) =>
-      apiRequest(`/api/team-members/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          role,
-          email,
-          phone,
-          ...(projectId ? { projectId } : {}),
-        }),
-      }),
+    mutationFn: ({ id, ...data }: TeamMember) =>
+      updateTeamMember(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/team-members"] });
       toast({ title: "Membro atualizado" });
-      setEditing(null);
-      setName("");
-      setRole("");
-      setEmail("");
-      setPhone("");
-      setProjectId(undefined);
+      reset();
     },
     onError: (error: unknown) => {
       toast({
@@ -98,9 +61,7 @@ export default function TeamMembers() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: async (id: string) => {
-      await apiRequest(`/api/team-members/${id}`, { method: "DELETE" });
-    },
+    mutationFn: (id: string) => deleteTeamMember(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/team-members"] });
       toast({ title: "Membro removido" });
@@ -134,21 +95,11 @@ export default function TeamMembers() {
   };
 
   const handleEdit = (member: TeamMember) => {
-    setEditing(member);
-    setName(member.name);
-    setRole(member.role);
-    setEmail(member.email);
-    setPhone(member.phone);
-    setProjectId(member.projectId ?? undefined);
+    startEdit(member);
   };
 
   const handleCancel = () => {
-    setEditing(null);
-    setName("");
-    setRole("");
-    setEmail("");
-    setPhone("");
-    setProjectId(undefined);
+    reset();
   };
 
   return (
@@ -171,25 +122,25 @@ export default function TeamMembers() {
               <Input
                 placeholder="Nome"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setField("name", e.target.value)}
                 className="md:w-1/3"
               />
               <Input
                 placeholder="Função"
                 value={role}
-                onChange={(e) => setRole(e.target.value)}
+                onChange={(e) => setField("role", e.target.value)}
                 className="md:w-1/3"
               />
               <Input
                 placeholder="Email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setField("email", e.target.value)}
                 className="md:w-1/3"
               />
               <Input
                 placeholder="Telefone"
                 value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                onChange={(e) => setField("phone", e.target.value)}
                 className="md:w-1/3"
               />
               <Button
