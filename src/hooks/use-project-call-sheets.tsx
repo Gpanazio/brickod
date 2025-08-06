@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { CallSheet } from "@shared/schema";
 import { nanoid } from "nanoid";
+import { logger } from "@shared/logger";
 
 const STORAGE_KEY = "brick-project-call-sheets";
 
@@ -28,7 +29,7 @@ export function useProjectCallSheets(projectId?: string) {
         return true;
       }
     } catch (error) {
-      console.error("Error loading project call sheets from storage:", error);
+      logger.error("Error loading project call sheets from storage:", error);
     }
     return false;
   };
@@ -63,7 +64,7 @@ export function useProjectCallSheets(projectId?: string) {
       
       return callSheetWithProject;
     } catch (error) {
-      console.error("Error saving call sheet to storage:", error);
+      logger.error("Error saving call sheet to storage:", error);
       return null;
     }
   };
@@ -85,7 +86,7 @@ export function useProjectCallSheets(projectId?: string) {
       
       return true;
     } catch (error) {
-      console.error("Error deleting call sheet:", error);
+      logger.error("Error deleting call sheet:", error);
       return false;
     }
   };
@@ -106,7 +107,7 @@ export function useProjectCallSheets(projectId?: string) {
       
       return true;
     } catch (error) {
-      console.error("Error updating call sheet status:", error);
+      logger.error("Error updating call sheet status:", error);
       return false;
     }
   };

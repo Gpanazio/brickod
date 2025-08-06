@@ -1,6 +1,7 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import * as schema from "@shared/schema";
+import { logger } from "@shared/logger";
 
 let db: ReturnType<typeof drizzle> | null = null;
 let client: postgres.Sql | null = null;
@@ -21,7 +22,7 @@ if (process.env.DATABASE_URL) {
 
   db = drizzle(client, { schema });
 } else {
-  console.warn('DATABASE_URL not set – falling back to in-memory storage');
+    logger.warn('DATABASE_URL not set – falling back to in-memory storage');
 }
 
 export { db };
@@ -31,10 +32,10 @@ export async function testConnection() {
   if (!client) return false;
   try {
     await client`SELECT 1`;
-    console.log('✅ Database connection successful');
+      logger.log('✅ Database connection successful');
     return true;
   } catch (error: any) {
-    console.error('❌ Database connection failed:', error.message);
+      logger.error('❌ Database connection failed:', error.message);
     return false;
   }
 }

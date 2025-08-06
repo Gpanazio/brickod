@@ -37,7 +37,6 @@ async function run() {
   const member = await storage.createTeamMember({ name: 'M' });
   assert.equal(await storage.deleteTeamMember(member.id), true);
 
-  console.log('Deletion tests passed');
 }
 
 run();

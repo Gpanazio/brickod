@@ -4,6 +4,7 @@ import { useToast } from "@/hooks/use-toast";
 import type { SelectProject, InsertProject, SelectCallSheet, InsertCallSheet } from "@shared/schema";
 import { nanoid } from "nanoid";
 import { apiRequest } from "@/lib/api";
+import { logger } from "@shared/logger";
 
 const PROJECTS_STORAGE_KEY = "brick-projects";
 const CALLSHEETS_STORAGE_KEY = "brick-call-sheets";
@@ -37,7 +38,7 @@ export function useSyncProjects() {
       return mergedProjects;
       
     } catch (error) {
-      console.warn("Sync failed, using localStorage only:", error);
+      logger.warn("Sync failed, using localStorage only:", error);
       const localData = localStorage.getItem(PROJECTS_STORAGE_KEY);
       return localData ? JSON.parse(localData) : [];
     }
@@ -89,7 +90,7 @@ export function useSyncProjects() {
             headers: { "Content-Type": "application/json" },
           });
         } catch (error) {
-          console.warn(`Failed to create project ${project.id} on server:`, error);
+          logger.warn(`Failed to create project ${project.id} on server:`, error);
         }
       } else if (new Date(project.updatedAt) > new Date(serverProject.updatedAt)) {
         // Atualizar no servidor
@@ -100,7 +101,7 @@ export function useSyncProjects() {
             headers: { "Content-Type": "application/json" },
           });
         } catch (error) {
-          console.warn(`Failed to update project ${project.id} on server:`, error);
+          logger.warn(`Failed to update project ${project.id} on server:`, error);
         }
       }
     }
@@ -141,7 +142,7 @@ export function useSyncProjects() {
           headers: { "Content-Type": "application/json" },
         });
       } catch (error) {
-        console.warn("Failed to save to server, will sync later:", error);
+          logger.warn("Failed to save to server, will sync later:", error);
       }
 
       return newProject;
@@ -176,7 +177,7 @@ export function useSyncProjects() {
           headers: { "Content-Type": "application/json" },
         });
       } catch (error) {
-        console.warn("Failed to update on server, will sync later:", error);
+          logger.warn("Failed to update on server, will sync later:", error);
         return updated.find(p => p.id === id);
       }
     },
@@ -204,7 +205,7 @@ export function useSyncProjects() {
           method: "DELETE",
         });
       } catch (error) {
-        console.warn("Failed to delete from server, will sync later:", error);
+        logger.warn("Failed to delete from server, will sync later:", error);
       }
 
       return true;
@@ -283,7 +284,7 @@ export function useSyncCallSheets(projectId?: string) {
         : mergedCallSheets;
         
     } catch (error) {
-      console.warn("CallSheets sync failed:", error);
+      logger.warn("CallSheets sync failed:", error);
       const localData = localStorage.getItem(CALLSHEETS_STORAGE_KEY);
       const localCallSheets = localData ? JSON.parse(localData) : [];
       return projectId 

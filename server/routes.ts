@@ -4,12 +4,13 @@ import { storage } from "./storage";
 import { insertCallSheetSchema, insertTemplateSchema, insertProjectSchema, insertTeamMemberSchema } from "@shared/schema";
 import { testConnection } from "./db";
 import { ZodError } from "zod";
+import { logger } from "@shared/logger";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Test database connection on startup
   const connected = await testConnection();
   if (!connected) {
-    console.warn('❌ Unable to connect to the database. Falling back to in-memory storage.');
+    logger.warn('❌ Unable to connect to the database. Falling back to in-memory storage.');
   }
   // Call Sheet routes
   app.get("/api/call-sheets", async (req, res) => {
@@ -17,7 +18,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const callSheets = await storage.listCallSheets();
       res.json(callSheets);
     } catch (error) {
-      console.error("Route error fetching call sheets:", error);
+      logger.error("Route error fetching call sheets:", error);
       res.status(500).json({ error: "Failed to fetch call sheets" });
     }
   });
@@ -33,7 +34,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json(callSheet);
     } catch (error) {
-      console.error("Error fetching call sheet:", error);
+      logger.error("Error fetching call sheet:", error);
       res.status(500).json({ error: "Failed to fetch call sheet" });
     }
   });
@@ -50,7 +51,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           details: error.issues 
         });
       }
-      console.error("Error creating call sheet:", error);
+      logger.error("Error creating call sheet:", error);
       res.status(500).json({ error: "Failed to create call sheet" });
     }
   });
@@ -73,7 +74,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           details: error.issues 
         });
       }
-      console.error("Error updating call sheet:", error);
+      logger.error("Error updating call sheet:", error);
       res.status(500).json({ error: "Failed to update call sheet" });
     }
   });
@@ -89,7 +90,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.status(204).send();
     } catch (error) {
-      console.error("Error deleting call sheet:", error);
+      logger.error("Error deleting call sheet:", error);
       res.status(500).json({ error: "Failed to delete call sheet" });
     }
   });
@@ -100,7 +101,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const projects = await storage.listProjects();
       res.json(projects);
     } catch (error) {
-      console.error("Route error fetching projects:", error);
+      logger.error("Route error fetching projects:", error);
       res.status(500).json({ error: "Failed to fetch projects" });
     }
   });
@@ -116,7 +117,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       res.json(project);
     } catch (error) {
-      console.error("Error fetching project:", error);
+      logger.error("Error fetching project:", error);
       res.status(500).json({ error: "Failed to fetch project" });
     }
   });
@@ -133,7 +134,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           details: error.issues
         });
       }
-      console.error("Error creating project:", error);
+      logger.error("Error creating project:", error);
       res.status(500).json({ error: "Failed to create project" });
     }
   });
@@ -156,7 +157,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           details: error.issues
         });
       }
-      console.error("Error updating project:", error);
+      logger.error("Error updating project:", error);
       res.status(500).json({ error: "Failed to update project" });
     }
   });
@@ -172,7 +173,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       res.status(204).send();
     } catch (error) {
-      console.error("Error deleting project:", error);
+      logger.error("Error deleting project:", error);
       res.status(500).json({ error: "Failed to delete project" });
     }
   });
@@ -183,7 +184,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const members = await storage.listTeamMembers();
       res.json(members);
     } catch (error) {
-      console.error("Error fetching team members:", error);
+      logger.error("Error fetching team members:", error);
       res.status(500).json({ error: "Failed to fetch team members" });
     }
   });
@@ -200,7 +201,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           details: error.issues
         });
       }
-      console.error("Error creating team member:", error);
+      logger.error("Error creating team member:", error);
       res.status(500).json({ error: "Failed to create team member" });
     }
   });
@@ -223,7 +224,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           details: error.issues
         });
       }
-      console.error("Error updating team member:", error);
+      logger.error("Error updating team member:", error);
       res.status(500).json({ error: "Failed to update team member" });
     }
   });
@@ -239,7 +240,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       res.status(204).send();
     } catch (error) {
-      console.error("Error deleting team member:", error);
+      logger.error("Error deleting team member:", error);
       res.status(500).json({ error: "Failed to delete team member" });
     }
   });
@@ -258,7 +259,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json(templates);
     } catch (error) {
-      console.error("Error fetching templates:", error);
+      logger.error("Error fetching templates:", error);
       res.status(500).json({ error: "Failed to fetch templates" });
     }
   });
@@ -268,7 +269,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const templates = await storage.getDefaultTemplates();
       res.json(templates);
     } catch (error) {
-      console.error("Error fetching default templates:", error);
+      logger.error("Error fetching default templates:", error);
       res.status(500).json({ error: "Failed to fetch default templates" });
     }
   });
@@ -284,7 +285,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json(template);
     } catch (error) {
-      console.error("Error fetching template:", error);
+      logger.error("Error fetching template:", error);
       res.status(500).json({ error: "Failed to fetch template" });
     }
   });
@@ -301,7 +302,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           details: error.issues 
         });
       }
-      console.error("Error creating template:", error);
+      logger.error("Error creating template:", error);
       res.status(500).json({ error: "Failed to create template" });
     }
   });
@@ -324,7 +325,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           details: error.issues 
         });
       }
-      console.error("Error updating template:", error);
+      logger.error("Error updating template:", error);
       res.status(500).json({ error: "Failed to update template" });
     }
   });
@@ -340,7 +341,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.status(204).send();
     } catch (error) {
-      console.error("Error deleting template:", error);
+      logger.error("Error deleting template:", error);
       res.status(500).json({ error: "Failed to delete template" });
     }
   });

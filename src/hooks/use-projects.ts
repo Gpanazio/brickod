@@ -4,6 +4,7 @@ import { useToast } from "@/hooks/use-toast";
 import type { SelectProject, InsertProject } from "@shared/schema";
 import { nanoid } from "nanoid";
 import { apiRequest } from "@/lib/api";
+import { logger } from "@shared/logger";
 
 const STORAGE_KEY = "brick-projects";
 
@@ -16,13 +17,13 @@ export function useProjects() {
   const syncData = async () => {
     try {
       // 1. Buscar dados do servidor
-      const serverProjects = await apiRequest("/api/projects");
-      console.log("Server projects:", serverProjects);
+        const serverProjects = await apiRequest("/api/projects");
+        logger.log("Server projects:", serverProjects);
       
       // 2. Buscar dados locais
       const localData = localStorage.getItem(STORAGE_KEY);
-      const localProjects: SelectProject[] = localData ? JSON.parse(localData) : [];
-      console.log("Local projects:", localProjects);
+        const localProjects: SelectProject[] = localData ? JSON.parse(localData) : [];
+        logger.log("Local projects:", localProjects);
       
       // 3. Primeiro, enviar projetos locais que não existem no servidor
       const serverIds = new Set(serverProjects.map((p: SelectProject) => p.id));
@@ -30,14 +31,14 @@ export function useProjects() {
       
       for (const localProject of localOnlyProjects) {
         try {
-          console.log("Uploading local project to server:", localProject.name);
+            logger.log("Uploading local project to server:", localProject.name);
           await apiRequest("/api/projects", {
             method: "POST",
             body: JSON.stringify(localProject),
             headers: { "Content-Type": "application/json" },
           });
         } catch (error) {
-          console.warn("Failed to upload local project:", error);
+            logger.warn("Failed to upload local project:", error);
         }
       }
       
@@ -68,7 +69,7 @@ export function useProjects() {
               method: "PUT",
               body: JSON.stringify(localProject),
               headers: { "Content-Type": "application/json" },
-            }).catch(err => console.warn("Failed to update server:", err));
+              }).catch(err => logger.warn("Failed to update server:", err));
           }
         }
       });
@@ -79,11 +80,11 @@ export function useProjects() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(finalProjects));
       
       setLastSync(new Date());
-      console.log("Sync completed, final projects:", finalProjects);
+        logger.log("Sync completed, final projects:", finalProjects);
       return finalProjects;
       
     } catch (error) {
-      console.warn("Server sync failed, using localStorage:", error);
+        logger.warn("Server sync failed, using localStorage:", error);
       const localData = localStorage.getItem(STORAGE_KEY);
       return localData ? JSON.parse(localData) : [];
     }
@@ -114,7 +115,7 @@ export function useProjects() {
 
       // 1. Tentar salvar no servidor PRIMEIRO
       try {
-        console.log("Creating project on server:", newProject);
+          logger.log("Creating project on server:", newProject);
         const serverProject = await apiRequest("/api/projects", {
           method: "POST",
           body: JSON.stringify(newProject),
@@ -127,11 +128,11 @@ export function useProjects() {
         const updated = [...localProjects, serverProject];
         localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
         
-        console.log("Project created successfully on server and local");
+          logger.log("Project created successfully on server and local");
         return serverProject;
         
       } catch (error) {
-        console.warn("Server save failed, saving locally:", error);
+        logger.warn("Server save failed, saving locally:", error);
         
         // 3. Fallback: salvar apenas localmente
         const localData = localStorage.getItem(STORAGE_KEY);
@@ -171,7 +172,7 @@ export function useProjects() {
           headers: { "Content-Type": "application/json" },
         });
       } catch (error) {
-        console.warn("Server update failed:", error);
+        logger.warn("Server update failed:", error);
         return updated.find(p => p.id === id);
       }
     },
@@ -198,7 +199,7 @@ export function useProjects() {
           method: "DELETE",
         });
       } catch (error) {
-        console.warn("Server delete failed:", error);
+        logger.warn("Server delete failed:", error);
       }
 
       return true;
@@ -271,7 +272,7 @@ export function useProjectCallSheets(projectId?: string) {
         }
       }
     } catch (error) {
-      console.error("Error loading call sheets:", error);
+        logger.error("Error loading call sheets:", error);
     }
   }, [projectId]);
 
@@ -291,7 +292,7 @@ export function useProjectCallSheets(projectId?: string) {
           }
         }
       } catch (error) {
-        console.error("Error refreshing call sheets:", error);
+          logger.error("Error refreshing call sheets:", error);
       }
     },
   };

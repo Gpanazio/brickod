@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/api";
 import type { CallSheet } from "@shared/schema";
+import { logger } from "@shared/logger";
 
 export function useCallSheetHistory() {
   return useQuery({
@@ -13,7 +14,7 @@ export function useCallSheetHistory() {
           new Date(a.updatedAt || a.createdAt || '').getTime()
         );
       } catch (error) {
-        console.warn('Erro de conexão com banco, usando histórico local:', error);
+          logger.warn('Erro de conexão com banco, usando histórico local:', error);
         return getLocalHistory();
       }
     },
@@ -30,7 +31,7 @@ function getLocalHistory(): CallSheet[] {
       new Date(a.updatedAt || a.createdAt || '').getTime()
     );
   } catch (error) {
-    console.error('Erro ao carregar histórico local:', error);
+      logger.error('Erro ao carregar histórico local:', error);
     return [];
   }
 }
@@ -47,7 +48,7 @@ export function useCreateCallSheet() {
           body: JSON.stringify(callSheet),
         }) as CallSheet;
       } catch (error) {
-        console.warn('Salvando ordem do dia localmente devido a erro de conexão:', error);
+          logger.warn('Salvando ordem do dia localmente devido a erro de conexão:', error);
         return saveCallSheetLocally(callSheet);
       }
     },
@@ -74,7 +75,7 @@ function saveCallSheetLocally(callSheet: CallSheet): CallSheet {
     
     return newCallSheet;
   } catch (error) {
-    console.error('Erro ao salvar ordem do dia localmente:', error);
+      logger.error('Erro ao salvar ordem do dia localmente:', error);
     throw new Error('Falha ao salvar ordem do dia');
   }
 }

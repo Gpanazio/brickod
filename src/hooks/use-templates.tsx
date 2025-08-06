@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/api";
 import type { SelectTemplate, InsertTemplate } from "@shared/schema";
+import { logger } from "@shared/logger";
 
 export function useTemplates(category?: string) {
   return useQuery({
@@ -11,7 +12,7 @@ export function useTemplates(category?: string) {
         const data = await apiRequest(url) as SelectTemplate[];
         return data;
       } catch (error) {
-        console.warn('Erro de conexão com banco, usando armazenamento local:', error);
+          logger.warn('Erro de conexão com banco, usando armazenamento local:', error);
         return getLocalTemplates(category);
       }
     },
@@ -29,7 +30,7 @@ function getLocalTemplates(category?: string): SelectTemplate[] {
     }
     return templates;
   } catch (error) {
-    console.error('Erro ao carregar templates locais:', error);
+      logger.error('Erro ao carregar templates locais:', error);
     return [];
   }
 }
@@ -65,7 +66,7 @@ export function useCreateTemplate() {
           body: JSON.stringify(template),
         }) as SelectTemplate;
       } catch (error) {
-        console.warn('Salvando template localmente devido a erro de conexão:', error);
+          logger.warn('Salvando template localmente devido a erro de conexão:', error);
         return saveTemplateLocally(template);
       }
     },
@@ -111,7 +112,7 @@ function saveTemplateLocally(template: InsertTemplate): SelectTemplate {
     
     return newTemplate;
   } catch (error) {
-    console.error('Erro ao salvar template localmente:', error);
+      logger.error('Erro ao salvar template localmente:', error);
     throw new Error('Falha ao salvar template');
   }
 }
@@ -126,7 +127,7 @@ export function useDeleteTemplate() {
           method: 'DELETE',
         });
       } catch (error) {
-        console.warn('Deletando template localmente devido a erro de conexão:', error);
+          logger.warn('Deletando template localmente devido a erro de conexão:', error);
         return deleteTemplateLocally(id);
       }
     },
@@ -145,7 +146,7 @@ function deleteTemplateLocally(id: string): void {
     const updatedTemplates = templates.filter((t: SelectTemplate) => t.id !== id);
     localStorage.setItem('brick_templates', JSON.stringify(updatedTemplates));
   } catch (error) {
-    console.error('Erro ao deletar template localmente:', error);
+      logger.error('Erro ao deletar template localmente:', error);
     throw new Error('Falha ao deletar template');
   }
 }

@@ -15,6 +15,7 @@ import {
 } from "@shared/schema";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
+import { logger } from "@shared/logger";
 
 export interface IStorage {
   // Call sheet operations
@@ -249,7 +250,7 @@ export class DatabaseStorage implements IStorage {
       this.isDbConnected = true;
       return callSheet || undefined;
     } catch (error) {
-      console.warn('Database error, using memory storage:', error.message);
+      logger.warn('Database error, using memory storage:', error.message);
       return this.fallbackStorage.getCallSheet(id);
     }
   }
@@ -277,7 +278,7 @@ export class DatabaseStorage implements IStorage {
       this.isDbConnected = true;
       return created;
     } catch (error) {
-      console.warn('Database error, using memory storage:', error.message);
+      logger.warn('Database error, using memory storage:', error.message);
       return this.fallbackStorage.createCallSheet(callSheet);
     }
   }
@@ -299,7 +300,7 @@ export class DatabaseStorage implements IStorage {
       this.isDbConnected = true;
       return updated || undefined;
     } catch (error) {
-      console.warn('Database error, using memory storage:', error.message);
+      logger.warn('Database error, using memory storage:', error.message);
       return this.fallbackStorage.updateCallSheet(id, updates);
     }
   }
@@ -314,7 +315,7 @@ export class DatabaseStorage implements IStorage {
       this.isDbConnected = true;
       return result.length > 0;
     } catch (error) {
-      console.warn('Database error, using memory storage:', error.message);
+      logger.warn('Database error, using memory storage:', error.message);
       return this.fallbackStorage.deleteCallSheet(id);
     }
   }
@@ -325,7 +326,7 @@ export class DatabaseStorage implements IStorage {
       this.isDbConnected = true;
       return result;
     } catch (error) {
-      console.warn('Database error, using memory storage:', error.message);
+      logger.warn('Database error, using memory storage:', error.message);
       return this.fallbackStorage.listCallSheets();
     }
   }
@@ -337,7 +338,7 @@ export class DatabaseStorage implements IStorage {
       this.isDbConnected = true;
       return template || undefined;
     } catch (error) {
-      console.warn('Database error, using memory storage:', error.message);
+      logger.warn('Database error, using memory storage:', error.message);
       return this.fallbackStorage.getTemplate(id);
     }
   }
@@ -359,7 +360,7 @@ export class DatabaseStorage implements IStorage {
       this.isDbConnected = true;
       return created;
     } catch (error) {
-      console.warn('Database error, using memory storage:', error.message);
+      logger.warn('Database error, using memory storage:', error.message);
       return this.fallbackStorage.createTemplate(template);
     }
   }
@@ -381,7 +382,7 @@ export class DatabaseStorage implements IStorage {
       this.isDbConnected = true;
       return updated || undefined;
     } catch (error) {
-      console.warn('Database error, using memory storage:', error.message);
+      logger.warn('Database error, using memory storage:', error.message);
       return this.fallbackStorage.updateTemplate(id, updates);
     }
   }
@@ -396,7 +397,7 @@ export class DatabaseStorage implements IStorage {
       this.isDbConnected = true;
       return result.length > 0;
     } catch (error) {
-      console.warn('Database error, using memory storage:', error.message);
+      logger.warn('Database error, using memory storage:', error.message);
       return this.fallbackStorage.deleteTemplate(id);
     }
   }
@@ -407,7 +408,7 @@ export class DatabaseStorage implements IStorage {
       this.isDbConnected = true;
       return result;
     } catch (error) {
-      console.warn('Database error, using memory storage:', error.message);
+      logger.warn('Database error, using memory storage:', error.message);
       return this.fallbackStorage.listTemplates();
     }
   }
@@ -418,7 +419,7 @@ export class DatabaseStorage implements IStorage {
       this.isDbConnected = true;
       return result;
     } catch (error) {
-      console.warn('Database error, using memory storage:', error.message);
+      logger.warn('Database error, using memory storage:', error.message);
       return this.fallbackStorage.getTemplatesByCategory(category);
     }
   }
@@ -429,7 +430,7 @@ export class DatabaseStorage implements IStorage {
       this.isDbConnected = true;
       return result;
     } catch (error) {
-      console.warn('Database error, using memory storage:', error.message);
+      logger.warn('Database error, using memory storage:', error.message);
       return this.fallbackStorage.getDefaultTemplates();
     }
   }
@@ -441,7 +442,7 @@ export class DatabaseStorage implements IStorage {
       this.isDbConnected = true;
       return project || undefined;
     } catch (error) {
-      console.warn('Database error, using memory storage:', error.message);
+      logger.warn('Database error, using memory storage:', error.message);
       return this.fallbackStorage.getProject(id);
     }
   }
@@ -463,7 +464,7 @@ export class DatabaseStorage implements IStorage {
       this.isDbConnected = true;
       return created;
     } catch (error) {
-      console.warn('Database error, using memory storage:', error.message);
+      logger.warn('Database error, using memory storage:', error.message);
       return this.fallbackStorage.createProject(project);
     }
   }
@@ -477,7 +478,7 @@ export class DatabaseStorage implements IStorage {
       this.isDbConnected = true;
       return updated || undefined;
     } catch (error) {
-      console.warn('Database error, using memory storage:', error.message);
+      logger.warn('Database error, using memory storage:', error.message);
       return this.fallbackStorage.updateProject(id, updates);
     }
   }
@@ -491,7 +492,7 @@ export class DatabaseStorage implements IStorage {
       this.isDbConnected = true;
       return result.length > 0;
     } catch (error) {
-      console.warn('Database error, using memory storage:', error.message);
+      logger.warn('Database error, using memory storage:', error.message);
       return this.fallbackStorage.deleteProject(id);
     }
   }
@@ -502,7 +503,7 @@ export class DatabaseStorage implements IStorage {
       this.isDbConnected = true;
       return result;
     } catch (error) {
-      console.warn('Database error, using memory storage:', error.message);
+      logger.warn('Database error, using memory storage:', error.message);
       return this.fallbackStorage.listProjects();
     }
   }
@@ -514,7 +515,7 @@ export class DatabaseStorage implements IStorage {
       this.isDbConnected = true;
       return teamMember || undefined;
     } catch (error) {
-      console.warn('Database error, using memory storage:', error.message);
+      logger.warn('Database error, using memory storage:', error.message);
       return this.fallbackStorage.getTeamMember(id);
     }
   }
@@ -532,7 +533,7 @@ export class DatabaseStorage implements IStorage {
       this.isDbConnected = true;
       return created;
     } catch (error) {
-      console.warn('Database error, using memory storage:', error.message);
+      logger.warn('Database error, using memory storage:', error.message);
       return this.fallbackStorage.createTeamMember(teamMember);
     }
   }
@@ -545,7 +546,7 @@ export class DatabaseStorage implements IStorage {
       this.isDbConnected = true;
       return updated || undefined;
     } catch (error) {
-      console.warn('Database error, using memory storage:', error.message);
+      logger.warn('Database error, using memory storage:', error.message);
       return this.fallbackStorage.updateTeamMember(id, updates);
     }
   }
@@ -559,7 +560,7 @@ export class DatabaseStorage implements IStorage {
       this.isDbConnected = true;
       return result.length > 0;
     } catch (error) {
-      console.warn('Database error, using memory storage:', error.message);
+      logger.warn('Database error, using memory storage:', error.message);
       return this.fallbackStorage.deleteTeamMember(id);
     }
   }
@@ -570,7 +571,7 @@ export class DatabaseStorage implements IStorage {
       this.isDbConnected = true;
       return result;
     } catch (error) {
-      console.warn('Database error, using memory storage:', error.message);
+      logger.warn('Database error, using memory storage:', error.message);
       return this.fallbackStorage.listTeamMembers();
     }
   }
