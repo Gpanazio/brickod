@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { pgTable, text, timestamp, json } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, json, boolean } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 
 // Zod schemas for frontend validation
@@ -150,7 +150,7 @@ export const templates = pgTable('templates', {
   name: text('name').notNull(),
   description: text('description').notNull(),
   category: text('category').notNull(),
-  isDefault: json('is_default').$type<boolean>().notNull().default(false as any),
+  isDefault: boolean('is_default').notNull().default(false),
   templateData: json('template_data').$type<{
     productionTitle?: string;
     producer?: string;

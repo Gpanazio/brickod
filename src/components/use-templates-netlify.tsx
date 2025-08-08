@@ -48,7 +48,7 @@ export function useCreateTemplate() {
       const newTemplate: SelectTemplate = {
         ...template,
         id: `local_${Date.now()}`,
-        isDefault: Boolean(template.isDefault || false),
+        isDefault: template.isDefault ?? false,
         createdAt: new Date(),
         updatedAt: new Date(),
       };

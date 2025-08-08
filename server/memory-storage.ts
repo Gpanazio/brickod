@@ -74,7 +74,7 @@ export class MemoryStorage implements IStorage {
     const newTemplate: SelectTemplate = {
       ...template,
       id: template.id || nanoid(),
-      isDefault: template.isDefault || false,
+      isDefault: template.isDefault ?? false,
       createdAt: now,
       updatedAt: now,
     };
