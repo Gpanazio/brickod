@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import type { SelectProject, InsertProject } from "@shared/schema";
@@ -250,49 +250,6 @@ export function useProjects() {
     },
     forceSync: () => {
       return queryClient.refetchQueries({ queryKey: ["/api/projects"] });
-    },
-  };
-}
-
-// Hook simples para call sheets
-export function useProjectCallSheets(projectId?: string) {
-  const [callSheets, setCallSheets] = useState<any[]>([]);
-
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem("brick-call-sheets");
-      if (stored) {
-        const allCallSheets = JSON.parse(stored);
-        if (projectId) {
-          const filtered = allCallSheets.filter((cs: any) => cs.projectId === projectId);
-          setCallSheets(filtered);
-        } else {
-          setCallSheets(allCallSheets);
-        }
-      }
-    } catch (error) {
-      console.error("Error loading call sheets:", error);
-    }
-  }, [projectId]);
-
-  return {
-    callSheets,
-    refreshCallSheets: () => {
-      // Recarregar do localStorage
-      try {
-        const stored = localStorage.getItem("brick-call-sheets");
-        if (stored) {
-          const allCallSheets = JSON.parse(stored);
-          if (projectId) {
-            const filtered = allCallSheets.filter((cs: any) => cs.projectId === projectId);
-            setCallSheets(filtered);
-          } else {
-            setCallSheets(allCallSheets);
-          }
-        }
-      } catch (error) {
-        console.error("Error refreshing call sheets:", error);
-      }
     },
   };
 }
