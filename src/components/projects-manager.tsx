@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
@@ -27,6 +27,9 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
   const [newProjectName, setNewProjectName] = useState("");
   const [newProjectDescription, setNewProjectDescription] = useState("");
   const [newProjectClient, setNewProjectClient] = useState("");
+  const [projectToDelete, setProjectToDelete] = useState<SelectProject | null>(null);
+  const [projectToDuplicate, setProjectToDuplicate] = useState<SelectProject | null>(null);
+  const [duplicateName, setDuplicateName] = useState("");
 
   const handleCreateProject = () => {
     if (newProjectName.trim()) {
@@ -68,27 +71,35 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
     }
   };
 
-  const handleDeleteProject = (project: SelectProject) => {
-    if (confirm(`Tem certeza que deseja excluir o projeto "${project.name}"? Esta ação não pode ser desfeita.`)) {
-      deleteProject(project.id!);
-      toast({
-        title: "Projeto excluído",
-        description: `O projeto "${project.name}" foi excluído.`,
-      });
-    }
+  const openDeleteDialog = (project: SelectProject) => {
+    setProjectToDelete(project);
   };
 
-  const handleDuplicateProject = (project: SelectProject) => {
-    const newName = prompt("Digite o nome do novo projeto", `${project.name} (cópia)`);
-    if (!newName || !newName.trim()) return;
+  const confirmDeleteProject = () => {
+    if (!projectToDelete) return;
+    deleteProject(projectToDelete.id!);
+    toast({
+      title: "Projeto excluído",
+      description: `O projeto "${projectToDelete.name}" foi excluído.`,
+    });
+    setProjectToDelete(null);
+  };
 
-    const newId = duplicateProject(project, newName.trim());
+  const openDuplicateDialog = (project: SelectProject) => {
+    setProjectToDuplicate(project);
+    setDuplicateName(`${project.name} (cópia)`);
+  };
+
+  const confirmDuplicateProject = () => {
+    if (!projectToDuplicate || !duplicateName.trim()) return;
+
+    const newId = duplicateProject(projectToDuplicate, duplicateName.trim());
 
     try {
       const stored = localStorage.getItem("brick-project-call-sheets");
       if (stored) {
         const allCallSheets = JSON.parse(stored);
-        const projectCallSheets = allCallSheets.filter((cs: any) => cs.projectId === project.id);
+        const projectCallSheets = allCallSheets.filter((cs: any) => cs.projectId === projectToDuplicate.id);
         const duplicatedCallSheets = projectCallSheets.map((cs: any) => ({
           ...cs,
           id: nanoid(),
@@ -106,8 +117,10 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
 
     toast({
       title: "Projeto duplicado",
-      description: `O projeto "${project.name}" foi duplicado como "${newName}".`,
+      description: `O projeto "${projectToDuplicate.name}" foi duplicado como "${duplicateName}".`,
     });
+    setProjectToDuplicate(null);
+    setDuplicateName("");
   };
 
   const handleStatusChange = (project: SelectProject, newStatus: 'ativo' | 'pausado' | 'concluído') => {
@@ -181,7 +194,7 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
                     <Edit className="w-4 h-4 mr-2" />
                     Editar
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={(e) => { e.stopPropagation(); handleDuplicateProject(project); }}>
+                  <DropdownMenuItem onClick={(e) => { e.stopPropagation(); openDuplicateDialog(project); }}>
                     <Copy className="w-4 h-4 mr-2" />
                     Duplicar
                   </DropdownMenuItem>
@@ -202,7 +215,7 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
                     Concluir
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    onClick={(e) => { e.stopPropagation(); handleDeleteProject(project); }}
+                    onClick={(e) => { e.stopPropagation(); openDeleteDialog(project); }}
                     variant="destructive"
                   >
                     <Trash2 className="w-4 h-4 mr-2" />
@@ -373,6 +386,70 @@ export function ProjectsManager({ onSelectProject }: ProjectsManagerProps) {
           ))}
         </div>
       )}
+      <Dialog open={!!projectToDelete} onOpenChange={(open) => { if (!open) setProjectToDelete(null); }}>
+        <DialogContent className="sm:max-w-md w-full bg-background rounded-xl p-6 shadow-lg z-50">
+          <DialogHeader>
+            <DialogTitle>Excluir projeto</DialogTitle>
+            <DialogDescription>
+              Tem certeza que deseja excluir o projeto "{projectToDelete?.name}"? Esta ação não pode ser desfeita.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setProjectToDelete(null)}>
+              Cancelar
+            </Button>
+            <Button variant="destructive" onClick={confirmDeleteProject}>
+              Excluir
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      <Dialog
+        open={!!projectToDuplicate}
+        onOpenChange={(open) => {
+          if (!open) {
+            setProjectToDuplicate(null);
+            setDuplicateName("");
+          }
+        }}
+      >
+        <DialogContent className="sm:max-w-md w-full bg-background rounded-xl p-6 shadow-lg z-50">
+          <DialogHeader>
+            <DialogTitle>Duplicar projeto</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="duplicate-name" className="text-sm font-medium">
+                Nome do Projeto
+              </Label>
+              <Input
+                id="duplicate-name"
+                value={duplicateName}
+                onChange={(e) => setDuplicateName(e.target.value)}
+                className="mt-1"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setProjectToDuplicate(null);
+                setDuplicateName("");
+              }}
+            >
+              Cancelar
+            </Button>
+            <Button
+              variant="brick"
+              onClick={confirmDuplicateProject}
+              disabled={!duplicateName.trim()}
+            >
+              Duplicar
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
