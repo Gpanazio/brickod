@@ -20,12 +20,10 @@ import { MemoryStorage } from "./memory-storage";
 
 export class DatabaseStorage implements IStorage {
   constructor(private fallbackStorage = new MemoryStorage()) {}
-  private isDbConnected = false;
 
   async getCallSheet(id: string): Promise<SelectCallSheet | undefined> {
     try {
       const [callSheet] = await db.select().from(callSheets).where(eq(callSheets.id, id));
-      this.isDbConnected = true;
       return callSheet || undefined;
     } catch (error: any) {
       console.warn('Database error, using memory storage:', error.message);
@@ -53,7 +51,6 @@ export class DatabaseStorage implements IStorage {
         .insert(callSheets)
         .values([newCallSheet])
         .returning();
-      this.isDbConnected = true;
       return created;
     } catch (error: any) {
       console.warn('Database error, using memory storage:', error.message);
@@ -74,8 +71,6 @@ export class DatabaseStorage implements IStorage {
         .set(updateData)
         .where(eq(callSheets.id, id))
         .returning();
-
-      this.isDbConnected = true;
       return updated || undefined;
     } catch (error: any) {
       console.warn('Database error, using memory storage:', error.message);
@@ -89,8 +84,6 @@ export class DatabaseStorage implements IStorage {
         .delete(callSheets)
         .where(eq(callSheets.id, id))
         .returning({ id: callSheets.id });
-
-      this.isDbConnected = true;
       return result.length > 0;
     } catch (error: any) {
       console.warn('Database error, using memory storage:', error.message);
@@ -101,7 +94,6 @@ export class DatabaseStorage implements IStorage {
   async listCallSheets(): Promise<SelectCallSheet[]> {
     try {
       const result = await db.select().from(callSheets);
-      this.isDbConnected = true;
       return result;
     } catch (error: any) {
       console.warn('Database error, using memory storage:', error.message);
@@ -113,7 +105,6 @@ export class DatabaseStorage implements IStorage {
   async getTemplate(id: string): Promise<SelectTemplate | undefined> {
     try {
       const [template] = await db.select().from(templates).where(eq(templates.id, id));
-      this.isDbConnected = true;
       return template || undefined;
     } catch (error: any) {
       console.warn('Database error, using memory storage:', error.message);
@@ -135,7 +126,6 @@ export class DatabaseStorage implements IStorage {
         .insert(templates)
         .values([newTemplate])
         .returning();
-      this.isDbConnected = true;
       return created;
     } catch (error: any) {
       console.warn('Database error, using memory storage:', error.message);
@@ -156,8 +146,6 @@ export class DatabaseStorage implements IStorage {
         .set(updateData)
         .where(eq(templates.id, id))
         .returning();
-
-      this.isDbConnected = true;
       return updated || undefined;
     } catch (error: any) {
       console.warn('Database error, using memory storage:', error.message);
@@ -171,8 +159,6 @@ export class DatabaseStorage implements IStorage {
         .delete(templates)
         .where(eq(templates.id, id))
         .returning({ id: templates.id });
-
-      this.isDbConnected = true;
       return result.length > 0;
     } catch (error: any) {
       console.warn('Database error, using memory storage:', error.message);
@@ -183,7 +169,6 @@ export class DatabaseStorage implements IStorage {
   async listTemplates(): Promise<SelectTemplate[]> {
     try {
       const result = await db.select().from(templates);
-      this.isDbConnected = true;
       return result;
     } catch (error: any) {
       console.warn('Database error, using memory storage:', error.message);
@@ -194,7 +179,6 @@ export class DatabaseStorage implements IStorage {
   async getTemplatesByCategory(category: string): Promise<SelectTemplate[]> {
     try {
       const result = await db.select().from(templates).where(eq(templates.category, category));
-      this.isDbConnected = true;
       return result;
     } catch (error: any) {
       console.warn('Database error, using memory storage:', error.message);
@@ -205,7 +189,6 @@ export class DatabaseStorage implements IStorage {
   async getDefaultTemplates(): Promise<SelectTemplate[]> {
     try {
       const result = await db.select().from(templates).where(eq(templates.isDefault, true));
-      this.isDbConnected = true;
       return result;
     } catch (error: any) {
       console.warn('Database error, using memory storage:', error.message);
@@ -217,7 +200,6 @@ export class DatabaseStorage implements IStorage {
   async getProject(id: string): Promise<SelectProject | undefined> {
     try {
       const [project] = await db.select().from(projects).where(eq(projects.id, id));
-      this.isDbConnected = true;
       return project || undefined;
     } catch (error: any) {
       console.warn('Database error, using memory storage:', error.message);
@@ -239,7 +221,6 @@ export class DatabaseStorage implements IStorage {
       };
 
       const [created] = await db.insert(projects).values([newProject]).returning();
-      this.isDbConnected = true;
       return created;
     } catch (error: any) {
       console.warn('Database error, using memory storage:', error.message);
@@ -253,7 +234,6 @@ export class DatabaseStorage implements IStorage {
       const updateData: any = { ...updates, updatedAt: now };
 
       const [updated] = await db.update(projects).set(updateData).where(eq(projects.id, id)).returning();
-      this.isDbConnected = true;
       return updated || undefined;
     } catch (error: any) {
       console.warn('Database error, using memory storage:', error.message);
@@ -267,7 +247,6 @@ export class DatabaseStorage implements IStorage {
         .delete(projects)
         .where(eq(projects.id, id))
         .returning({ id: projects.id });
-      this.isDbConnected = true;
       return result.length > 0;
     } catch (error: any) {
       console.warn('Database error, using memory storage:', error.message);
@@ -278,7 +257,6 @@ export class DatabaseStorage implements IStorage {
   async listProjects(): Promise<SelectProject[]> {
     try {
       const result = await db.select().from(projects);
-      this.isDbConnected = true;
       return result;
     } catch (error: any) {
       console.warn('Database error, using memory storage:', error.message);
@@ -290,7 +268,6 @@ export class DatabaseStorage implements IStorage {
   async getTeamMember(id: string): Promise<SelectTeamMember | undefined> {
     try {
       const [teamMember] = await db.select().from(teamMembers).where(eq(teamMembers.id, id));
-      this.isDbConnected = true;
       return teamMember || undefined;
     } catch (error: any) {
       console.warn('Database error, using memory storage:', error.message);
@@ -308,7 +285,6 @@ export class DatabaseStorage implements IStorage {
         updatedAt: now,
       };
       const [created] = await db.insert(teamMembers).values([newMember]).returning();
-      this.isDbConnected = true;
       return created;
     } catch (error: any) {
       console.warn('Database error, using memory storage:', error.message);
@@ -321,7 +297,6 @@ export class DatabaseStorage implements IStorage {
       const now = new Date();
       const updateData: any = { ...updates, updatedAt: now };
       const [updated] = await db.update(teamMembers).set(updateData).where(eq(teamMembers.id, id)).returning();
-      this.isDbConnected = true;
       return updated || undefined;
     } catch (error: any) {
       console.warn('Database error, using memory storage:', error.message);
@@ -335,7 +310,6 @@ export class DatabaseStorage implements IStorage {
         .delete(teamMembers)
         .where(eq(teamMembers.id, id))
         .returning({ id: teamMembers.id });
-      this.isDbConnected = true;
       return result.length > 0;
     } catch (error: any) {
       console.warn('Database error, using memory storage:', error.message);
@@ -346,7 +320,6 @@ export class DatabaseStorage implements IStorage {
   async listTeamMembers(): Promise<SelectTeamMember[]> {
     try {
       const result = await db.select().from(teamMembers);
-      this.isDbConnected = true;
       return result;
     } catch (error: any) {
       console.warn('Database error, using memory storage:', error.message);
