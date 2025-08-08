@@ -82,10 +82,14 @@ function SortableContactItem({ contact, index, onUpdate, onRemove }: SortableCon
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
-          <Label className="block text-sm font-medium text-muted-foreground mb-1">
+          <Label
+            htmlFor={`contact-${contact.id}-name`}
+            className="block text-sm font-medium text-muted-foreground mb-1"
+          >
             Nome
           </Label>
           <Input
+            id={`contact-${contact.id}-name`}
             type="text"
             value={contact.name}
             onChange={(e) => onUpdate(contact.id, { name: e.target.value })}
@@ -93,10 +97,14 @@ function SortableContactItem({ contact, index, onUpdate, onRemove }: SortableCon
           />
         </div>
         <div>
-          <Label className="block text-sm font-medium text-muted-foreground mb-1">
+          <Label
+            htmlFor={`contact-${contact.id}-role`}
+            className="block text-sm font-medium text-muted-foreground mb-1"
+          >
             Cargo/Função
           </Label>
           <Input
+            id={`contact-${contact.id}-role`}
             type="text"
             value={contact.role}
             onChange={(e) => onUpdate(contact.id, { role: e.target.value })}
@@ -104,10 +112,14 @@ function SortableContactItem({ contact, index, onUpdate, onRemove }: SortableCon
           />
         </div>
         <div>
-          <Label className="block text-sm font-medium text-muted-foreground mb-1">
+          <Label
+            htmlFor={`contact-${contact.id}-phone`}
+            className="block text-sm font-medium text-muted-foreground mb-1"
+          >
             Telefone
           </Label>
           <Input
+            id={`contact-${contact.id}-phone`}
             type="tel"
             value={contact.phone}
             onChange={(e) => onUpdate(contact.id, { phone: e.target.value })}

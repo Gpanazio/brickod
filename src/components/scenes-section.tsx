@@ -83,10 +83,14 @@ function SortableSceneItem({ scene, index, onUpdate, onRemove }: SortableSceneIt
       </div>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div>
-          <Label className="block text-sm font-medium text-muted-foreground mb-1">
+          <Label
+            htmlFor={`scene-${scene.id}-number`}
+            className="block text-sm font-medium text-muted-foreground mb-1"
+          >
             Número da Cena
           </Label>
           <Input
+            id={`scene-${scene.id}-number`}
             type="text"
             value={scene.number}
             onChange={(e) => onUpdate(scene.id, { number: e.target.value })}
@@ -94,10 +98,14 @@ function SortableSceneItem({ scene, index, onUpdate, onRemove }: SortableSceneIt
           />
         </div>
         <div className="md:col-span-2">
-          <Label className="block text-sm font-medium text-muted-foreground mb-1">
+          <Label
+            htmlFor={`scene-${scene.id}-description`}
+            className="block text-sm font-medium text-muted-foreground mb-1"
+          >
             Descrição
           </Label>
           <Input
+            id={`scene-${scene.id}-description`}
             type="text"
             value={scene.description}
             onChange={(e) => onUpdate(scene.id, { description: e.target.value })}
@@ -105,10 +113,14 @@ function SortableSceneItem({ scene, index, onUpdate, onRemove }: SortableSceneIt
           />
         </div>
         <div>
-          <Label className="block text-sm font-medium text-muted-foreground mb-1">
+          <Label
+            htmlFor={`scene-${scene.id}-estimated-time`}
+            className="block text-sm font-medium text-muted-foreground mb-1"
+          >
             Tempo Estimado
           </Label>
           <Input
+            id={`scene-${scene.id}-estimated-time`}
             type="text"
             value={scene.estimatedTime || ''}
             onChange={(e) => onUpdate(scene.id, { estimatedTime: e.target.value })}
@@ -117,10 +129,14 @@ function SortableSceneItem({ scene, index, onUpdate, onRemove }: SortableSceneIt
         </div>
       </div>
       <div className="mt-4">
-        <Label className="block text-sm font-medium text-muted-foreground mb-1">
+        <Label
+          htmlFor={`scene-${scene.id}-cast`}
+          className="block text-sm font-medium text-muted-foreground mb-1"
+        >
           Elenco da Cena
         </Label>
         <Textarea
+          id={`scene-${scene.id}-cast`}
           value={scene.cast}
           onChange={(e) => onUpdate(scene.id, { cast: e.target.value })}
           placeholder="Liste os atores necessários para esta cena"

@@ -32,10 +32,14 @@ export default function ProductionInfo({
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="md:col-span-2">
-            <Label className="block text-sm font-medium text-muted-foreground mb-2">
+            <Label
+              htmlFor="production-client"
+              className="block text-sm font-medium text-muted-foreground mb-2"
+            >
               Cliente
             </Label>
             <Input
+              id="production-client"
               type="text"
               value={client}
               onChange={(e) => onUpdateField('client', e.target.value)}
@@ -44,10 +48,14 @@ export default function ProductionInfo({
             />
           </div>
           <div>
-            <Label className="block text-sm font-medium text-muted-foreground mb-2">
+            <Label
+              htmlFor="production-title"
+              className="block text-sm font-medium text-muted-foreground mb-2"
+            >
               Título da Produção
             </Label>
             <Input
+              id="production-title"
               type="text"
               value={productionTitle}
               onChange={(e) => onUpdateField('productionTitle', e.target.value)}
@@ -56,10 +64,14 @@ export default function ProductionInfo({
             />
           </div>
           <div>
-            <Label className="block text-sm font-medium text-muted-foreground mb-2">
+            <Label
+              htmlFor="production-shooting-date"
+              className="block text-sm font-medium text-muted-foreground mb-2"
+            >
               Data de Filmagem
             </Label>
             <Input
+              id="production-shooting-date"
               type="date"
               value={shootingDate}
               onChange={(e) => onUpdateField('shootingDate', e.target.value)}
@@ -67,10 +79,14 @@ export default function ProductionInfo({
             />
           </div>
           <div>
-            <Label className="block text-sm font-medium text-muted-foreground mb-2">
+            <Label
+              htmlFor="production-producer"
+              className="block text-sm font-medium text-muted-foreground mb-2"
+            >
               Produtor
             </Label>
             <Input
+              id="production-producer"
               type="text"
               value={producer}
               onChange={(e) => onUpdateField('producer', e.target.value)}
@@ -79,10 +95,14 @@ export default function ProductionInfo({
             />
           </div>
           <div>
-            <Label className="block text-sm font-medium text-muted-foreground mb-2">
+            <Label
+              htmlFor="production-director"
+              className="block text-sm font-medium text-muted-foreground mb-2"
+            >
               Diretor
             </Label>
             <Input
+              id="production-director"
               type="text"
               value={director}
               onChange={(e) => onUpdateField('director', e.target.value)}

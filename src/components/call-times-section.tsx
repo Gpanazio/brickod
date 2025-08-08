@@ -58,10 +58,14 @@ export default function CallTimesSection({
         {/* Horários Gerais */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6 p-4 bg-muted rounded-lg">
           <div>
-            <Label className="block text-sm font-medium text-muted-foreground mb-2">
+            <Label
+              htmlFor="call-start-time"
+              className="block text-sm font-medium text-muted-foreground mb-2"
+            >
               Horário de Início
             </Label>
             <Input
+              id="call-start-time"
               type="time"
               value={startTime || ''}
               onChange={(e) => onUpdateField('startTime', e.target.value)}
@@ -69,10 +73,14 @@ export default function CallTimesSection({
             />
           </div>
           <div>
-            <Label className="block text-sm font-medium text-muted-foreground mb-2">
+            <Label
+              htmlFor="call-lunch-break-time"
+              className="block text-sm font-medium text-muted-foreground mb-2"
+            >
               Horário do Almoço
             </Label>
             <Input
+              id="call-lunch-break-time"
               type="time"
               value={lunchBreakTime || ''}
               onChange={(e) => onUpdateField('lunchBreakTime', e.target.value)}
@@ -80,10 +88,14 @@ export default function CallTimesSection({
             />
           </div>
           <div>
-            <Label className="block text-sm font-medium text-muted-foreground mb-2">
+            <Label
+              htmlFor="call-end-time"
+              className="block text-sm font-medium text-muted-foreground mb-2"
+            >
               Horário de Fim
             </Label>
             <Input
+              id="call-end-time"
               type="time"
               value={endTime || ''}
               onChange={(e) => onUpdateField('endTime', e.target.value)}
@@ -119,7 +131,12 @@ export default function CallTimesSection({
                   <div key={callTime.id} className="space-y-2 p-3 bg-muted rounded-lg">
                     <div className="flex items-start justify-between">
                       <div className="w-full mr-2">
-                        <Label className="text-xs text-muted-foreground mb-1 block">Membro da Equipe</Label>
+                        <Label
+                          htmlFor={`crew-member-${callTime.id}`}
+                          className="text-xs text-muted-foreground mb-1 block"
+                        >
+                          Membro da Equipe
+                        </Label>
                         <Select
                           value={callTime.memberId || undefined}
                           onValueChange={(value) => {
@@ -136,7 +153,10 @@ export default function CallTimesSection({
                             }
                           }}
                         >
-                          <SelectTrigger className="w-full px-3 py-2 text-sm">
+                          <SelectTrigger
+                            id={`crew-member-${callTime.id}`}
+                            className="w-full px-3 py-2 text-sm"
+                          >
                             <SelectValue placeholder="Selecione um membro" />
                           </SelectTrigger>
                           <SelectContent>
@@ -158,8 +178,14 @@ export default function CallTimesSection({
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                       <div>
-                        <Label className="text-xs text-muted-foreground mb-1 block">Nome</Label>
+                        <Label
+                          htmlFor={`crew-name-${callTime.id}`}
+                          className="text-xs text-muted-foreground mb-1 block"
+                        >
+                          Nome
+                        </Label>
                         <Input
+                          id={`crew-name-${callTime.id}`}
                           type="text"
                           value={callTime.name}
                           onChange={(e) => onUpdateCrew(callTime.id, { name: e.target.value })}
@@ -167,8 +193,14 @@ export default function CallTimesSection({
                         />
                       </div>
                       <div>
-                        <Label className="text-xs text-muted-foreground mb-1 block">Cargo</Label>
+                        <Label
+                          htmlFor={`crew-role-${callTime.id}`}
+                          className="text-xs text-muted-foreground mb-1 block"
+                        >
+                          Cargo
+                        </Label>
                         <Input
+                          id={`crew-role-${callTime.id}`}
                           type="text"
                           value={callTime.role}
                           onChange={(e) => onUpdateCrew(callTime.id, { role: e.target.value })}
@@ -176,8 +208,14 @@ export default function CallTimesSection({
                         />
                       </div>
                       <div>
-                        <Label className="text-xs text-muted-foreground mb-1 block">Telefone</Label>
+                        <Label
+                          htmlFor={`crew-phone-${callTime.id}`}
+                          className="text-xs text-muted-foreground mb-1 block"
+                        >
+                          Telefone
+                        </Label>
                         <Input
+                          id={`crew-phone-${callTime.id}`}
                           type="tel"
                           value={callTime.phone || ''}
                           onChange={(e) => onUpdateCrew(callTime.id, { phone: e.target.value })}
@@ -185,8 +223,14 @@ export default function CallTimesSection({
                         />
                       </div>
                       <div>
-                        <Label className="text-xs text-muted-foreground mb-1 block">Horário</Label>
+                        <Label
+                          htmlFor={`crew-time-${callTime.id}`}
+                          className="text-xs text-muted-foreground mb-1 block"
+                        >
+                          Horário
+                        </Label>
                         <Input
+                          id={`crew-time-${callTime.id}`}
                           type="time"
                           value={callTime.time}
                           onChange={(e) => onUpdateCrew(callTime.id, { time: e.target.value })}

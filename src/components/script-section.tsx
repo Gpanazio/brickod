@@ -215,10 +215,14 @@ export default function ScriptSection({
 
         {scriptUrl && (
           <div className="mt-4">
-            <Label className="block text-sm font-medium text-muted-foreground mb-2">
+            <Label
+              htmlFor="script-name"
+              className="block text-sm font-medium text-muted-foreground mb-2"
+            >
               Nome do Roteiro (opcional)
             </Label>
             <Input
+              id="script-name"
               type="text"
               value={scriptName}
               onChange={(e) => onUpdateField('scriptName', e.target.value)}
@@ -279,9 +283,12 @@ export default function ScriptSection({
                   </div>
 
                   <div>
-                    <Label className="text-sm font-medium">Link do Arquivo</Label>
+                    <Label htmlFor="attachment-url" className="text-sm font-medium">
+                      Link do Arquivo
+                    </Label>
                     <div className="mt-1 space-y-3">
                       <Input
+                        id="attachment-url"
                         type="url"
                         value={newAttachmentUrl}
                         onChange={(e) => setNewAttachmentUrl(e.target.value)}
