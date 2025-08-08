@@ -101,7 +101,7 @@ function saveTemplateLocally(template: InsertTemplate): SelectTemplate {
     const newTemplate: SelectTemplate = {
       ...template,
       id: `local_${Date.now()}`,
-      isDefault: template.isDefault || false,
+      isDefault: template.isDefault ?? false,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
