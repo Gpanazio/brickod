@@ -223,19 +223,39 @@ export default function CallTimesSection({
               <div className="space-y-3">
                 {castCallTimes.map((callTime) => (
                   <div key={callTime.id} className="flex items-center space-x-3">
-                    <Input
-                      type="text"
-                      value={callTime.name}
-                      onChange={(e) => onUpdateCast(callTime.id, { name: e.target.value })}
-                      placeholder="Nome do Ator/Atriz"
-                      className="w-48"
-                    />
-                    <Input
-                      type="time"
-                      value={callTime.time}
-                      onChange={(e) => onUpdateCast(callTime.id, { time: e.target.value })}
-                      className="w-24"
-                    />
+                    <div className="flex flex-col w-48">
+                      <Label
+                        htmlFor={`cast-name-${callTime.id}`}
+                        className="text-xs text-muted-foreground mb-1"
+                      >
+                        Nome do ator/atriz
+                      </Label>
+                      <Input
+                        id={`cast-name-${callTime.id}`}
+                        type="text"
+                        value={callTime.name}
+                        onChange={(e) =>
+                          onUpdateCast(callTime.id, { name: e.target.value })
+                        }
+                        placeholder="Ex: João Silva"
+                      />
+                    </div>
+                    <div className="flex flex-col w-24">
+                      <Label
+                        htmlFor={`cast-time-${callTime.id}`}
+                        className="text-xs text-muted-foreground mb-1"
+                      >
+                        Horário
+                      </Label>
+                      <Input
+                        id={`cast-time-${callTime.id}`}
+                        type="time"
+                        value={callTime.time}
+                        onChange={(e) =>
+                          onUpdateCast(callTime.id, { time: e.target.value })
+                        }
+                      />
+                    </div>
                     <Button
                       onClick={() => onRemoveCast(callTime.id)}
                       variant="iconDestructive"
