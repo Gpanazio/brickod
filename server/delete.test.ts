@@ -1,7 +1,8 @@
+import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { DatabaseStorage } from './database-storage';
 
-async function run() {
+test('deletion operations', async () => {
   const storage = new DatabaseStorage();
 
   const callSheet = await storage.createCallSheet({
@@ -36,8 +37,4 @@ async function run() {
 
   const member = await storage.createTeamMember({ name: 'M' });
   assert.equal(await storage.deleteTeamMember(member.id), true);
-
-  console.log('Deletion tests passed');
-}
-
-run();
+});

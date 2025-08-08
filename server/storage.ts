@@ -9,7 +9,6 @@ import type {
   InsertTeamMember,
 } from "@shared/schema";
 import { DatabaseStorage } from "./database-storage";
-import { MemoryStorage } from "./memory-storage";
 
 export interface IStorage {
   // Call sheet operations
@@ -44,7 +43,7 @@ export interface IStorage {
 }
 
 export function createStorage(): IStorage {
-  return new DatabaseStorage(new MemoryStorage());
+  return new DatabaseStorage();
 }
 
 export const storage = createStorage();
