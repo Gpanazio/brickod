@@ -1,28 +1,14 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { renderHook, act, waitFor } from "@testing-library/react";
-import { useCallSheet } from "./use-call-sheet";
+import { useCallSheet, DEFAULT_CALL_SHEET } from "./use-call-sheet";
 
 const STORAGE_KEY = "brick-call-sheet";
 
 const storedSheet = {
   id: "stored-id",
+  ...DEFAULT_CALL_SHEET,
   productionTitle: "Stored Title",
   shootingDate: "2024-01-01",
-  producer: "",
-  director: "",
-  client: "",
-  scriptUrl: "",
-  scriptName: "",
-  attachments: [],
-  startTime: "",
-  lunchBreakTime: "",
-  endTime: "",
-  locations: [],
-  scenes: [],
-  contacts: [],
-  crewCallTimes: [],
-  castCallTimes: [],
-  generalNotes: "",
 };
 
 describe("useCallSheet initial load", () => {
