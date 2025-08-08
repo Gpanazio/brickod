@@ -8,7 +8,7 @@
     "preview": "vite preview",
     "db:push": "drizzle-kit push",
     "start": "tsx server/index.ts",
-    "test": "tsx --test server/routes.test.ts"
+    "test": "tsx --test server/*.test.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",

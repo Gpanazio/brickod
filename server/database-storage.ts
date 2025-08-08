@@ -1,4 +1,3 @@
-import { nanoid } from "nanoid";
 import {
   callSheets,
   templates,
@@ -13,317 +12,189 @@ import {
   type SelectTeamMember,
   type InsertTeamMember,
 } from "@shared/schema";
+import type { IStorage } from "./storage";
+import {
+  createDatabaseRepository,
+  createMemoryRepository,
+  withFallback,
+  prepareCallSheetCreate,
+  prepareCallSheetUpdate,
+  prepareTemplateCreate,
+  prepareTemplateUpdate,
+  prepareProjectCreate,
+  prepareProjectUpdate,
+  prepareTeamMemberCreate,
+  prepareTeamMemberUpdate,
+} from "./repository";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
-import type { IStorage } from "./storage";
-import { MemoryStorage } from "./memory-storage";
 
 export class DatabaseStorage implements IStorage {
-  constructor(private fallbackStorage = new MemoryStorage()) {}
+  private callSheetsRepo = withFallback(
+    createDatabaseRepository<SelectCallSheet, InsertCallSheet>(
+      callSheets,
+      prepareCallSheetCreate,
+      prepareCallSheetUpdate,
+    ),
+    createMemoryRepository<SelectCallSheet, InsertCallSheet>(
+      prepareCallSheetCreate,
+      (existing, updates) => ({
+        ...existing,
+        ...prepareCallSheetUpdate(updates),
+      }),
+    ),
+  );
 
-  async getCallSheet(id: string): Promise<SelectCallSheet | undefined> {
-    try {
-      const [callSheet] = await db.select().from(callSheets).where(eq(callSheets.id, id));
-      return callSheet || undefined;
-    } catch (error: any) {
-      console.warn('Database error, using memory storage:', error.message);
-      return this.fallbackStorage.getCallSheet(id);
-    }
+  private templatesRepo = withFallback(
+    createDatabaseRepository<SelectTemplate, InsertTemplate>(
+      templates,
+      prepareTemplateCreate,
+      prepareTemplateUpdate,
+    ),
+    createMemoryRepository<SelectTemplate, InsertTemplate>(
+      prepareTemplateCreate,
+      (existing, updates) => ({
+        ...existing,
+        ...prepareTemplateUpdate(updates),
+      }),
+    ),
+  );
+
+  private projectsRepo = withFallback(
+    createDatabaseRepository<SelectProject, InsertProject>(
+      projects,
+      prepareProjectCreate,
+      prepareProjectUpdate,
+    ),
+    createMemoryRepository<SelectProject, InsertProject>(
+      prepareProjectCreate,
+      (existing, updates) => ({
+        ...existing,
+        ...prepareProjectUpdate(updates),
+      }),
+    ),
+  );
+
+  private teamMembersRepo = withFallback(
+    createDatabaseRepository<SelectTeamMember, InsertTeamMember>(
+      teamMembers,
+      prepareTeamMemberCreate,
+      prepareTeamMemberUpdate,
+    ),
+    createMemoryRepository<SelectTeamMember, InsertTeamMember>(
+      prepareTeamMemberCreate,
+      (existing, updates) => ({
+        ...existing,
+        ...prepareTeamMemberUpdate(updates),
+      }),
+    ),
+  );
+
+  async getCallSheet(id: string) {
+    return this.callSheetsRepo.get(id);
   }
 
-  async createCallSheet(callSheet: InsertCallSheet): Promise<SelectCallSheet> {
-    try {
-      const now = new Date();
-      const newCallSheet = {
-        ...callSheet,
-        id: callSheet.id || nanoid(),
-        locations: Array.from(callSheet.locations || []),
-        scenes: Array.from(callSheet.scenes || []),
-        contacts: Array.from(callSheet.contacts || []),
-        crewCallTimes: Array.from(callSheet.crewCallTimes || []),
-        castCallTimes: Array.from(callSheet.castCallTimes || []),
-        generalNotes: callSheet.generalNotes || '',
-        createdAt: now,
-        updatedAt: now,
-      };
-
-      const [created] = await db
-        .insert(callSheets)
-        .values([newCallSheet])
-        .returning();
-      return created;
-    } catch (error: any) {
-      console.warn('Database error, using memory storage:', error.message);
-      return this.fallbackStorage.createCallSheet(callSheet);
-    }
+  async createCallSheet(callSheet: InsertCallSheet) {
+    return this.callSheetsRepo.create(callSheet);
   }
 
-  async updateCallSheet(id: string, updates: Partial<InsertCallSheet>): Promise<SelectCallSheet | undefined> {
-    try {
-      const now = new Date();
-      const updateData: any = {
-        ...updates,
-        updatedAt: now,
-      };
-
-      const [updated] = await db
-        .update(callSheets)
-        .set(updateData)
-        .where(eq(callSheets.id, id))
-        .returning();
-      return updated || undefined;
-    } catch (error: any) {
-      console.warn('Database error, using memory storage:', error.message);
-      return this.fallbackStorage.updateCallSheet(id, updates);
-    }
+  async updateCallSheet(id: string, updates: Partial<InsertCallSheet>) {
+    return this.callSheetsRepo.update(id, updates);
   }
 
-  async deleteCallSheet(id: string): Promise<boolean> {
+  async deleteCallSheet(id: string) {
+    return this.callSheetsRepo.delete(id);
+  }
+
+  async listCallSheets() {
+    return this.callSheetsRepo.list();
+  }
+
+  async getTemplate(id: string) {
+    return this.templatesRepo.get(id);
+  }
+
+  async createTemplate(template: InsertTemplate) {
+    return this.templatesRepo.create(template);
+  }
+
+  async updateTemplate(id: string, updates: Partial<InsertTemplate>) {
+    return this.templatesRepo.update(id, updates);
+  }
+
+  async deleteTemplate(id: string) {
+    return this.templatesRepo.delete(id);
+  }
+
+  async listTemplates() {
+    return this.templatesRepo.list();
+  }
+
+  async getTemplatesByCategory(category: string) {
     try {
       const result = await db
-        .delete(callSheets)
-        .where(eq(callSheets.id, id))
-        .returning({ id: callSheets.id });
-      return result.length > 0;
-    } catch (error: any) {
-      console.warn('Database error, using memory storage:', error.message);
-      return this.fallbackStorage.deleteCallSheet(id);
-    }
-  }
-
-  async listCallSheets(): Promise<SelectCallSheet[]> {
-    try {
-      const result = await db.select().from(callSheets);
+        .select()
+        .from(templates)
+        .where(eq(templates.category, category));
       return result;
     } catch (error: any) {
-      console.warn('Database error, using memory storage:', error.message);
-      return this.fallbackStorage.listCallSheets();
+      console.warn("Database error, using fallback:", error.message);
+      const all = await this.templatesRepo.list();
+      return all.filter((t) => t.category === category);
     }
   }
 
-  // Template operations
-  async getTemplate(id: string): Promise<SelectTemplate | undefined> {
-    try {
-      const [template] = await db.select().from(templates).where(eq(templates.id, id));
-      return template || undefined;
-    } catch (error: any) {
-      console.warn('Database error, using memory storage:', error.message);
-      return this.fallbackStorage.getTemplate(id);
-    }
-  }
-
-  async createTemplate(template: InsertTemplate): Promise<SelectTemplate> {
-    try {
-      const now = new Date();
-      const newTemplate = {
-        ...template,
-        id: template.id || nanoid(),
-        createdAt: now,
-        updatedAt: now,
-      };
-
-      const [created] = await db
-        .insert(templates)
-        .values([newTemplate])
-        .returning();
-      return created;
-    } catch (error: any) {
-      console.warn('Database error, using memory storage:', error.message);
-      return this.fallbackStorage.createTemplate(template);
-    }
-  }
-
-  async updateTemplate(id: string, updates: Partial<InsertTemplate>): Promise<SelectTemplate | undefined> {
-    try {
-      const now = new Date();
-      const updateData: any = {
-        ...updates,
-        updatedAt: now,
-      };
-
-      const [updated] = await db
-        .update(templates)
-        .set(updateData)
-        .where(eq(templates.id, id))
-        .returning();
-      return updated || undefined;
-    } catch (error: any) {
-      console.warn('Database error, using memory storage:', error.message);
-      return this.fallbackStorage.updateTemplate(id, updates);
-    }
-  }
-
-  async deleteTemplate(id: string): Promise<boolean> {
+  async getDefaultTemplates() {
     try {
       const result = await db
-        .delete(templates)
-        .where(eq(templates.id, id))
-        .returning({ id: templates.id });
-      return result.length > 0;
-    } catch (error: any) {
-      console.warn('Database error, using memory storage:', error.message);
-      return this.fallbackStorage.deleteTemplate(id);
-    }
-  }
-
-  async listTemplates(): Promise<SelectTemplate[]> {
-    try {
-      const result = await db.select().from(templates);
+        .select()
+        .from(templates)
+        .where(eq(templates.isDefault, true));
       return result;
     } catch (error: any) {
-      console.warn('Database error, using memory storage:', error.message);
-      return this.fallbackStorage.listTemplates();
+      console.warn("Database error, using fallback:", error.message);
+      const all = await this.templatesRepo.list();
+      return all.filter((t) => t.isDefault);
     }
   }
 
-  async getTemplatesByCategory(category: string): Promise<SelectTemplate[]> {
-    try {
-      const result = await db.select().from(templates).where(eq(templates.category, category));
-      return result;
-    } catch (error: any) {
-      console.warn('Database error, using memory storage:', error.message);
-      return this.fallbackStorage.getTemplatesByCategory(category);
-    }
+  async getProject(id: string) {
+    return this.projectsRepo.get(id);
   }
 
-  async getDefaultTemplates(): Promise<SelectTemplate[]> {
-    try {
-      const result = await db.select().from(templates).where(eq(templates.isDefault, true));
-      return result;
-    } catch (error: any) {
-      console.warn('Database error, using memory storage:', error.message);
-      return this.fallbackStorage.getDefaultTemplates();
-    }
+  async createProject(project: InsertProject) {
+    return this.projectsRepo.create(project);
   }
 
-  // Project operations
-  async getProject(id: string): Promise<SelectProject | undefined> {
-    try {
-      const [project] = await db.select().from(projects).where(eq(projects.id, id));
-      return project || undefined;
-    } catch (error: any) {
-      console.warn('Database error, using memory storage:', error.message);
-      return this.fallbackStorage.getProject(id);
-    }
+  async updateProject(id: string, updates: Partial<InsertProject>) {
+    return this.projectsRepo.update(id, updates);
   }
 
-  async createProject(project: InsertProject): Promise<SelectProject> {
-    try {
-      const now = new Date();
-      const newProject = {
-        ...project,
-        id: project.id || nanoid(),
-        description: project.description || '',
-        client: project.client || '',
-        status: project.status || 'ativo',
-        createdAt: now,
-        updatedAt: now,
-      };
-
-      const [created] = await db.insert(projects).values([newProject]).returning();
-      return created;
-    } catch (error: any) {
-      console.warn('Database error, using memory storage:', error.message);
-      return this.fallbackStorage.createProject(project);
-    }
+  async deleteProject(id: string) {
+    return this.projectsRepo.delete(id);
   }
 
-  async updateProject(id: string, updates: Partial<InsertProject>): Promise<SelectProject | undefined> {
-    try {
-      const now = new Date();
-      const updateData: any = { ...updates, updatedAt: now };
-
-      const [updated] = await db.update(projects).set(updateData).where(eq(projects.id, id)).returning();
-      return updated || undefined;
-    } catch (error: any) {
-      console.warn('Database error, using memory storage:', error.message);
-      return this.fallbackStorage.updateProject(id, updates);
-    }
+  async listProjects() {
+    return this.projectsRepo.list();
   }
 
-  async deleteProject(id: string): Promise<boolean> {
-    try {
-      const result = await db
-        .delete(projects)
-        .where(eq(projects.id, id))
-        .returning({ id: projects.id });
-      return result.length > 0;
-    } catch (error: any) {
-      console.warn('Database error, using memory storage:', error.message);
-      return this.fallbackStorage.deleteProject(id);
-    }
+  async getTeamMember(id: string) {
+    return this.teamMembersRepo.get(id);
   }
 
-  async listProjects(): Promise<SelectProject[]> {
-    try {
-      const result = await db.select().from(projects);
-      return result;
-    } catch (error: any) {
-      console.warn('Database error, using memory storage:', error.message);
-      return this.fallbackStorage.listProjects();
-    }
+  async createTeamMember(teamMember: InsertTeamMember) {
+    return this.teamMembersRepo.create(teamMember);
   }
 
-  // Team member operations
-  async getTeamMember(id: string): Promise<SelectTeamMember | undefined> {
-    try {
-      const [teamMember] = await db.select().from(teamMembers).where(eq(teamMembers.id, id));
-      return teamMember || undefined;
-    } catch (error: any) {
-      console.warn('Database error, using memory storage:', error.message);
-      return this.fallbackStorage.getTeamMember(id);
-    }
+  async updateTeamMember(id: string, updates: Partial<InsertTeamMember>) {
+    return this.teamMembersRepo.update(id, updates);
   }
 
-  async createTeamMember(teamMember: InsertTeamMember): Promise<SelectTeamMember> {
-    try {
-      const now = new Date();
-      const newMember = {
-        ...teamMember,
-        id: teamMember.id || nanoid(),
-        createdAt: now,
-        updatedAt: now,
-      };
-      const [created] = await db.insert(teamMembers).values([newMember]).returning();
-      return created;
-    } catch (error: any) {
-      console.warn('Database error, using memory storage:', error.message);
-      return this.fallbackStorage.createTeamMember(teamMember);
-    }
+  async deleteTeamMember(id: string) {
+    return this.teamMembersRepo.delete(id);
   }
 
-  async updateTeamMember(id: string, updates: Partial<InsertTeamMember>): Promise<SelectTeamMember | undefined> {
-    try {
-      const now = new Date();
-      const updateData: any = { ...updates, updatedAt: now };
-      const [updated] = await db.update(teamMembers).set(updateData).where(eq(teamMembers.id, id)).returning();
-      return updated || undefined;
-    } catch (error: any) {
-      console.warn('Database error, using memory storage:', error.message);
-      return this.fallbackStorage.updateTeamMember(id, updates);
-    }
-  }
-
-  async deleteTeamMember(id: string): Promise<boolean> {
-    try {
-      const result = await db
-        .delete(teamMembers)
-        .where(eq(teamMembers.id, id))
-        .returning({ id: teamMembers.id });
-      return result.length > 0;
-    } catch (error: any) {
-      console.warn('Database error, using memory storage:', error.message);
-      return this.fallbackStorage.deleteTeamMember(id);
-    }
-  }
-
-  async listTeamMembers(): Promise<SelectTeamMember[]> {
-    try {
-      const result = await db.select().from(teamMembers);
-      return result;
-    } catch (error: any) {
-      console.warn('Database error, using memory storage:', error.message);
-      return this.fallbackStorage.listTeamMembers();
-    }
+  async listTeamMembers() {
+    return this.teamMembersRepo.list();
   }
 }
