@@ -82,10 +82,14 @@ function SortableLocationItem({ location, index, onUpdate, onRemove }: SortableL
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <Label className="block text-sm font-medium text-muted-foreground mb-1">
+          <Label
+            htmlFor={`location-${location.id}-address`}
+            className="block text-sm font-medium text-muted-foreground mb-1"
+          >
             Endereço
           </Label>
           <Input
+            id={`location-${location.id}-address`}
             type="text"
             value={location.address}
             onChange={(e) => onUpdate(location.id, { address: e.target.value })}
@@ -93,10 +97,14 @@ function SortableLocationItem({ location, index, onUpdate, onRemove }: SortableL
           />
         </div>
         <div>
-          <Label className="block text-sm font-medium text-muted-foreground mb-1">
+          <Label
+            htmlFor={`location-${location.id}-notes`}
+            className="block text-sm font-medium text-muted-foreground mb-1"
+          >
             Observações
           </Label>
           <Input
+            id={`location-${location.id}-notes`}
             type="text"
             value={location.notes || ''}
             onChange={(e) => onUpdate(location.id, { notes: e.target.value })}
