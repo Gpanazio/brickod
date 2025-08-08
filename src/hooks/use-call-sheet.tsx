@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { CallSheet, Location, Scene, Contact, CallTime, Attachment } from "@shared/schema";
 import { nanoid } from "nanoid";
 
@@ -27,12 +27,17 @@ export function useCallSheet() {
   });
 
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const skipEffect = useRef(1);
 
   useEffect(() => {
     loadFromStorage();
   }, []);
 
   useEffect(() => {
+    if (skipEffect.current > 0) {
+      skipEffect.current -= 1;
+      return;
+    }
     setHasUnsavedChanges(true);
   }, [callSheet]);
 
@@ -261,6 +266,7 @@ export function useCallSheet() {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
+        skipEffect.current += 1;
         setCallSheet(parsed);
         setHasUnsavedChanges(false);
         return true;
@@ -268,6 +274,7 @@ export function useCallSheet() {
     } catch (error) {
       console.error("Error loading from storage:", error);
     }
+    setHasUnsavedChanges(false);
     return false;
   };
 
