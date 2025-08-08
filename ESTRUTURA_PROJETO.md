@@ -24,7 +24,6 @@ gerador-ordem-do-dia-brick/
 │   │   ├── use-call-sheet-history.tsx
 │   │   ├── use-projects.ts
 │   │   ├── use-project-call-sheets.tsx
-│   │   ├── use-sync-storage.ts
 │   │   ├── use-toast.ts
 │   │   └── use-mobile.tsx
 │   ├── 📁 lib/                  # Utilitários
