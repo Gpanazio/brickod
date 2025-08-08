@@ -4,26 +4,30 @@ import { nanoid } from "nanoid";
 
 const STORAGE_KEY = "brick-call-sheet";
 
+export const DEFAULT_CALL_SHEET: Omit<CallSheet, "id"> = {
+  productionTitle: "",
+  shootingDate: "",
+  producer: "",
+  director: "",
+  client: "",
+  scriptUrl: "",
+  scriptName: "",
+  attachments: [],
+  startTime: "",
+  lunchBreakTime: "",
+  endTime: "",
+  locations: [],
+  scenes: [],
+  contacts: [],
+  crewCallTimes: [],
+  castCallTimes: [],
+  generalNotes: "",
+};
+
 export function useCallSheet() {
   const [callSheet, setCallSheet] = useState<CallSheet>({
     id: nanoid(),
-    productionTitle: "",
-    shootingDate: "",
-    producer: "",
-    director: "",
-    client: "",
-    scriptUrl: "",
-    scriptName: "",
-    attachments: [],
-    startTime: "",
-    lunchBreakTime: "",
-    endTime: "",
-    locations: [],
-    scenes: [],
-    contacts: [],
-    crewCallTimes: [],
-    castCallTimes: [],
-    generalNotes: "",
+    ...DEFAULT_CALL_SHEET,
   });
 
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
@@ -281,23 +285,7 @@ export function useCallSheet() {
   const clearData = () => {
     setCallSheet({
       id: nanoid(),
-      productionTitle: "",
-      shootingDate: "",
-      producer: "",
-      director: "",
-      client: "",
-      scriptUrl: "",
-      scriptName: "",
-      attachments: [],
-      startTime: "",
-      lunchBreakTime: "",
-      endTime: "",
-      locations: [],
-      scenes: [],
-      contacts: [],
-      crewCallTimes: [],
-      castCallTimes: [],
-      generalNotes: "",
+      ...DEFAULT_CALL_SHEET,
     });
     setHasUnsavedChanges(false);
   };
