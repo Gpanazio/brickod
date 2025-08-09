@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { CallSheet } from "@shared/schema";
 import { nanoid } from "nanoid";
+import { safeLocalStorage } from "@/lib/safe-local-storage";
 
 const STORAGE_KEY = "brick-project-call-sheets";
 
@@ -13,7 +14,7 @@ export function useProjectCallSheets(projectId?: string) {
 
   const loadFromStorage = () => {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
+      const stored = safeLocalStorage.getItem(STORAGE_KEY);
       if (stored) {
         const allCallSheets = JSON.parse(stored);
         if (projectId) {
@@ -35,7 +36,7 @@ export function useProjectCallSheets(projectId?: string) {
 
   const saveCallSheet = (callSheet: CallSheet) => {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
+      const stored = safeLocalStorage.getItem(STORAGE_KEY);
       const allCallSheets = stored ? JSON.parse(stored) : [];
       
       const callSheetWithProject = {
@@ -54,7 +55,7 @@ export function useProjectCallSheets(projectId?: string) {
         allCallSheets.push(callSheetWithProject);
       }
 
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(allCallSheets));
+      safeLocalStorage.setItem(STORAGE_KEY, JSON.stringify(allCallSheets));
       
       // Update local state if this call sheet belongs to current project
       if (projectId) {
@@ -74,11 +75,11 @@ export function useProjectCallSheets(projectId?: string) {
 
   const deleteCallSheet = (id: string) => {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
+      const stored = safeLocalStorage.getItem(STORAGE_KEY);
       const allCallSheets = stored ? JSON.parse(stored) : [];
       
       const updatedCallSheets = allCallSheets.filter((cs: CallSheet) => cs.id !== id);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedCallSheets));
+      safeLocalStorage.setItem(STORAGE_KEY, JSON.stringify(updatedCallSheets));
       
       // Refresh local state
       loadFromStorage();
@@ -92,7 +93,7 @@ export function useProjectCallSheets(projectId?: string) {
 
   const updateCallSheetStatus = (id: string, status: 'rascunho' | 'finalizada') => {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
+      const stored = safeLocalStorage.getItem(STORAGE_KEY);
       const allCallSheets = stored ? JSON.parse(stored) : [];
       
       const updatedCallSheets = allCallSheets.map((cs: CallSheet) => 
@@ -101,7 +102,7 @@ export function useProjectCallSheets(projectId?: string) {
           : cs
       );
       
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedCallSheets));
+      safeLocalStorage.setItem(STORAGE_KEY, JSON.stringify(updatedCallSheets));
       loadFromStorage();
       
       return true;

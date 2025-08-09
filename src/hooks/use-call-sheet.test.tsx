@@ -1,6 +1,25 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, vi } from "vitest";
 import { renderHook, act, waitFor } from "@testing-library/react";
 import { useCallSheet, DEFAULT_CALL_SHEET } from "./use-call-sheet";
+import { safeLocalStorage } from "@/lib/safe-local-storage";
+
+vi.mock("@/lib/safe-local-storage", () => {
+  let store: Record<string, string> = {};
+  return {
+    safeLocalStorage: {
+      getItem: vi.fn((key: string) => store[key] ?? null),
+      setItem: vi.fn((key: string, value: string) => {
+        store[key] = value;
+      }),
+      removeItem: vi.fn((key: string) => {
+        delete store[key];
+      }),
+      clear: vi.fn(() => {
+        store = {};
+      }),
+    },
+  };
+});
 
 const STORAGE_KEY = "brick-call-sheet";
 
@@ -13,11 +32,11 @@ const storedSheet = {
 
 describe("useCallSheet initial load", () => {
   beforeEach(() => {
-    localStorage.clear();
+    safeLocalStorage.clear();
   });
 
   it("loads from localStorage without unsaved changes", async () => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(storedSheet));
+    safeLocalStorage.setItem(STORAGE_KEY, JSON.stringify(storedSheet));
     const { result } = renderHook(() => useCallSheet());
 
     await waitFor(() =>
@@ -27,7 +46,7 @@ describe("useCallSheet initial load", () => {
   });
 
   it("marks unsaved changes after updates", async () => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(storedSheet));
+    safeLocalStorage.setItem(STORAGE_KEY, JSON.stringify(storedSheet));
     const { result } = renderHook(() => useCallSheet());
 
     await waitFor(() =>

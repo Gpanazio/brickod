@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { CallSheet, Location, Scene, Contact, CallTime, Attachment } from "@shared/schema";
 import { nanoid } from "nanoid";
+import { safeLocalStorage } from "@/lib/safe-local-storage";
 
 const STORAGE_KEY = "brick-call-sheet";
 
@@ -256,7 +257,7 @@ export function useCallSheet() {
         ...callSheet,
         updatedAt: new Date().toISOString(),
       };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
+      safeLocalStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
       setHasUnsavedChanges(false);
       return true;
     } catch (error) {
@@ -267,7 +268,7 @@ export function useCallSheet() {
 
   const loadFromStorage = () => {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
+      const stored = safeLocalStorage.getItem(STORAGE_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
         skipEffect.current += 1;
