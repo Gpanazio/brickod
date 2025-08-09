@@ -2,6 +2,7 @@ import express from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { errorHandler } from "./error-handler";
+import { closeDb } from "./db";
 
 const app = express();
 app.use(express.json());
@@ -47,3 +48,12 @@ app.use((req, res, next) => {
     log(`serving on port ${port}`);
   });
 })();
+
+async function shutdown(signal: string) {
+  log(`Received ${signal}, shutting down...`);
+  await closeDb();
+  process.exit(0);
+}
+
+process.on('SIGINT', () => shutdown('SIGINT'));
+process.on('SIGTERM', () => shutdown('SIGTERM'));

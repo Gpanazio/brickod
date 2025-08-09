@@ -162,6 +162,8 @@ Ao executar scripts Node ou testes que utilizem `fetch`, defina
 `API_BASE_URL` ou `VITE_API_BASE_URL`. Em produção essas variáveis devem
 usar HTTPS ou permanecer vazias para evitar avisos de conteúdo misto.
 
+Durante o encerramento do processo (sinais `SIGINT` ou `SIGTERM`), a aplicação fecha a conexão com o banco de dados antes de finalizar.
+
 ## 🤝 Contribuição
 
 1. Fork o projeto

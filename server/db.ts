@@ -38,3 +38,13 @@ export async function testConnection() {
     return false;
   }
 }
+
+// Close database connection gracefully
+export async function closeDb() {
+  try {
+    await client?.end?.();
+    await client?.close?.();
+  } catch (error: any) {
+    console.error('Error closing database connection:', error.message);
+  }
+}
